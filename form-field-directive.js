@@ -1,14 +1,16 @@
 /*!
  * Form field directive.
  *
- * Copyright (c) 2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  * @author David I. Lehn
  */
-define(['angular'], function(angular) {
+define(['angular', 'module'], function(angular, module) {
 
 'use strict';
+
+var modulePath = module.uri.substr(0, module.uri.lastIndexOf('/')) + '/';
 
 /* @ngInject */
 function factory() {
@@ -21,7 +23,7 @@ function factory() {
     controller: function() {},
     controllerAs: 'ctrl',
     bindToController: true,
-    templateUrl: '/app/components/form/form-field.html',
+    templateUrl: modulePath + 'form-field.html',
     link: function(scope, element, attrs, ctrl) {
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
