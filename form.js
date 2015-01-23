@@ -51,7 +51,7 @@ module.directive(selectDirective);
 module.directive(textareaDirective);
 module.directive(trackStateDirective);
 
-module.config(function(config) {
+module.run(function(config) {
   var constants = config.constants = config.constants || {};
 
   constants.monthNames = [
