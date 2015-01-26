@@ -36,7 +36,7 @@ define([
 
 'use strict';
 
-var module = angular.module('app.form', []);
+var module = angular.module('bedrock.form', []);
 
 module.directive(datepickerDirective);
 module.directive(formDirective);
