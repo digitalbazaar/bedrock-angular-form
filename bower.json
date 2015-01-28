@@ -2,7 +2,10 @@
   "name": "bedrock-angular-form",
   "main": "./form.js",
   "moduleType": ["amd"],
-  "ignore": [],
+  "ignore": [
+    "bedrock",
+    "bedrock.json"
+  ],
   "dependencies": {
   }
 }
