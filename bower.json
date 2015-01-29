@@ -1,11 +1,13 @@
 {
   "name": "bedrock-angular-form",
-  "main": "./form.js",
+  "main": ["./form.js", "./form.less"],
   "moduleType": ["amd"],
   "ignore": [
     "bedrock",
     "bedrock.json"
   ],
   "dependencies": {
+    "angular-ui-select": "https://github.com/digitalbazaar/ui-select.git#allow-lazy-compile-dist",
+    "bedrock-angular": "~0.0.1"
   }
 }
