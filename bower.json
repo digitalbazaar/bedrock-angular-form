@@ -3,8 +3,7 @@
   "main": ["./form.js", "./form.less"],
   "moduleType": ["amd"],
   "ignore": [
-    "bedrock",
-    "bedrock.json"
+    "bedrock/prepare"
   ],
   "dependencies": {
     "angular-ui-select": "https://github.com/digitalbazaar/ui-select.git#allow-lazy-compile-dist",

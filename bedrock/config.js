@@ -3,15 +3,20 @@
  *
  * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
  */
+var fs = require('fs');
 var path = require('path');
 
 module.exports = function(bedrock) {
-  if(bedrock.config.protractor) {
-    var config = bedrock.config.protractor.config;
+  var prepare = path.join(__dirname, 'prepare.js');
+  if(bedrock.config.protractor && fs.existsSync(prepare)) {
+    var protractor = bedrock.config.protractor.config;
     // add protractor tests
-    //config.suites['bedrock-angular-form'] =
+    //protractor.suites['bedrock-angular-form'] =
     //  path.join(__dirname, './tests/**/*.js');
-    config.params.config.onPrepare.push(
-      path.join(__dirname, './prepare'));
+    protractor.params.config.onPrepare.push(prepare);
   }
+
+  // ignore angular-ui-select templates
+  var ignore = bedrock.config.views.optimize.angular.templates.ignore;
+  ignore.packages.push('ui-select');
 };
