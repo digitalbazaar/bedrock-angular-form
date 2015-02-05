@@ -6,11 +6,9 @@
  * @author Dave Longley
  * @author David I. Lehn
  */
-define(['angular', 'module'], function(angular, module) {
+define(['angular'], function(angular) {
 
 'use strict';
-
-var modulePath = module.uri.substr(0, module.uri.lastIndexOf('/')) + '/';
 
 /* @ngInject */
 function factory() {
@@ -23,7 +21,7 @@ function factory() {
     controller: function() {},
     controllerAs: 'ctrl',
     bindToController: true,
-    templateUrl: modulePath + 'form-field.html',
+    templateUrl: requirejs.toUrl('bedrock-angular-form/form-field.html'),
     link: function(scope, element, attrs, ctrl) {
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
