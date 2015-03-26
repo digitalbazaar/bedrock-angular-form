@@ -57,13 +57,30 @@ Show a date picker form component.
 
 ### br-form
 
-TODO
+Display a form UI for a data model based on a layout.  The top level layout
+is split into groups built with `br-form-group`.  Each group is composed of
+many fields built with `br-form-field`.
+
+```html
+<br-form
+  br-model="model.data"
+  br-groups="model.layout"
+  br-options="{
+    editable: false
+  }"></br-form>
+```
+
+See `brFormLibraryService` for how to create the `br-groups` data.
 
 ### br-form-field
+
+Used by `br-form-group` to display a field.
 
 TODO
 
 ### br-form-group
+
+Used by `br-form` to display a group of fields.
 
 TODO
 
@@ -189,7 +206,133 @@ See `br-help-toggle`.
 
 ### brFormLibraryService
 
-TODO
+`brFormLibraryService` provides helpers to manage vocabs that can be used to
+create form layout data.
+
+- **brFormLibraryService.create()**: Create a new
+  `brFormLibraryService.Library`
+- **Library.vocabs**: Map of all loaded vocabs indexed by id.
+- **Library.hasVocabs**: Flag set if vocabs exist.
+- **Library.properties**: Map of all loaded properties indexed by id.
+- **Library.groups**: Map of all loaded groups indexed by id.
+- **Library.hasGroups**: Flag set if groups exist.
+- **Library.graph**: Flattened graph of all properties and groups.
+- **Library.load(id)**: Load a vocab URI, expand and compact the data with a
+  custom context, reframe in `@link` mode, then find all properties and
+  property groups.
+
+One way to use this is to have static context and vocab files on your site
+and use `Library.load()` to load the vocab.
+
+## Layout Format
+
+The form layout is created using JSON-LD.  There are a number of custom and
+common properties used in a vocab document to define properties and how they
+are combined into form groups.
+
+Properties have some common properties and the `rdfs:range` as a type.
+Forms use the property types to know what type of field to display.
+
+Propety groups have labels and comments used for display as well as a
+ordered list of properties to display with options.
+
+An example context `https://example.com/contexts/example-v1.jsonld`:
+
+```js
+{
+  "@context": {
+    "id": "@id",
+    "type": "@type",
+    "dc": "http://purl.org/dc/terms/",
+    "dc11": "http://purl.org/dc/elements/1.1/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    ...
+
+    "owl:sameAs": {"@type": "@id"},
+
+    "br": "urn:bedrock:",
+
+    "layout": {"@id": "br:layout", "@type": "@id", "@container": "@list"},
+    "property": {"@id": "br:property", "@type": "@id"},
+    "propertyGroup": {"@id": "br:propertyGroup", "@type": "@id"},
+    "optional": {"@id": "br:optional", "@type": "@xsd:boolean"},
+    "resource": {"@id": "br:resource", "@type": "@id"},
+    "date": {"@id": "br:date", "@type": "xsd:dateTime"},
+    "domain": {"@id": "rdfs:domain",  "@type": "@vocab"},
+    "range": {"@id": "rdfs:range", "@type": "@vocab"},
+    "rangeOption": {
+      "@id": "br:rangeOption",
+      "@container": "@list"
+    },
+    "rangeOptionCompareProperty": {
+      "@id": "br:rangeOptionCompareProperty",
+      "@type": "@vocab"
+    },
+    "comment": "rdfs:comment",
+    "label": "rdfs:label",
+    "value": "rdf:value",
+    "Property": "rdf:Property",
+    "PropertyGroup": "br:PropertyGroup",
+    "URL": "rdfs:Resource",
+    "String": "rdfs:Literal",
+    "Date": "xsd:dateTime",
+
+    "ex": "https://example.com/schema/",
+    "testId": "ex:testId",
+    "testDate": {"@id" : "ex:testDate", "@type": "xsd:dateTime"},
+    ...
+  }
+}
+```
+
+An example vocab `https://example.com/vocabs/example-v1.jsonld`:
+
+```js
+{
+  "@context": "../contexts/example-v1.jsonld",
+  "id": "https://example.com/vocabs/example-v1",
+  "label": "Example Vocabulary",
+  "@graph": [
+    {
+      "id": "https://example.com/schema/testId",
+      "type": "Property",
+      "label": "Test ID",
+      "comment": "A test identifier.",
+      "domain": "schema:Thing",
+      "range": "String"
+    },
+    {
+      "id": "https://example.com/schema/testDate",
+      "type": "Property",
+      "label": "Test Date",
+      "comment": "A test date.",
+      "domain": "schema:Thing",
+      "range": "Date"
+    },
+    ...
+    {
+      "id": "https://example.com/schema/examplePropertyGroup",
+      "type": "PropertyGroup",
+      "label": "Example Group",
+      "comment": "The custom properties for an example layout group.",
+      "layout": [
+        {
+          "property": "https://example.com/schema/testId"
+        },
+        {
+          "property": "https://example.com/schema/testDate"
+        }
+      ]
+    }
+    ...
+  ]
+}
+```
 
 ## Constants
 
