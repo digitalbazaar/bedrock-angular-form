@@ -17,6 +17,7 @@ function factory() {
       model: '=brModel'
     },
     transclude: true,
+    /* jshint multistr: true */
     template: '\
       <div ng-class="{ \
         \'form-group\': !options.inline, \

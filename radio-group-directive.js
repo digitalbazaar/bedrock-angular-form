@@ -21,6 +21,7 @@ function factory() {
     controllerAs: 'ctrl',
     bindToController: true,
     transclude: true,
+    /* jshint multistr: true */
     template: '\
       <div class="form-group" br-property-path="{{ctrl.options.name}}"> \
         <label ng-if="ctrl.options.label !== undefined" \

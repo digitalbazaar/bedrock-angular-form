@@ -17,6 +17,7 @@ function factory() {
       groups: '=brGroups',
       model: '=brModel'
     },
+    /* jshint multistr: true */
     template: '\
       <div br-lazy-compile="options" br-lazy-compile-id="br-form"> \
         <form ng-if="options.editable && !options.embedded" \

@@ -21,6 +21,7 @@ function datepickerFactory($filter, $templateCache, $timeout) {
     controller: Ctrl,
     controllerAs: 'ctrl',
     bindToController: true,
+    /* jshint multistr: true */
     template: '\
       <div ng-class="{ \
         \'form-group\': !ctrl.options.inline, \

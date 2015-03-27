@@ -20,6 +20,7 @@ function factory() {
       compare: '=?brCompareItem'
     },
     transclude: true,
+    /* jshint multistr: true */
     template: '\
       <div ng-class="{\'form-group\': !options.inline}" \
         br-property-path="{{options.name}}"> \

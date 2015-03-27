@@ -17,6 +17,7 @@ function factory() {
       group: '=brGroup',
       model: '=brModel'
     },
+    /* jshint multistr: true */
     template: '\
       <!-- <pre>GROUP OPTIONS: {{options|json}}</pre> --> \
       <div class="section"> \
