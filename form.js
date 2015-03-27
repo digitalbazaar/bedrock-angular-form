@@ -61,7 +61,7 @@ module.run(function(config) {
   ];
   constants.monthNumbers = [
     '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'
-  ],
+  ];
 
   // country map sorted by display order
   constants.countries = [
