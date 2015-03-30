@@ -1,8 +1,8 @@
 # bedrock-angular-form
 
-An [AngularJS][] module that provides services and directives for creating and
-handling forms.  A form can also be dynamically created with a JSON based
-layout model.
+A [bedrock][] [AngularJS][] module that provides services and directives for
+creating and handling forms.  A form can also be dynamically created with a
+JSON based layout model.
 
 Uses features from [bedrock-angular-alert][] and [bedrock-angular-resource][].
 
