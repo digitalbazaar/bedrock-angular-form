@@ -9,13 +9,16 @@ Uses features from [bedrock-angular-alert][] and [bedrock-angular-resource][].
 ## Quick Examples
 
 ```html
-<!-- ... TODO ... -->
-<br-form
-  br-model="model.data"
-  br-groups="model.layout"
-  br-options="{
-    editable: false
-  }"></br-form>
+<div ng-controller="TestController as model">
+  <form class="well form-horizontal" role="form">
+    <fieldset>
+      <br-input br-model="model.name" 
+        br-options="{icon: 'tag', name: 'name', label: 'Name'}">
+        Please enter your name.
+      </br-input>
+    </fieldset>
+  </form>
+</div>
 ```
 
 ```js
