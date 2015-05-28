@@ -13,5 +13,6 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/0.1.0...1.1.0
 [1.0.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/0.1.0...1.0.0
