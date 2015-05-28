@@ -1,7 +1,7 @@
 /*!
  * Input directive.
  *
- * Copyright (c) 2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
@@ -61,7 +61,15 @@ function factory() {
           <div ng-transclude></div> \
         </div> \
       </div>',
-    link: function(scope, element, attrs) {
+    compile: Compile
+  };
+
+  function Compile(tElement, tAttrs) {
+    // transplant validation to input element
+    ['required', 'ng-minlength', 'ng-maxlength', 'pattern', 'ng-pattern'].map(
+      moveAttrToInput.bind(null, tElement, tAttrs));
+
+    return function(scope, element, attrs) {
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
         var options = scope.options = scope.$eval(value) || {};
@@ -112,8 +120,18 @@ function factory() {
           element.find('input').removeAttr('readonly');
         }
       });
+    };
+  }
+
+  function moveAttrToInput(tElement, tAttrs, attr) {
+    if(!(tAttrs.$normalize(attr) in tAttrs)) {
+      return;
     }
-  };
+
+    var input = tElement.find('input');
+    input.attr(attr, tElement.attr(attr));
+    tElement.removeAttr(attr);
+  }
 }
 
 return {brInput: factory};
