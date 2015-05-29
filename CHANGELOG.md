@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.2.1] - 2015-05-29
+
+### Fixed
+- Preserve proper scope when linking transplanted attributes.
+
 ## [1.2.0] - 2015-05-28
 
 ### Added
@@ -20,7 +25,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.0...HEAD
-[1.2.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/0.1.0...1.2.0
-[1.1.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/0.1.0...1.1.0
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.1...HEAD
+[1.2.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.1...1.2.1
+[1.2.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.1.0...1.2.0
+[1.1.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/0.1.0...1.0.0
