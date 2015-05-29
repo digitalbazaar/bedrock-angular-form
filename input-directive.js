@@ -5,14 +5,19 @@
  *
  * @author Dave Longley
  */
-define([], function() {
+define(['angular'], function(angular) {
 
 'use strict';
+
+var SNAKE_CASE_REGEXP = /[A-Z]/g;
 
 /* @ngInject */
 function factory() {
   return {
     restrict: 'E',
+    // compile prior to other directives to ensure directives to be
+    // moved to the input element are moved prior to their compilation
+    priority: 1,
     scope: {
       model: '=brModel'
     },
@@ -68,6 +73,16 @@ function factory() {
     // transplant validation to input element
     ['required', 'ng-minlength', 'ng-maxlength', 'pattern', 'ng-pattern'].map(
       moveAttrToInput.bind(null, tElement, tAttrs));
+    // transplant any directive prefixed with 'br-input-' to the input element
+    angular.forEach(tElement[0].attributes, function(attribute) {
+      if(!attribute.specified) {
+        return;
+      }
+      var attr = attribute.name;
+      if(hasBrInputPrefix(tAttrs.$normalize(attr))) {
+        moveAttrToInput(tElement, tAttrs, attr, true);
+      }
+    });
 
     return function(scope, element, attrs) {
       attrs.brOptions = attrs.brOptions || {};
@@ -123,14 +138,37 @@ function factory() {
     };
   }
 
-  function moveAttrToInput(tElement, tAttrs, attr) {
-    if(!(tAttrs.$normalize(attr) in tAttrs)) {
+  function moveAttrToInput(tElement, tAttrs, attr, prefixed) {
+    var normalized = tAttrs.$normalize(attr);
+    if(!(normalized in tAttrs)) {
       return;
     }
 
     var input = tElement.find('input');
-    input.attr(attr, tElement.attr(attr));
+    var newAttr = prefixed ? removeBrInputPrefix(normalized) : attr;
+    input.attr(newAttr, tElement.attr(attr));
     tElement.removeAttr(attr);
+  }
+
+  function hasBrInputPrefix(attr) {
+    return (
+      attr.length > 7 &&
+      attr.indexOf('brInput') === 0 &&
+      attr[7] === attr[7].toUpperCase());
+  }
+
+  function removeBrInputPrefix(attr) {
+    var first = attr[7].toLowerCase();
+    var rval = snake_case(first + attr.substr(8), '-');
+    return rval;
+  }
+
+  // from Angular.js
+  function snake_case(name, separator) {
+    separator = separator || '_';
+    return name.replace(SNAKE_CASE_REGEXP, function(letter, pos) {
+      return (pos ? separator : '') + letter.toLowerCase();
+    });
   }
 }
 
