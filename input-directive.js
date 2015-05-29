@@ -18,51 +18,64 @@ function factory() {
     // compile prior to other directives to ensure directives to be
     // moved to the input element are moved prior to their compilation
     priority: 1,
-    scope: {
-      model: '=brModel'
-    },
+    /* Note: Here we use a new child scope, not an isolate scope. This is
+    because we need to transplant attribute-based directives from the
+    `br-input` element to the inner `input` element, for example:
+
+    ng-maxlength="{{expression to be evaluated in the outer scope}}"
+
+    We need to access our own scope variables in expressions on the `input`
+    element and can't "transclude attributes" for the other ones (to preserve
+    their scope). We also don't want to force people to write more verbose
+    `br-input` elements, so asking them to include `input` themselves with
+    the attributes they want (and then we'd need to modify it further anyway)
+    isn't an option. To help avoid shadowing parent scope variables, we
+    only set scope variables under the `_bri` property. */
+    scope: true,
     transclude: true,
     /* jshint multistr: true */
     template: '\
       <div ng-class="{ \
-        \'form-group\': !options.inline, \
-        \'form-group-inline\': options.inline}" \
-        br-property-path="{{options.name}}" \
-        class="{{(options.inline && options.columns.input) || \'\'}}" \
+        \'form-group\': !_brInput.options.inline, \
+        \'form-group-inline\': _brInput.options.inline}" \
+        br-property-path="{{_brInput.options.name}}" \
+        class="{{(_brInput.options.inline && \
+          _brInput.options.columns.input) || \'\'}}" \
         ng-style="{display: \
-          (options.inline ? \'inline-\' : \'\') + \'block\'}"> \
-        <label ng-if="options.label !== undefined" \
-          class="{{options.columns.label}} control-label" \
-          for="{{options.name}}">{{options.label}}</label> \
+          (_brInput.options.inline ? \'inline-\' : \'\') + \'block\'}"> \
+        <label ng-if="_brInput.options.label !== undefined" \
+          class="{{_brInput.options.columns.label}} control-label" \
+          for="{{_brInput.options.name}}">{{_brInput.options.label}}</label> \
         <div class="input-group \
-          {{(!options.inline && options.columns.input) || \'\'}}"> \
-          <span ng-if="options.icon" \
+          {{(!_brInput.options.inline && \
+            _brInput.options.columns.input) || \'\'}}"> \
+          <span ng-if="_brInput.options.icon" \
             class="input-group-addon"><i \
-            class="fa {{options.icon}}"></i></span> \
-          <span ng-if="options.image" \
+            class="fa {{_brInput.options.icon}}"></i></span> \
+          <span ng-if="_brInput.options.image" \
             class="input-group-addon"><img \
-            ng-src="{{options.image}}"></img></span> \
+            ng-src="{{_brInput.options.image}}"></img></span> \
           <input class="form-control" \
-            type="{{options.type}}" \
-            name="{{options.name}}" \
-            placeholder="{{options.placeholder}}" \
-            ng-model="model" \
-            ng-disabled="options.disabled" \
-            br-track-state="help" \
-            ng-class="{\'br-help-off\': !options.help}"/> \
-          <span ng-if="options.loading" \
+            type="{{_brInput.options.type}}" \
+            name="{{_brInput.options.name}}" \
+            placeholder="{{_brInput.options.placeholder}}" \
+            ng-disabled="_brInput.options.disabled" \
+            br-track-state="_brInput.help" \
+            ng-class="{\'br-help-off\': !_brInput.options.help}"/> \
+          <span ng-if="_brInput.options.loading" \
             class="br-spinner-inside-input"> \
             <i class="fa fa-refresh fa-spin text-muted"></i> \
           </span> \
-          <span ng-if="options.help" class="input-group-btn"> \
+          <span ng-if="_brInput.options.help" class="input-group-btn"> \
             <button type="button" class="btn btn-default" \
-              br-help-toggle="help"> \
+              br-help-toggle="_brInput.help"> \
               <i class="fa fa-question-circle"></i> \
             </button> \
           </span> \
         </div> \
-        <div ng-if="options.help" ng-show="help.show" \
-          class="{{options.columns.help}} help-block br-fadein br-fadeout"> \
+        <div ng-if="_brInput.options.help" ng-show="_brInput.help.show" \
+          class="{{_brInput.options.columns.help}} help-block \
+            br-fadein br-fadeout"> \
           <div ng-transclude></div> \
         </div> \
       </div>',
@@ -70,6 +83,8 @@ function factory() {
   };
 
   function Compile(tElement, tAttrs) {
+    // transplant br-model as `ng-model` on input
+    moveAttrToInput(tElement, tAttrs, 'br-model', 'ng-model');
     // transplant validation to input element
     ['required', 'ng-minlength', 'ng-maxlength', 'pattern', 'ng-pattern'].map(
       moveAttrToInput.bind(null, tElement, tAttrs));
@@ -89,7 +104,9 @@ function factory() {
     return function(scope, element, attrs) {
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
-        var options = scope.options = scope.$eval(value) || {};
+        var options = scope.$eval(value) || {};
+        scope._brInput = {options: options};
+
         options.inline = ('inline' in options) ? options.inline : false;
         options.type = options.type || 'text';
         options.placeholder = options.placeholder || '';
@@ -150,7 +167,10 @@ function factory() {
       newAttr = attr;
     }
     input.attr(newAttr, tElement.attr(attr));
-    tElement.removeAttr(attr);
+    // for backwards compatibility, don't remove br-model
+    if(attr !== 'br-model') {
+      tElement.removeAttr(attr);
+    }
   }
 
   function hasBrInputPrefix(attr) {
