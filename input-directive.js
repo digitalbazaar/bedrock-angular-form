@@ -79,8 +79,10 @@ function factory() {
         return;
       }
       var attr = attribute.name;
-      if(hasBrInputPrefix(tAttrs.$normalize(attr))) {
-        moveAttrToInput(tElement, tAttrs, attr, true);
+      var normalized = tAttrs.$normalize(attr);
+      if(hasBrInputPrefix(normalized)) {
+        moveAttrToInput(
+          tElement, tAttrs, attr, removeBrInputPrefix(normalized));
       }
     });
 
@@ -138,14 +140,15 @@ function factory() {
     };
   }
 
-  function moveAttrToInput(tElement, tAttrs, attr, prefixed) {
-    var normalized = tAttrs.$normalize(attr);
-    if(!(normalized in tAttrs)) {
+  function moveAttrToInput(tElement, tAttrs, attr, newAttr) {
+    if(!(tAttrs.$normalize(attr) in tAttrs)) {
       return;
     }
 
     var input = tElement.find('input');
-    var newAttr = prefixed ? removeBrInputPrefix(normalized) : attr;
+    if(newAttr === undefined) {
+      newAttr = attr;
+    }
     input.attr(newAttr, tElement.attr(attr));
     tElement.removeAttr(attr);
   }
