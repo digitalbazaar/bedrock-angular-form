@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.2.2] - 2015-05-30
+
+### Fixed
+- Restore non-prefixed ng validator support.
+
 ## [1.2.1] - 2015-05-29
 
 ### Fixed
@@ -25,8 +30,9 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.1...HEAD
-[1.2.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.1...1.2.1
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.2...HEAD
+[1.2.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.1...1.2.2
+[1.2.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/0.1.0...1.0.0
