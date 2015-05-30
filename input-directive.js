@@ -163,7 +163,7 @@ function factory() {
     }
 
     var input = tElement.find('input');
-    if(newAttr === undefined) {
+    if(typeof newAttr !== 'string') {
       newAttr = attr;
     }
     input.attr(newAttr, tElement.attr(attr));
