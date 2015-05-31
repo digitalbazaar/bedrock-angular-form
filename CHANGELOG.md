@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.2.3] - 2015-05-31
+
+### Added
+- Future-proof support for transcluding multiple types of content.
+
 ## [1.2.2] - 2015-05-30
 
 ### Fixed
