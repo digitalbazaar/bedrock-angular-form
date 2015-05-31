@@ -11,6 +11,15 @@ define(['angular'], function(angular) {
 
 var SNAKE_CASE_REGEXP = /[A-Z]/g;
 
+/* Note: This is used for backwards-compatibility. Prior to the use of
+ng-multi-transclude, transcluded content was assumed to be help content. In
+order to detect a deprecated use of `br-input`, we check the transcluded
+content below to see if it lacks any ng-multi-transclude IDs. Any supported
+IDs must be listed here in the array below so this will work properly. */
+var TRANSCLUDE_SELECTOR = ['help'].map(function(name) {
+  return '[name="br-input-' + name + '"]';
+}).join(',');
+
 /* @ngInject */
 function factory() {
   return {
@@ -75,8 +84,9 @@ function factory() {
         </div> \
         <div ng-if="_brInput.options.help" ng-show="_brInput.help.show" \
           class="{{_brInput.options.columns.help}} help-block \
-            br-fadein br-fadeout"> \
-          <div ng-transclude></div> \
+            br-fadein br-fadeout" ng-multi-transclude-controller> \
+          <div ng-if="_brInput.legacy" ng-transclude></div> \
+          <div ng-multi-transclude="br-input-help"></div> \
         </div> \
       </div>',
     compile: Compile
@@ -101,11 +111,20 @@ function factory() {
       }
     });
 
-    return function(scope, element, attrs) {
+    return function(scope, element, attrs, ctrl, transcludeFn) {
+      scope._brInput = {};
+
+      // backwards-compatibility support for default transclude location
+      transcludeFn(function(clone, transcludeScope) {
+        scope._brInput.legacy = (clone.filter(TRANSCLUDE_SELECTOR).length === 0);
+        clone.remove();
+        transcludeScope.$destroy();
+      });
+
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
         var options = scope.$eval(value) || {};
-        scope._brInput = {options: options};
+        scope._brInput.options = options;
 
         options.inline = ('inline' in options) ? options.inline : false;
         options.type = options.type || 'text';
