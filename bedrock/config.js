@@ -11,8 +11,8 @@ module.exports = function(bedrock) {
   if(bedrock.config.protractor && fs.existsSync(prepare)) {
     var protractor = bedrock.config.protractor.config;
     // add protractor tests
-    //protractor.suites['bedrock-angular-form'] =
-    //  path.join(__dirname, './tests/**/*.js');
+    protractor.suites['bedrock-angular-form'] =
+      path.join(__dirname, './tests/**/*.js');
     protractor.params.config.onPrepare.push(prepare);
   }
 
