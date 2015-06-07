@@ -16,7 +16,7 @@ ng-multi-transclude, transcluded content was assumed to be help content. In
 order to detect a deprecated use of `br-input`, we check the transcluded
 content below to see if it lacks any ng-multi-transclude IDs. Any supported
 IDs must be listed here in the array below so this will work properly. */
-var TRANSCLUDE_SELECTOR = ['help'].map(function(name) {
+var TRANSCLUDE_SELECTOR = ['help','validation-error'].map(function(name) {
   return '[name="br-input-' + name + '"]';
 }).join(',');
 
@@ -87,6 +87,11 @@ function factory() {
             br-fadein br-fadeout" ng-multi-transclude-controller> \
           <div ng-if="_brInput.legacy" ng-transclude></div> \
           <div ng-multi-transclude="br-input-help"></div> \
+        </div> \
+        <div ng-multi-transclude-controller \
+          class="{{_brInput.options.columns.help}}"> \
+          <div ng-multi-transclude="br-input-validation-error"> \
+          </div> \
         </div> \
       </div>',
     compile: Compile
