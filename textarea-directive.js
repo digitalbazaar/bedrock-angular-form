@@ -41,7 +41,7 @@ function factory() {
             rows="{{options.rows}}" \
             name="{{options.name}}" \
             placeholder="{{options.placeholder}}" \
-            ng-model="model" ng-disabled=options.disabled \
+            ng-model="model" ng-disabled="options.disabled" \
             br-track-state="help" \
             style="{{options.style}}" \
             wrap="{{options.wrap}}" \
