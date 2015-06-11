@@ -1,0 +1,28 @@
+{
+  "name": "bedrock-angular-form",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node test.js test --framework protractor --protractor-suite bedrock-angular-form",
+    "postinstall": "bower install",
+    "postupdate": "bower update",
+    "bower-install": "bower install",
+    "bower-update": "bower update"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digitalbazaar/bedrock-angular-form"
+  },
+  "dependencies": {
+    "bedrock": "^1.0.0",
+    "bedrock-express": "^1.0.0",
+    "bedrock-protractor": "^2.0.0",
+    "bedrock-views": "^1.0.0",
+    "bower": "~1.4.1"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "directories": {},
+  "main": "test.js"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "bedrock-angular-form-test",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular-ui-select": "https://github.com/digitalbazaar/ui-select.git#allow-lazy-compile-dist",
+    "bedrock-angular": "^1.0.0"
+  },
+  "resolutions": {
+    "angular": "1.3.16"
+  }
+}
