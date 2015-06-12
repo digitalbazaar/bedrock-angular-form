@@ -39,7 +39,7 @@ function factory() {
     `br-input` elements, so asking them to include `input` themselves with
     the attributes they want (and then we'd need to modify it further anyway)
     isn't an option. To help avoid shadowing parent scope variables, we
-    only set scope variables under the `_bri` property. */
+    only set scope variables under the `_brInput` property. */
     scope: true,
     transclude: true,
     /* jshint multistr: true */
