@@ -9,19 +9,17 @@ define(['angular'], function(angular) {
 
 'use strict';
 
-var SNAKE_CASE_REGEXP = /[A-Z]/g;
-
 /* Note: This is used for backwards-compatibility. Prior to the use of
 ng-multi-transclude, transcluded content was assumed to be help content. In
 order to detect a deprecated use of `br-input`, we check the transcluded
 content below to see if it lacks any ng-multi-transclude IDs. Any supported
 IDs must be listed here in the array below so this will work properly. */
-var TRANSCLUDE_SELECTOR = ['help','validation-error'].map(function(name) {
+var TRANSCLUDE_SELECTOR = ['help', 'validation-error'].map(function(name) {
   return '[name="br-input-' + name + '"]';
 }).join(',');
 
 /* @ngInject */
-function factory() {
+function factory(brFormUtilsService) {
   return {
     restrict: 'E',
     // compile prior to other directives to ensure directives to be
@@ -98,22 +96,32 @@ function factory() {
   };
 
   function Compile(tElement, tAttrs) {
-    // transplant br-model as `ng-model` on input
-    moveAttrToInput(tElement, tAttrs, 'br-model', 'ng-model');
-    // transplant validation to input element
-    ['required', 'ng-minlength', 'ng-maxlength', 'pattern', 'ng-pattern'].map(
-      moveAttrToInput.bind(null, tElement, tAttrs));
-    // transplant any directive prefixed with 'br-input-' to the input element
-    angular.forEach(tElement[0].attributes, function(attribute) {
-      if(!attribute.specified) {
-        return;
-      }
-      var attr = attribute.name;
-      var normalized = tAttrs.$normalize(attr);
-      if(hasBrInputPrefix(normalized)) {
-        moveAttrToInput(
-          tElement, tAttrs, attr, removeBrInputPrefix(normalized));
-      }
+    var target = 'input';
+
+    // transplant br-model as `ng-model` to target
+    brFormUtilsService.moveAttr({
+      element: tElement,
+      attrs: tAttrs,
+      attr: 'br-model',
+      newAttr: 'ng-model',
+      target: target
+    });
+
+    // transplant validation to target
+    brFormUtilsService.moveAttr({
+      element: tElement,
+      attrs: tAttrs,
+      attr: [
+        'required', 'ng-minlength', 'ng-maxlength', 'pattern', 'ng-pattern'],
+      target: target
+    });
+
+    // transplant any directive prefixed with 'br-input-' to target
+    brFormUtilsService.movePrefixedAttrs({
+      element: tElement,
+      attrs: tAttrs,
+      prefix: 'br-input-',
+      target: target
     });
 
     return function(scope, element, attrs, ctrl, transcludeFn) {
@@ -121,7 +129,8 @@ function factory() {
 
       // backwards-compatibility support for default transclude location
       transcludeFn(function(clone, transcludeScope) {
-        scope._brInput.legacy = (clone.filter(TRANSCLUDE_SELECTOR).length === 0);
+        scope._brInput.legacy = (
+          clone.filter(TRANSCLUDE_SELECTOR).length === 0);
         clone.remove();
         transcludeScope.$destroy();
       });
@@ -179,43 +188,6 @@ function factory() {
         }
       });
     };
-  }
-
-  function moveAttrToInput(tElement, tAttrs, attr, newAttr) {
-    if(!(tAttrs.$normalize(attr) in tAttrs)) {
-      return;
-    }
-
-    var input = tElement.find('input');
-    if(typeof newAttr !== 'string') {
-      newAttr = attr;
-    }
-    input.attr(newAttr, tElement.attr(attr));
-    // for backwards compatibility, don't remove br-model
-    if(attr !== 'br-model') {
-      tElement.removeAttr(attr);
-    }
-  }
-
-  function hasBrInputPrefix(attr) {
-    return (
-      attr.length > 7 &&
-      attr.indexOf('brInput') === 0 &&
-      attr[7] === attr[7].toUpperCase());
-  }
-
-  function removeBrInputPrefix(attr) {
-    var first = attr[7].toLowerCase();
-    var rval = snake_case(first + attr.substr(8), '-');
-    return rval;
-  }
-
-  // from Angular.js
-  function snake_case(name, separator) {
-    separator = separator || '_';
-    return name.replace(SNAKE_CASE_REGEXP, function(letter, pos) {
-      return (pos ? separator : '') + letter.toLowerCase();
-    });
   }
 }
 

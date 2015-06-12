@@ -1,7 +1,7 @@
 /*!
  * Form module.
  *
- * Copyright (c) 2012-2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
@@ -12,6 +12,7 @@ define([
   './form-field-directive',
   './form-group-directive',
   './form-library-service',
+  './form-utils-service',
   './help-toggle-directive',
   './input-directive',
   './input-watcher-directive',
@@ -26,6 +27,7 @@ define([
   formFieldDirective,
   formGroupDirective,
   formLibraryService,
+  formUtilsService,
   helpToggleDirective,
   inputDirective,
   inputWatcherDirective,
@@ -43,6 +45,7 @@ module.directive(formDirective);
 module.directive(formFieldDirective);
 module.directive(formGroupDirective);
 module.service(formLibraryService);
+module.service(formUtilsService);
 module.directive(helpToggleDirective);
 module.directive(inputDirective);
 module.directive(inputWatcherDirective);

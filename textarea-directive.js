@@ -1,7 +1,7 @@
 /*!
  * Textarea directive.
  *
- * Copyright (c) 2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
@@ -9,10 +9,8 @@ define(['angular'], function(angular) {
 
 'use strict';
 
-var SNAKE_CASE_REGEXP = /[A-Z]/g;
-
 /* @ngInject */
-function factory($parse) {
+function factory($parse, brFormUtilsService) {
   return {
     restrict: 'E',
     // compile prior to other directives to ensure directives to be
@@ -82,21 +80,32 @@ function factory($parse) {
   };
 
   function Compile(tElement, tAttrs) {
-    // transplant br-model as `ng-model` on textarea
-    moveAttr(tElement, tAttrs, 'br-model', 'ng-model');
-    // transplant validation to textarea element
-    ['required', 'ng-minlength', 'ng-maxlength', 'pattern', 'ng-pattern'].map(
-      moveAttr.bind(null, tElement, tAttrs));
-    // transplant any directive prefixed with 'br-textarea-' to the textarea
-    angular.forEach(tElement[0].attributes, function(attribute) {
-      if(!attribute.specified) {
-        return;
-      }
-      var attr = attribute.name;
-      var normalized = tAttrs.$normalize(attr);
-      if(hasBrTextareaPrefix(normalized)) {
-        moveAttr(tElement, tAttrs, attr, removeBrTextareaPrefix(normalized));
-      }
+    var target = 'textarea';
+
+    // transplant br-model as `ng-model` to target
+    brFormUtilsService.moveAttr({
+      element: tElement,
+      attrs: tAttrs,
+      attr: 'br-model',
+      newAttr: 'ng-model',
+      target: target
+    });
+
+    // transplant validation to target
+    brFormUtilsService.moveAttr({
+      element: tElement,
+      attrs: tAttrs,
+      attr: [
+        'required', 'ng-minlength', 'ng-maxlength', 'pattern', 'ng-pattern'],
+      target: target
+    });
+
+    // transplant any directive prefixed with 'br-textarea-' to target
+    brFormUtilsService.movePrefixedAttrs({
+      element: tElement,
+      attrs: tAttrs,
+      prefix: 'br-textarea-',
+      target: target
     });
 
     return function(scope, element, attrs) {
@@ -153,43 +162,6 @@ function factory($parse) {
         };
       }
     };
-  }
-
-  function moveAttr(tElement, tAttrs, attr, newAttr) {
-    if(!(tAttrs.$normalize(attr) in tAttrs)) {
-      return;
-    }
-
-    var el = tElement.find('textarea');
-    if(typeof newAttr !== 'string') {
-      newAttr = attr;
-    }
-    el.attr(newAttr, tElement.attr(attr));
-    // for backwards compatibility, don't remove br-model
-    if(attr !== 'br-model') {
-      tElement.removeAttr(attr);
-    }
-  }
-
-  function hasBrTextareaPrefix(attr) {
-    return (
-      attr.length > 7 &&
-      attr.indexOf('brTextarea') === 0 &&
-      attr[7] === attr[7].toUpperCase());
-  }
-
-  function removeBrTextareaPrefix(attr) {
-    var first = attr[7].toLowerCase();
-    var rval = snake_case(first + attr.substr(8), '-');
-    return rval;
-  }
-
-  // from Angular.js
-  function snake_case(name, separator) {
-    separator = separator || '_';
-    return name.replace(SNAKE_CASE_REGEXP, function(letter, pos) {
-      return (pos ? separator : '') + letter.toLowerCase();
-    });
   }
 }
 
