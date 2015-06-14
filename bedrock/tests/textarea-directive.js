@@ -5,7 +5,7 @@ bedrock.testInBrowser('br-input', function($injector) {
 var chai = require('chai');
 var expect = chai.expect;
 
-describe('textarea unit tests', function() {
+describe('textarea-directive unit tests', function() {
   var $compile = $injector.get('$compile');
   var $rootScope = $injector.get('$rootScope');
   var $scope, element;
