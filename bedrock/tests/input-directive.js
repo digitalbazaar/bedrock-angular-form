@@ -1,6 +1,6 @@
 var bedrock = GLOBAL.bedrock;
 
-bedrock.testInBrowser('br-input', function($injector) {
+bedrock.testInBrowser('input-directive', function($injector) {
 
 var chai = require('chai');
 var expect = chai.expect;

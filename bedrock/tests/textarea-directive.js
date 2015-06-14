@@ -1,6 +1,6 @@
 var bedrock = GLOBAL.bedrock;
 
-bedrock.testInBrowser('br-input', function($injector) {
+bedrock.testInBrowser('textarea-directive', function($injector) {
 
 var chai = require('chai');
 var expect = chai.expect;
@@ -21,7 +21,26 @@ describe('textarea-directive unit tests', function() {
   });
 
   it('should create a textarea with the proper attributes', function() {
-      console.error('************************************');
+
+      $scope.testOption = {
+        icon: 'comment',
+        name: 'testName',
+        label: 'Test Label',
+        placeholder: 'Test Placeholder',
+        rows: '3',
+        wrap: 'hard'
+      };
+
+      // test setup
+      element.append($compile(
+        '<br-textarea \
+          br-model="model.testModel" \
+          br-options="testOption"> \
+          Example help text. \
+        </br-textarea>'
+      )($scope));
+
+      /*
       element.append($compile(
         '<br-textarea \
           br-model="model.testModel" \
@@ -36,6 +55,7 @@ describe('textarea-directive unit tests', function() {
           Example help text. \
         </br-textarea>'
       )($scope));
+      */
 
       $scope.$apply();
       expect(element.find('label'), 'label should exist')
