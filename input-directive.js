@@ -120,7 +120,7 @@ function factory(brFormUtilsService) {
     brFormUtilsService.movePrefixedAttrs({
       element: tElement,
       attrs: tAttrs,
-      prefix: 'br-input-',
+      prefix: 'brInput',
       target: target
     });
 

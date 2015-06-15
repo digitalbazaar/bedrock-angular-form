@@ -104,7 +104,7 @@ function factory($parse, brFormUtilsService) {
     brFormUtilsService.movePrefixedAttrs({
       element: tElement,
       attrs: tAttrs,
-      prefix: 'br-textarea-',
+      prefix: 'brTextarea',
       target: target
     });
 
