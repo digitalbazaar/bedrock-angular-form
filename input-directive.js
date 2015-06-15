@@ -22,6 +22,7 @@ var TRANSCLUDE_SELECTOR = ['help', 'validation-error'].map(function(name) {
 function factory(brFormUtilsService) {
   return {
     restrict: 'E',
+    require: '?^form',
     // compile prior to other directives to ensure directives to be
     // moved to the input element are moved prior to their compilation
     priority: 1,
@@ -86,10 +87,14 @@ function factory(brFormUtilsService) {
           <div ng-if="_brInput.legacy" ng-transclude></div> \
           <div ng-multi-transclude="br-input-help"></div> \
         </div> \
-        <div ng-multi-transclude-controller \
-          class="{{_brInput.options.columns.help}}"> \
-          <div ng-multi-transclude="br-input-validation-error"> \
-          </div> \
+        <div ng-if="!_brInput.options.inline && \
+          _brInput.form[_brInput.options.name].$invalid" \
+          class="{{_brInput.options.columns.validation}}" \
+          ng-multi-transclude-controller> \
+          <div class="alert alert-danger" \
+            ng-multi-transclude="br-input-validation-errors"></div> \
+          <!-- FIXME: remove `br-input-validation-error` --> \
+          <div ng-multi-transclude="br-input-validation-error"></div> \
         </div> \
       </div>',
     compile: Compile
@@ -126,6 +131,7 @@ function factory(brFormUtilsService) {
 
     return function(scope, element, attrs, ctrl, transcludeFn) {
       scope._brInput = {};
+      scope._brInput.form = ctrl;
 
       // backwards-compatibility support for default transclude location
       transcludeFn(function(clone, transcludeScope) {
@@ -161,6 +167,9 @@ function factory(brFormUtilsService) {
         }
         if(!('help' in columns)) {
           columns.help = 'col-sm-offset-3 col-sm-8';
+        }
+        if(!('validation' in columns)) {
+          columns.validation = 'col-sm-offset-3 col-sm-8';
         }
 
         if('maxLength' in options) {
