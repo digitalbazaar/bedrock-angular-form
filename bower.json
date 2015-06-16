@@ -5,10 +5,13 @@
   "moduleType": ["amd"],
   "ignore": [
     "bedrock/bower.json",
+    "bedrock/bower_components",
+    "bedrock/node_modules",
     "bedrock/package.json",
     "bedrock/prepare",
     "bedrock/tests",
-    "bedrock/test.js"
+    "bedrock/test.js",
+    "bedrock/views"
   ],
   "dependencies": {
     "angular-ui-select": "https://github.com/digitalbazaar/ui-select.git#allow-lazy-compile-dist",
