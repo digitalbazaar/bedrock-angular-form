@@ -67,7 +67,7 @@ function factory() {
       if(hasAttrPrefix(normalized, options.prefix)) {
         service.moveAttr(angular.extend({
           attr: attr,
-          newAttr: removeAttrPrefix(attr, options.prefix)
+          newAttr: removeAttrPrefix(normalized, options.prefix)
         }, options));
       }
     });
@@ -90,8 +90,7 @@ function factory() {
 
   function removeAttrPrefix(attr, prefix) {
     var first = attr[prefix.length].toLowerCase();
-    var rval = service.snake_case(first + attr.substr(prefix.length + 1), '-');
-    return rval;
+    return service.snake_case(first + attr.substr(prefix.length + 1), '-');
   }
 
   return service;
