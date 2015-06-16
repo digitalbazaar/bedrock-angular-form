@@ -87,14 +87,12 @@ function factory(brFormUtilsService) {
           <div ng-if="_brInput.legacy" ng-transclude></div> \
           <div ng-multi-transclude="br-input-help"></div> \
         </div> \
-        <div ng-if="!_brInput.options.inline && \
-          _brInput.form[_brInput.options.name].$invalid" \
+        <div ng-show="_brInput.showValidation()" \
           class="{{_brInput.options.columns.validation}}" \
           ng-multi-transclude-controller> \
-          <div class="alert alert-danger" \
+          <div name="br-input-validation-errors" \
+            class="alert alert-danger" \
             ng-multi-transclude="br-input-validation-errors"></div> \
-          <!-- FIXME: remove `br-input-validation-error` --> \
-          <div ng-multi-transclude="br-input-validation-error"></div> \
         </div> \
       </div>',
     compile: Compile
@@ -140,6 +138,27 @@ function factory(brFormUtilsService) {
         clone.remove();
         transcludeScope.$destroy();
       });
+
+      var errorElement = element.find('[name="br-input-validation-errors"]');
+
+      scope._brInput.showValidation = function() {
+        // do not show empty validation area
+        if(!$.trim(errorElement.html())) {
+          return false;
+        }
+        // use `showValidation` option if given
+        var options = scope._brInput.options || {};
+        if('showValidation' in options) {
+          return options.showValidation;
+        }
+        // do not show validation if field not in form
+        if(!ctrl || !('name' in options) || !ctrl[options.name]) {
+          return false;
+        }
+        // default: show if not inline, form submitted, and field invalid
+        return (!options.inline &&
+          ctrl.$submitted && ctrl[options.name].$invalid);
+      };
 
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
