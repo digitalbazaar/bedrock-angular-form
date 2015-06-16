@@ -17,4 +17,6 @@ config.requirejs.bower.packages.push({
     path.join(dir, 'bower.json'), {encoding: 'utf8'}))
 });
 
+config.views.paths.push(path.join(__dirname, 'views'));
+
 bedrock.start();
