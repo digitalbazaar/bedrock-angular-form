@@ -18,6 +18,7 @@
     "angular-ui-select": "https://github.com/digitalbazaar/ui-select.git#allow-lazy-compile-dist",
     "bedrock-angular": "^1.0.0",
     "bedrock-angular-alert": "^1.0.0",
+    "bedrock-angular-lazy-compile": "^1.0.0",
     "bedrock-angular-resource": "^1.0.0"
   }
 }
