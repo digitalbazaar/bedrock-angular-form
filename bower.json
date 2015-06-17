@@ -6,6 +6,7 @@
   "ignore": [
     "bedrock/bower.json",
     "bedrock/bower_components",
+    "bedrock/components",
     "bedrock/node_modules",
     "bedrock/package.json",
     "bedrock/prepare",
