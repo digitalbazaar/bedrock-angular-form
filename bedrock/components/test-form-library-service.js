@@ -36,9 +36,9 @@ function factory(brFormLibraryService) {
       value: 'rdf:value',
       Property: 'rdf:Property',
       PropertyGroup: 'br:PropertyGroup',
-      URL: "rdfs:Resource",
-      String: "rdfs:Literal",
-      Date: "xsd:dateTime"
+      URL: 'rdfs:Resource',
+      String: 'rdfs:Literal',
+      Date: 'xsd:dateTime'
     }
   };
 
@@ -58,98 +58,98 @@ function factory(brFormLibraryService) {
       },
 
       {
-        "id": "br:PropertyGroup",
+        "id": "PropertyGroup",
         "type": "owl:Class",
         "label": "Property Group",
         "comment": "A group of related properties."
       },
       {
         "id": "br:layout",
-        "type": "rdf:Property",
+        "type": "Property",
         "label": "PropertyGroup Layout",
         "comment": "An ordered list of Properties and PropertyGroups.",
-        "domain": "br:PropertyGroup"
+        "domain": "PropertyGroup"
       },
 
       {
         "id": "t2:resource",
-        "type": "rdf:Property",
+        "type": "Property",
         "label": "Test Resource URL",
         "comment": "A resource URL.",
         "domain": "schema:Thing",
-        "range": "rdfs:Resource",
+        "range": "URL",
         "vs:term_status": "unstable"
       },
       {
         "id": "t2:resource2",
-        "type": "rdf:Property",
+        "type": "Property",
         "label": "2nd Test Resource URL",
         "comment": "A resource URL.",
         "domain": "schema:Thing",
-        "range": "rdfs:Resource",
+        "range": "URL",
         "vs:term_status": "unstable"
       },
       {
         "id": "t2:string",
-        "type": "rdf:Property",
+        "type": "Property",
         "label": "Test String",
         "comment": "A string.",
         "domain": "schema:Thing",
-        "range": "rdfs:Literal",
+        "range": "String",
         "vs:term_status": "unstable"
       },
       {
         "id": "t2:string2",
-        "type": "rdf:Property",
+        "type": "Property",
         "label": "2nd Test String (w/ default)",
         "comment": "A string.",
         "domain": "schema:Thing",
-        "range": "rdfs:Literal",
+        "range": "String",
         "vs:term_status": "unstable",
         "br:default": "default string2"
       },
       {
         "id": "t2:string3",
-        "type": "rdf:Property",
+        "type": "Property",
         "label": "3nd Test String (w/o default)",
         "comment": "A string.",
         "domain": "schema:Thing",
-        "range": "rdfs:Literal",
+        "range": "String",
         "vs:term_status": "unstable"
       },
       {
         "id": "t2:string4",
-        "type": "rdf:Property",
+        "type": "Property",
         "label": "4th Test String (w/ default)",
         "comment": "A string.",
         "domain": "schema:Thing",
-        "range": "rdfs:Literal",
+        "range": "String",
         "vs:term_status": "unstable",
         "br:default": "default string4"
       },
       {
         "id": "t2:date",
-        "type": "rdf:Property",
+        "type": "Property",
         "label": "Test Date",
         "comment": "A date and time. The value MUST be expressed using an ISO-8601 date/time string.",
         "domain": "schema:Thing",
-        "range": "xsd:dateTime",
+        "range": "Date",
         "vs:term_status": "unstable"
       },
       {
         "id": "t2:image",
-        "type": "rdf:Property",
+        "type": "Property",
         "owl:sameAs": "schema:image",
         "label": "Test Image",
         "comment": "A image URL.",
         "domain": "schema:Thing",
-        "range": "rdfs:Resource",
+        "range": "URL",
         "vs:term_status": "unstable"
       },
 
       {
         "id": "t2:kitchen-sink",
-        "type": "br:PropertyGroup",
+        "type": "PropertyGroup",
         "label": "Test #2 Kitchen Sink Properties",
         "comment": "A test of various properties.",
         "layout": [
@@ -174,7 +174,7 @@ function factory(brFormLibraryService) {
           {
             "property": "t2:date",
             "value": {
-              "type": "xsd:dateTime",
+              "type": "Date",
               "@value": "2014-10-29T12:00:00-04:00"
             }
           }
@@ -185,7 +185,9 @@ function factory(brFormLibraryService) {
 
   service.getLibrary = function() {
     var library = brFormLibraryService.create();
-    return library.load(vocab);
+    return library.load(vocab).then(function() {
+      return library;
+    });
   };
 
   return service;
