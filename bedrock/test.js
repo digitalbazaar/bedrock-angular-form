@@ -19,11 +19,9 @@ config.requirejs.bower.packages.push({
     path.join(dir, 'bower.json'), {encoding: 'utf8'}))
 });
 
-config.views.paths.push(path.join(__dirname, 'views'));
-
 // add test bower package
 config.requirejs.bower.packages.push({
-  path: path.join(dir, 'components'),
+  path: path.join(__dirname, 'components'),
   manifest: {
     name: 'bedrock-angular-form-test-components',
     moduleType: 'amd',
@@ -33,5 +31,7 @@ config.requirejs.bower.packages.push({
     }
   }
 });
+
+config.views.paths.push(path.join(__dirname, 'views'));
 
 bedrock.start();
