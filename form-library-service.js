@@ -98,8 +98,14 @@ function factory(
 
   Library.prototype.load = function(id) {
     var self = this;
-    return service.collection.get(id)
-      .then(function(vocab) {
+
+    var promise;
+    if(typeof id === 'string') {
+      promise = service.collection.get(id);
+    } else {
+      promise = Promise.resolve(id);
+    }
+    return promise.then(function(vocab) {
         // expand with base to resolve relative context urls
         return jsonld.promises.expand(vocab, {base: id});
       })
