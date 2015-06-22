@@ -5,7 +5,7 @@
  *
  * @author Dave Longley
  */
-define(['angular'], function(angular) {
+define([], function() {
 
 'use strict';
 
@@ -65,7 +65,6 @@ function factory(brFormUtilsService) {
             class="input-group-addon"><img \
             ng-src="{{_brInput.options.image}}"></img></span> \
           <input class="form-control" \
-            type="{{_brInput.options.type}}" \
             name="{{_brInput.options.name}}" \
             placeholder="{{_brInput.options.placeholder}}" \
             ng-disabled="_brInput.options.disabled" \
@@ -129,95 +128,113 @@ function factory(brFormUtilsService) {
       target: target
     });
 
-    return function(scope, element, attrs, ctrl, transcludeFn) {
-      scope._brInput = {};
-      scope._brInput.form = ctrl;
-
-      // backwards-compatibility support for default transclude location
-      transcludeFn(function(clone, transcludeScope) {
-        scope._brInput.legacy = (
-          clone.filter(TRANSCLUDE_SELECTOR).length === 0);
-        clone.remove();
-        transcludeScope.$destroy();
-      });
-
-      var errorElement = element.find('[name="br-input-validation-errors"]');
-
-      scope._brInput.showValidation = function() {
-        // do not show empty validation area
-        if(!$.trim(errorElement.html())) {
-          return false;
-        }
-        // use `showValidation` option if given
-        var options = scope._brInput.options || {};
-        if('showValidation' in options) {
-          return options.showValidation;
-        }
-        // do not show validation if field not in form
-        if(!ctrl || !('name' in options) || !ctrl[options.name]) {
-          return false;
-        }
-        // default: show if not inline, form submitted, and field invalid
-        return (!options.inline &&
-          ctrl.$submitted && ctrl[options.name].$invalid);
-      };
-
-      attrs.brOptions = attrs.brOptions || {};
-      attrs.$observe('brOptions', function(value) {
-        var options = scope.$eval(value) || {};
-        scope._brInput.options = options;
-
-        options.inline = ('inline' in options) ? options.inline : false;
-        options.type = options.type || 'text';
-        options.placeholder = options.placeholder || '';
-        // default to no help displayed in inline mode
-        options.help = ('help' in options) ? options.help : !options.inline;
-
-        // prefix "fa-" to icon
-        if(typeof options.icon === 'string' &&
-          options.icon.indexOf('fa-') !== 0) {
-          options.icon = 'fa-' + options.icon;
-        }
-
-        var columns = options.columns = options.columns || {};
-        if(!('label' in columns)) {
-          columns.label =  'col-sm-3';
-        }
-        if(!('input' in columns)) {
-          columns.input = 'col-sm-8';
-        }
-        if(!('help' in columns)) {
-          columns.help = 'col-sm-offset-3 col-sm-8';
-        }
-        if(!('validation' in columns)) {
-          columns.validation = 'col-sm-offset-3 col-sm-8';
-        }
-
-        if('maxLength' in options) {
-          element.find('input').attr('maxlength', options.maxLength);
-        } else {
-          element.find('input').removeAttr('maxlength');
-        }
-
-        if('autocomplete' in options) {
-          element.find('input').attr('autocomplete', options.autocomplete);
-        } else {
-          element.find('input').removeAttr('autocomplete');
-        }
-
-        if(options.autofocus) {
-          element.find('input').attr('autofocus', 'autofocus');
-        } else {
-          element.find('input').removeAttr('autofocus');
-        }
-
-        if(options.readonly) {
-          element.find('input').attr('readonly', 'readonly');
-        } else {
-          element.find('input').removeAttr('readonly');
-        }
-      });
+    return {
+      pre: preLink,
+      post: postLink
     };
+  }
+
+  function preLink(scope, element, attrs, ctrl) {
+    scope._brInput = {};
+    scope._brInput.form = ctrl;
+
+    attrs.brOptions = attrs.brOptions || {};
+    updateOptions(scope, element, attrs.brOptions);
+  }
+
+  function postLink(scope, element, attrs, ctrl, transcludeFn) {
+    // backwards-compatibility support for default transclude location
+    transcludeFn(function(clone, transcludeScope) {
+      scope._brInput.legacy = (
+        clone.filter(TRANSCLUDE_SELECTOR).length === 0);
+      clone.remove();
+      transcludeScope.$destroy();
+    });
+
+    var errorElement = element.find('[name="br-input-validation-errors"]');
+
+    scope._brInput.showValidation = function() {
+      // do not show empty validation area
+      if(!$.trim(errorElement.html())) {
+        return false;
+      }
+      // use `showValidation` option if given
+      var options = scope._brInput.options || {};
+      if('showValidation' in options) {
+        return options.showValidation;
+      }
+      // do not show validation if field not in form
+      if(!ctrl || !('name' in options) || !ctrl[options.name]) {
+        return false;
+      }
+      // default: show if not inline, form submitted, and field invalid
+      return (!options.inline &&
+        ctrl.$submitted && ctrl[options.name].$invalid);
+    };
+
+    attrs.$observe('brOptions', function(value) {
+      updateOptions(scope, element, value);
+    });
+  }
+
+  function updateOptions(scope, element, value) {
+    var options = scope.$eval(value) || {};
+    scope._brInput.options = options;
+
+    // update type directly to ensure angular input directives see the change
+    // immediately (angular input directives cache `type` early and don't
+    // check for changes)
+    var input = element.find('input');
+    input[0].type = options.type = options.type || 'text';
+
+    options.inline = ('inline' in options) ? options.inline : false;
+    options.placeholder = options.placeholder || '';
+    // default to no help displayed in inline mode
+    options.help = ('help' in options) ? options.help : !options.inline;
+
+    // prefix "fa-" to icon
+    if(typeof options.icon === 'string' &&
+      options.icon.indexOf('fa-') !== 0) {
+      options.icon = 'fa-' + options.icon;
+    }
+
+    var columns = options.columns = options.columns || {};
+    if(!('label' in columns)) {
+      columns.label =  'col-sm-3';
+    }
+    if(!('input' in columns)) {
+      columns.input = 'col-sm-8';
+    }
+    if(!('help' in columns)) {
+      columns.help = 'col-sm-offset-3 col-sm-8';
+    }
+    if(!('validation' in columns)) {
+      columns.validation = 'col-sm-offset-3 col-sm-8';
+    }
+
+    if('maxLength' in options) {
+      input.attr('maxlength', options.maxLength);
+    } else {
+      input.removeAttr('maxlength');
+    }
+
+    if('autocomplete' in options) {
+      input.attr('autocomplete', options.autocomplete);
+    } else {
+      input.removeAttr('autocomplete');
+    }
+
+    if(options.autofocus) {
+      input.attr('autofocus', 'autofocus');
+    } else {
+      input.removeAttr('autofocus');
+    }
+
+    if(options.readonly) {
+      input.attr('readonly', 'readonly');
+    } else {
+      input.removeAttr('readonly');
+    }
   }
 }
 
