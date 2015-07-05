@@ -6,41 +6,7 @@ define([], function() {
 function factory(brFormLibraryService) {
   var service = {};
 
-  service.CONTEXT = {
-    '@context': {
-      id: '@id',
-      type: '@type',
-      rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-      rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
-      schema: "http://schema.org/",
-      xsd: 'http://www.w3.org/2001/XMLSchema#',
-      br: 'urn:bedrock:',
-      layout: {'@id': 'br:layout', '@type': '@id', '@container': '@list'},
-      property: {'@id': 'br:property', '@type': '@id'},
-      propertyGroup: {'@id': 'br:propertyGroup', '@type': '@id'},
-      optional: {'@id': 'br:optional', '@type': '@xsd:boolean'},
-      resource: {'@id': 'br:resource', '@type': '@id'},
-      date: {'@id': 'br:date', '@type': 'xsd:dateTime'},
-      domain: {'@id': 'rdfs:domain',  '@type': '@id'},
-      range: {'@id': 'rdfs:range', '@type': '@vocab'},
-      rangeOption: {
-        '@id': 'br:rangeOption',
-        '@container': '@list'
-      },
-      rangeOptionCompareProperty: {
-        '@id': 'br:rangeOptionCompareProperty',
-        '@type': '@vocab'
-      },
-      comment: 'rdfs:comment',
-      label: 'rdfs:label',
-      value: 'rdf:value',
-      Property: 'rdf:Property',
-      PropertyGroup: 'br:PropertyGroup',
-      URL: 'rdfs:Resource',
-      String: 'rdfs:Literal',
-      Date: 'xsd:dateTime'
-    }
-  };
+  service.CONTEXT = brFormLibraryService._CONTEXT;
 
   var vocab = {
     "@context": [
@@ -56,7 +22,6 @@ function factory(brFormLibraryService) {
         "label": "Bedrock Test Vocabulary",
         "comment": "This document describes a number of classes and properties for use in testing the Bedrock vocab features."
       },
-
       {
         "id": "PropertyGroup",
         "type": "owl:Class",
@@ -146,7 +111,6 @@ function factory(brFormLibraryService) {
         "range": "URL",
         "vs:term_status": "unstable"
       },
-
       {
         "id": "t2:kitchen-sink",
         "type": "PropertyGroup",

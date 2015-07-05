@@ -18,7 +18,7 @@ function factory(
   // collection of all vocabs
   service.collection = new brResourceService.Collection();
 
-  var CONTEXT = {
+  service._CONTEXT = {
     '@context': {
       id: '@id',
       type: '@type',
@@ -56,7 +56,7 @@ function factory(
 
   // frames properties and property groups
   var FRAME = {
-    '@context': CONTEXT['@context'],
+    '@context': service._CONTEXT['@context'],
     type: ['Property', 'PropertyGroup']
   };
 
@@ -76,7 +76,7 @@ function factory(
     self.groups = {};
     self.hasGroups = false;
     // flattened graph of all properties and groups
-    self.graph = {'@context': CONTEXT['@context'], '@graph': []};
+    self.graph = {'@context': service._CONTEXT['@context'], '@graph': []};
 
     // preload configured vocabs
     if(config.data.forms) {
@@ -111,7 +111,7 @@ function factory(
       })
       .then(function(vocab) {
         // compact with standard context
-        return jsonld.promises.compact(vocab, CONTEXT, {skipExpansion: true});
+        return jsonld.promises.compact(vocab, service._CONTEXT, {skipExpansion: true});
       })
       .then(function(vocab) {
         // store vocab

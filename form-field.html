@@ -150,7 +150,11 @@
       <!-- FIXME: repeat over array -->
       <li ng-switch="ctrl.range">
         <div ng-switch-when="URL">
-          <a ng-if="!ctrl.selected.propertyGroup"
+          <br-form ng-if="ctrl.propertyGroups.length > 0"
+            br-model="ctrl.value[ctrl.key]"
+            br-groups="ctrl.propertyGroups"
+            br-options="{editable: false}"></br-form>
+          <a ng-if="angular.isDefined(ctrl.selected) && !ctrl.selected.propertyGroup"
             href="{{ctrl.value[ctrl.key]}}">{{ctrl.value[ctrl.key]}}</a>
           <div ng-if="ctrl.selected.propertyGroup">
             {{ctrl.value[ctrl.key].label || ctrl.value[ctrl.key].id || ctrl.value[ctrl.key].type}}

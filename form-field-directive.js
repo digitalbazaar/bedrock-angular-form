@@ -29,6 +29,7 @@ function factory() {
       });
 
       ctrl.propertyId = ctrl.property.property.id;
+      ctrl.propertyGroups = [ctrl.property.propertyGroup] || [];
       ctrl.schema = ctrl.property.property;
       ctrl.range = ctrl.schema.range;
       ctrl.value = ctrl.model;
