@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.4.0] - 2015-07-10
+
+### Added
+- Support overriding `propertyGroup` for `property` in layout objects. When
+  a `propertyGroup` defines its layout objects, it may now specify both
+  a `property` and a `propertyGroup` to use to display the property's value.
+
 ## [1.3.1] - 2015-07-08
 
 ### Changed
@@ -40,7 +47,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.3.1...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.4.0...HEAD
+[1.4.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.3.1...1.4.0
 [1.3.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.2...1.3.1
 [1.2.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.0...1.2.1
