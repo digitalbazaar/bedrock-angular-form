@@ -6,7 +6,7 @@
  * @author Dave Longley
  * @author David I. Lehn
  */
-define(['angular'], function(angular) {
+define(['angular', 'jsonld'], function(angular, jsonld) {
 
 'use strict';
 
@@ -28,9 +28,18 @@ function factory() {
         ctrl.options = scope.$eval(value) || {};
       });
 
-      ctrl.propertyId = ctrl.property.property.id;
-      ctrl.propertyGroups = [ctrl.property.propertyGroup] || [];
-      ctrl.schema = ctrl.property.property;
+      // property is for @id
+      if(ctrl.property.property === 'id') {
+        ctrl.propertyId = 'id';
+        ctrl.schema = {
+          label: 'ID',
+          range: 'URL'
+        };
+      } else {
+        ctrl.propertyId = ctrl.property.property.id;
+        ctrl.schema = ctrl.property.property;
+      }
+      ctrl.propertyGroups = jsonld.getValues(ctrl.property, 'propertyGroup');
       ctrl.range = ctrl.schema.range;
       ctrl.value = ctrl.model;
       ctrl.key = ctrl.propertyId;
