@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [1.5.0] - 2015-07-13
+
+### Added
+- Support displaying `id` (`@id`) via `br-form`.
+
+### Fixed
+- Add missing `bedrock.lazyCompile` angular dependency.
+- Simplify angular expression conditionals.
+- Remove unnecessary extra spacing via CSS.
+
 ## [1.4.1] - 2015-07-10
 
 ### Fixed
@@ -52,8 +62,9 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.4.1...HEAD
-[1.4.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.4.0...1.4.1
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.4.1...1.5.0
+[1.4.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.3.1...1.4.0
 [1.3.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.2...1.3.1
 [1.2.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.1...1.2.2
