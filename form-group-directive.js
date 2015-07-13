@@ -21,12 +21,13 @@ function factory() {
     template: '\
       <!-- <pre>GROUP OPTIONS: {{options|json}}</pre> --> \
       <div class="section"> \
-        <h4 class="headline">{{group.label}}</h4> \
-        <p class="text-info" ng-show="group.comment">{{group.comment}}</p> \
-        <p ng-show="group.layout.length == 0" class="text-center"> \
+        <h4 ng-if="group.label || options.embedded" \
+          class="headline">{{group.label || \'&nbsp;\'}}</h4> \
+        <p ng-if="group.comment" class="text-info">{{group.comment}}</p> \
+        <p ng-if="group.layout.length == 0" class="text-center"> \
           No fields. \
         </p> \
-        <div ng-if="options.editable" ng-show="group.layout.length > 0" \
+        <div ng-if="options.editable && group.layout.length > 0" \
           ng-class="{well: !options.embedded}"> \
           <fieldset> \
             <br-form-field \
@@ -35,7 +36,7 @@ function factory() {
               br-options="{{options}}" /> \
           </fieldset> \
         </div> \
-        <dl ng-if="!options.editable" ng-show="group.layout.length > 0" \
+        <dl ng-if="!options.editable && group.layout.length > 0" \
           class="dl-horizontal"> \
           <br-form-field ng-repeat="property in group.layout" \
             br-property="property" br-model="model" \

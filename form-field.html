@@ -150,20 +150,20 @@
       <!-- FIXME: repeat over array -->
       <li ng-switch="ctrl.range">
         <div ng-switch-when="URL">
-          <br-form ng-if="ctrl.propertyGroups.length > 0"
-            br-model="ctrl.value[ctrl.key]"
-            br-groups="ctrl.propertyGroups"
-            br-options="{editable: false}"></br-form>
-          <a ng-if="ctrl.propertyGroups.length === 0 &&
-            !ctrl.selected.propertyGroup &&
-            ctrl.value[ctrl.key].indexOf('http') === 0"
-            href="{{ctrl.value[ctrl.key]}}">{{ctrl.value[ctrl.key]}}</a>
-          <span ng-if="ctrl.propertyGroups.length === 0 &&
-            !ctrl.selected.propertyGroup &&
-            ctrl.value[ctrl.key].indexOf('http') !== 0">{{ctrl.value[ctrl.key]}}</span>
-          <div ng-if="ctrl.propertyGroups.length === 0 &&
-            ctrl.selected.propertyGroup">
-            {{ctrl.value[ctrl.key].label || ctrl.value[ctrl.key].id || ctrl.value[ctrl.key].type}}
+          <div ng-if="ctrl.propertyGroups.length > 0">
+            <br-form br-model="ctrl.value[ctrl.key]"
+              br-groups="ctrl.propertyGroups"
+              br-options="{editable: false, embedded: true}"></br-form>
+          </div>
+          <div ng-if="ctrl.propertyGroups.length === 0">
+            <a ng-if="!ctrl.selected.propertyGroup &&
+              ctrl.value[ctrl.key].indexOf('http') === 0"
+              href="{{ctrl.value[ctrl.key]}}">{{ctrl.value[ctrl.key]}}</a>
+            <span ng-if="!ctrl.selected.propertyGroup &&
+              ctrl.value[ctrl.key].indexOf('http') !== 0">{{ctrl.value[ctrl.key]}}</span>
+            <div ng-if="ctrl.selected.propertyGroup">
+              {{ctrl.value[ctrl.key].label || ctrl.value[ctrl.key].id || ctrl.value[ctrl.key].type}}
+            </div>
           </div>
         </div>
         <div ng-switch-when="String">
