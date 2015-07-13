@@ -38,7 +38,7 @@ define([
 
 'use strict';
 
-var module = angular.module('bedrock.form', []);
+var module = angular.module('bedrock.form', ['bedrock.lazyCompile']);
 
 module.directive(datepickerDirective);
 module.directive(formDirective);
