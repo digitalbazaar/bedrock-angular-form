@@ -63,6 +63,14 @@ br-form-group br-form-group > .section h4.headline {
   font-size: @font-size-base;
 }
 
+/* Omit dt field name and remove dd indention */
+br-form-group dt.collapsed {
+  display: none;
+}
+br-form-group dd.collapsed {
+  margin-left: 0;
+}
+
 /* Help */
 .form-horizontal .help-block {
   margin-top: 10px;

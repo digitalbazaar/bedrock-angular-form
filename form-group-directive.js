@@ -20,8 +20,8 @@ function factory() {
     /* jshint multistr: true */
     template: '\
       <!-- <pre>GROUP OPTIONS: {{options|json}}</pre> --> \
-      <div class="section"> \
-        <h4 ng-if="group.label || options.embedded" \
+      <div ng-class="{section: !group.collapsed}"> \
+        <h4 ng-if="!group.collapsed && (group.label || options.embedded)" \
           class="headline">{{group.label || \'&nbsp;\'}}</h4> \
         <p ng-if="group.comment" class="text-info">{{group.comment}}</p> \
         <p ng-if="group.layout.length == 0" class="text-center"> \
