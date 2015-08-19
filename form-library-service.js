@@ -61,12 +61,13 @@ function factory(
     type: ['Property', 'PropertyGroup']
   };
 
-  service.create = function() {
-    return new Library();
+  service.create = function(options) {
+    return new Library(options);
   };
 
-  function Library() {
+  function Library(options) {
     var self = this;
+    options = options || {};
 
     // all loaded vocabs
     self.vocabs = {};
@@ -80,7 +81,7 @@ function factory(
     self.graph = {'@context': service._CONTEXT['@context'], '@graph': []};
 
     // preload configured vocabs
-    if(config.data.forms) {
+    if(config.data.forms && options.loadVocabs !== false) {
       // TODO: fix library merging to allow for parallelizing library
       // loading
       var promise = Promise.resolve();
