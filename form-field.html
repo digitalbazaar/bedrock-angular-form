@@ -156,11 +156,18 @@
               br-options="{editable: false, embedded: true}"></br-form>
           </div>
           <div ng-if="ctrl.propertyGroups.length === 0">
+            <div ng-if="!ctrl.selected.propertyGroup &&
+              ctrl.schema.contentType.indexOf('image/') === 0">
+              <!-- FIXME: improve handling of value vs object with id -->
+              <img ng-src="{{ctrl.value[ctrl.key].id}}" />
+            </div>
             <a ng-if="!ctrl.selected.propertyGroup &&
-              ctrl.value[ctrl.key].indexOf('http') === 0"
+              ctrl.value[ctrl.key].indexOf('http') === 0 &&
+              ctrl.schema.contentType.indexOf('image/') !== 0"
               href="{{ctrl.value[ctrl.key]}}">{{ctrl.value[ctrl.key]}}</a>
             <span ng-if="!ctrl.selected.propertyGroup &&
-              ctrl.value[ctrl.key].indexOf('http') !== 0">{{ctrl.value[ctrl.key]}}</span>
+              ctrl.value[ctrl.key].indexOf('http') !== 0 &&
+              ctrl.schema.contentType.indexOf('image/') !== 0">{{ctrl.value[ctrl.key]}}</span>
             <div ng-if="ctrl.selected.propertyGroup">
               {{ctrl.value[ctrl.key].label || ctrl.value[ctrl.key].id || ctrl.value[ctrl.key].type}}
             </div>
@@ -177,11 +184,6 @@
         <div ng-switch-when="Date">
           {{ctrl.value[ctrl.key]['@value'] | date:'medium'}}
         </div>
-        <!-- TODO: schema:image
-        <div ng-switch-when="...">
-          <img ng-src="{{ctrl.value[ctrl.key]}}" />
-        </div>
-        -->
         <div ng-switch-default>
           <p class="text-error">Unknown property type. Contact support.</p>
           <pre>PROPERTY: {{ctrl.property|json}}</pre>

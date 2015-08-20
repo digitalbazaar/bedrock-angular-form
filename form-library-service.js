@@ -45,13 +45,14 @@ function factory(
       },
       collapsed: {'@id': 'br:collapsed', '@type': 'xsd:boolean'},
       comment: 'rdfs:comment',
+      contentType: 'br:contentType',
       label: 'rdfs:label',
       value: 'rdf:value',
       Property: 'rdf:Property',
       PropertyGroup: 'br:PropertyGroup',
-      URL: "rdfs:Resource",
+      Date: "xsd:dateTime",
       String: "rdfs:Literal",
-      Date: "xsd:dateTime"
+      URL: "rdfs:Resource"
     }
   };
 
