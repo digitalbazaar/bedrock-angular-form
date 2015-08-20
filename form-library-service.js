@@ -43,7 +43,7 @@ function factory(
         '@id': 'br:rangeOptionCompareProperty',
         '@type': '@vocab'
       },
-      collapsed: {'@id': 'br:collapsed', '@type': '@xsd:boolean'},
+      collapsed: {'@id': 'br:collapsed', '@type': 'xsd:boolean'},
       comment: 'rdfs:comment',
       label: 'rdfs:label',
       value: 'rdf:value',
