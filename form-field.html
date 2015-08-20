@@ -36,6 +36,7 @@
         }">
         {{ctrl.schema.comment}}
       </br-input>
+      <!-- TODO: handle images via contentType image/* -->
     </div>
     <div ng-switch-when="String">
       <br-select
@@ -99,11 +100,6 @@
         {{ctrl.schema.comment}}
       </br-datepicker>
     </div>
-    <!-- TODO: schema:image
-    <div ng-switch-when="...">
-      ...
-    </div>
-    -->
     <div ng-switch-default>
       <label class="control-label col-sm-3">{{ctrl.schema.label}}</label>
       <p class="text-error">Unknown property type. Contact support.</p>
