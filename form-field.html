@@ -152,18 +152,35 @@
               br-options="{editable: false, embedded: true}"></br-form>
           </div>
           <div ng-if="ctrl.propertyGroups.length === 0">
+            <!-- FIXME: improve handling of id vs object with id -->
             <div ng-if="!ctrl.selected.propertyGroup &&
-              ctrl.schema.contentType.indexOf('image/') === 0">
-              <!-- FIXME: improve handling of value vs object with id -->
+              ctrl.schema.contentType.indexOf('image/') === 0 &&
+              !ctrl.value[ctrl.key].id">
+              <img ng-src="{{ctrl.value[ctrl.key]}}" />
+            </div>
+            <div ng-if="!ctrl.selected.propertyGroup &&
+              ctrl.schema.contentType.indexOf('image/') === 0 &&
+              ctrl.value[ctrl.key].id">
               <img ng-src="{{ctrl.value[ctrl.key].id}}" />
             </div>
             <a ng-if="!ctrl.selected.propertyGroup &&
               ctrl.value[ctrl.key].indexOf('http') === 0 &&
-              ctrl.schema.contentType.indexOf('image/') !== 0"
+              ctrl.schema.contentType.indexOf('image/') !== 0 &&
+              !ctrl.value[ctrl.key].id"
               href="{{ctrl.value[ctrl.key]}}">{{ctrl.value[ctrl.key]}}</a>
+            <a ng-if="!ctrl.selected.propertyGroup &&
+              ctrl.value[ctrl.key].indexOf('http') === 0 &&
+              ctrl.schema.contentType.indexOf('image/') !== 0 &&
+              ctrl.value[ctrl.key].id"
+              href="{{ctrl.value[ctrl.key]}}">{{ctrl.value[ctrl.key].id}}</a>
             <span ng-if="!ctrl.selected.propertyGroup &&
               ctrl.value[ctrl.key].indexOf('http') !== 0 &&
-              ctrl.schema.contentType.indexOf('image/') !== 0">{{ctrl.value[ctrl.key]}}</span>
+              ctrl.schema.contentType.indexOf('image/') !== 0 &&
+              !ctrl.value[ctrl.key].id">{{ctrl.value[ctrl.key]}}</span>
+            <span ng-if="!ctrl.selected.propertyGroup &&
+              ctrl.value[ctrl.key].indexOf('http') !== 0 &&
+              ctrl.schema.contentType.indexOf('image/') !== 0 &&
+              ctrl.value[ctrl.key].id">{{ctrl.value[ctrl.key].id}}</span>
             <div ng-if="ctrl.selected.propertyGroup">
               {{ctrl.value[ctrl.key].label || ctrl.value[ctrl.key].id || ctrl.value[ctrl.key].type}}
             </div>
