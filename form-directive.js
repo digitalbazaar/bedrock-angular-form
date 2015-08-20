@@ -20,6 +20,11 @@ function factory() {
     /* jshint multistr: true */
     template: '\
       <div br-lazy-compile="options" br-lazy-compile-id="br-form"> \
+        <!-- \
+        <pre>FORM OPTIONS: {{options|json}}</pre> \
+        <pre>FORM GROUPS: {{groups|json}}</pre> \
+        <pre>FORM MODEL: {{model|json}}</pre> \
+        --> \
         <form ng-if="options.editable && !options.embedded" \
           class="form-horizontal"> \
           <div ng-repeat="group in groups" \
@@ -53,11 +58,6 @@ function factory() {
             <pre>{{group|json}}</pre> \
           </div> \
         </div> \
-        <!-- \
-        <pre>FORM OPTIONS: {{options|json}}</pre> \
-        <pre>FORM GROUPS: {{groups|json}}</pre> \
-        <pre>FORM MODEL: {{model|json}}</pre> \
-        --> \
       </div>',
     link: function(scope, element, attrs) {
       attrs.brOptions = attrs.brOptions || {};
