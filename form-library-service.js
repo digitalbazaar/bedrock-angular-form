@@ -82,15 +82,14 @@ function factory(
 
     // preload configured vocabs
     if(config.data.forms && options.loadVocabs !== false) {
-      // TODO: fix library merging to allow for parallelizing library
-      // loading
-      var promise = Promise.resolve();
-      angular.forEach(config.data.forms.vocabs || [], function(id) {
-        promise = promise.then(function() {
-          return self.load(id);
-        });
-      });
-      promise.catch(function(err) {
+      Promise.all((config.data.forms.vocabs || []).map(function(id) {
+        var options = {};
+        if(typeof id !== 'string') {
+          options.vocab = id;
+          id = id.id;
+        }
+        return self.load(id, options);
+      })).catch(function(err) {
         brAlertService.add('error', err);
       }).then(function() {
         $rootScope.$apply();
@@ -98,54 +97,83 @@ function factory(
     }
   }
 
-  Library.prototype.load = function(id) {
+  /* A private queue for ensuring vocabularies are merged in the order
+  they are loaded; allows fetching to occur asynchronously prior to merging. */
+  var mergeQueue = [];
+
+  Library.prototype.load = function(id, options) {
     var self = this;
+    options = angular.extend({}, options || {});
+    if(typeof id !== 'string') {
+      throw new Error('id must be a string.');
+    }
 
     var promise;
-    if(typeof id === 'string') {
-      promise = service.collection.get(id);
+    if('vocab' in options) {
+      promise = Promise.resolve(options.vocab);
     } else {
-      promise = Promise.resolve(id);
+      promise = service.collection.get(id);
+      if(!('base' in options)) {
+        // expand with base to resolve relative context urls
+        options.base = id;
+      }
     }
     return promise.then(function(vocab) {
-        // expand with base to resolve relative context urls
-        return jsonld.promises.expand(vocab, {base: id});
-      })
-      .then(function(vocab) {
-        // compact with standard context
-        return jsonld.promises.compact(vocab, service._CONTEXT, {skipExpansion: true});
-      })
-      .then(function(vocab) {
-        // store vocab
-        self.vocabs[id] = vocab;
-        self.hasVocabs = true;
-
-        // merge in new vocab w/o merging existing nodes
-        return jsonld.promises.merge(
-          [self.graph, vocab], null, {mergeNodes: false});
-      })
-      .then(function(merged) {
-        self.graph = merged;
-        // reframe merged data w/properties and groups filtered and linked
-        return jsonld.promises.frame(merged, FRAME, {embed: '@link'});
-      })
-      .then(function(framed) {
-        // build property and group indexes
-        self.properties = {};
-        self.groups = {};
-        self.hasGroups = false;
-        var nodes = jsonld.getValues(framed, '@graph');
-        angular.forEach(nodes, function(node) {
-          // raise conflict exception, overwrite silently?
-          if(jsonld.hasValue(node, 'type', 'Property')) {
-            self.properties[node.id] = node;
-          } else if(jsonld.hasValue(node, 'type', 'PropertyGroup')) {
-            self.groups[node.id] = node;
-            self.hasGroups = true;
-          }
-        });
-        return self.vocabs[id];
+      return jsonld.promises.expand(vocab, options);
+    }).then(function(vocab) {
+      // compact with standard context
+      return jsonld.promises.compact(
+        vocab, service._CONTEXT, {skipExpansion: true});
+    }).then(function(vocab) {
+      mergeQueue.push({
+        id: id,
+        vocab: vocab
       });
+      return _mergeVocabs();
+    }).then(function() {
+      return self.vocabs[id];
+    });
+
+    // Note: If an error occurs while any vocab is loading, the entire
+    // library is considered defunct; it's not considered easy to recover
+    // a library where one vocab fails to load.
+
+    function _mergeVocabs() {
+      if(mergeQueue.length === 0 || mergeQueue.length > 1) {
+        return Promise.resolve();
+      }
+
+      // merge in new vocab w/o merging existing nodes
+      var state = mergeQueue.pop();
+      return jsonld.promises.merge(
+        [self.graph, state.vocab], null, {mergeNodes: false})
+        .then(function(merged) {
+          state.graph = merged;
+          // reframe merged data w/properties and groups filtered and linked
+          return jsonld.promises.frame(merged, FRAME, {embed: '@link'});
+        }).then(function(framed) {
+          // store vocab and update graph
+          self.vocabs[state.id] = state.vocab;
+          self.hasVocabs = true;
+          self.graph = state.graph;
+
+          // build property and group indexes
+          self.properties = {};
+          self.groups = {};
+          self.hasGroups = false;
+          var nodes = jsonld.getValues(framed, '@graph');
+          angular.forEach(nodes, function(node) {
+            // raise conflict exception, overwrite silently?
+            if(jsonld.hasValue(node, 'type', 'Property')) {
+              self.properties[node.id] = node;
+            } else if(jsonld.hasValue(node, 'type', 'PropertyGroup')) {
+              self.groups[node.id] = node;
+              self.hasGroups = true;
+            }
+          });
+          return _mergeVocabs();
+        });
+    }
   };
 
   // register for system-wide refreshes
