@@ -187,7 +187,10 @@
           </div>
         </div>
         <div ng-switch-when="String">
-          {{ctrl.value[ctrl.key]}}
+          <div ng-switch="ctrl.schema.displayType">
+            <pre ng-switch-when="pre">{{ctrl.value[ctrl.key]}}</pre>
+            <span ng-switch-default>{{ctrl.value[ctrl.key]}}</span>
+          </div>
         </div>
         <!-- TODO: textarea
         <div ng-switch-when="...">

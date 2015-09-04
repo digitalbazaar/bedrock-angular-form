@@ -46,6 +46,7 @@ function factory(
       collapsed: {'@id': 'br:collapsed', '@type': 'xsd:boolean'},
       comment: 'rdfs:comment',
       contentType: 'br:contentType',
+      displayType: 'br:displayType',
       label: 'rdfs:label',
       value: 'rdf:value',
       Property: 'rdf:Property',
