@@ -161,7 +161,10 @@ function factory(brFormUtilsService) {
       // use `showValidation` option if given
       var options = scope._brInput.options || {};
       if('showValidation' in options) {
-        return options.showValidation;
+        if(!options.showValidation) {
+          return options.showValidation;
+        }
+        return ctrl[options.name].$dirty && ctrl[options.name].$invalid;
       }
       // do not show validation if field not in form
       if(!ctrl || !('name' in options) || !ctrl[options.name]) {
