@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [1.5.2] - 2015-09-25
+
+### Changed
+- Improve showValidation option.
+
+### Added
+- "br:displayType" property to control how values are displayed.
+- "pre" displayType for preformatted Strings.
+
 ## [1.5.1] - 2015-09-01
 
 ### Fixed
@@ -75,7 +84,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.1...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.2...HEAD
+[1.5.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.4.1...1.5.0
 [1.4.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.4.0...1.4.1
