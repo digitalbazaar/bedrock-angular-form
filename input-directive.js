@@ -164,7 +164,7 @@ function factory(brFormUtilsService) {
         if(!options.showValidation) {
           return options.showValidation;
         }
-        return ctrl[options.name].$dirty && ctrl[options.name].$invalid;
+        return ctrl[options.name].$touched && ctrl[options.name].$invalid;
       }
       // do not show validation if field not in form
       if(!ctrl || !('name' in options) || !ctrl[options.name]) {
