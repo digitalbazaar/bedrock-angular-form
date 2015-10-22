@@ -2,9 +2,6 @@ var bedrock = GLOBAL.bedrock;
 
 bedrock.testInBrowser('textarea-directive', function($injector) {
 
-var chai = require('chai');
-var expect = chai.expect;
-
 var $compile = $injector.get('$compile');
 var $rootScope = $injector.get('$rootScope');
 var $scope, element;

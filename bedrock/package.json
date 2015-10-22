@@ -16,7 +16,7 @@
   "dependencies": {
     "bedrock": "^1.0.0",
     "bedrock-express": "^1.0.0",
-    "bedrock-protractor": "^2.1.1",
+    "bedrock-protractor": "^2.2.0",
     "bedrock-views": "^1.0.0",
     "bower": "~1.4.1"
   },
