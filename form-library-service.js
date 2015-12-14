@@ -178,8 +178,9 @@ function factory(
     }
   };
 
+  // TODO: does refresh make sense for vocabs?
   // register for system-wide refreshes
-  brRefreshService.register(service.collection);
+  //brRefreshService.register(service.collection);
 
   // expose service to scope
   $rootScope.app.services.form = service;
