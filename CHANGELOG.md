@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.5.3] - 2015-12-14
+
+### Fixed
+- Disable `getAll` based refresh for form library service; vocabs don't have
+  a `getAll` collection end point.
+
 ## [1.5.2] - 2015-09-25
 
 ### Changed
@@ -23,7 +29,7 @@
 - Support images via a contentType vocab param.
 - Add option to prevent loading default vocabs.
 - Add 'collapsed' option to not show properties.
-    
+
 ## [1.5.0] - 2015-07-13
 
 ### Added
@@ -84,7 +90,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.2...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.3...HEAD
+[1.5.3]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.2...1.5.3
 [1.5.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.4.1...1.5.0
