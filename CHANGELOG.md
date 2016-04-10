@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.1.0] - 2016-04-10
+
+### Added
+- Support angular 1.5 multi-transclusion.
+
 ## [2.0.0] - 2016-04-09
 
 ### Changed
@@ -95,7 +100,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.0...HEAD
+[2.1.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.3...2.0.0
 [1.5.3]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.2...1.5.3
 [1.5.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.1...1.5.2
