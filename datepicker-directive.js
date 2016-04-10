@@ -46,7 +46,7 @@ function datepickerFactory($filter, $templateCache, $timeout) {
             type="text" \
             name="{{ctrl.options.name}}" \
             placeholder="{{ctrl.options.placeholder}}" \
-            datepicker-popup="{{ctrl.options.format}}" \
+            uib-datepicker-popup="{{ctrl.options.format}}" \
             is-open="ctrl.calendarOpen" \
             ng-model="ctrl.date" \
             ng-change="ctrl.change()" \
