@@ -9,15 +9,6 @@ define([], function() {
 
 'use strict';
 
-/* Note: This is used for backwards-compatibility. Prior to the use of
-ng-multi-transclude, transcluded content was assumed to be help content. In
-order to detect a deprecated use of `br-input`, we check the transcluded
-content below to see if it lacks any ng-multi-transclude IDs. Any supported
-IDs must be listed here in the array below so this will work properly. */
-var TRANSCLUDE_SELECTOR = ['help', 'validation-error'].map(function(name) {
-  return '[name="br-input-' + name + '"]';
-}).join(',');
-
 /* @ngInject */
 function factory(brFormUtilsService) {
   return {
@@ -40,7 +31,10 @@ function factory(brFormUtilsService) {
     isn't an option. To help avoid shadowing parent scope variables, we
     only set scope variables under the `_brInput` property. */
     scope: true,
-    transclude: true,
+    transclude: {
+      'br-input-help': '?brInputHelp',
+      'br-input-validation-errors': '?brInputValidationErrors',
+    },
     /* jshint multistr: true */
     template: '\
       <div ng-class="{ \
@@ -86,6 +80,7 @@ function factory(brFormUtilsService) {
             br-fadein br-fadeout" ng-multi-transclude-controller> \
           <div ng-if="_brInput.legacy" ng-transclude class="text-muted"></div> \
           <div ng-multi-transclude="br-input-help" class="text-muted"></div> \
+          <div ng-transclude="br-input-help" class="text-muted"></div> \
         </div> \
         <div ng-show="_brInput.showValidation()" \
           class="{{_brInput.options.columns.validation}}" \
@@ -94,6 +89,8 @@ function factory(brFormUtilsService) {
           <div name="br-input-validation-errors" \
             class="text-danger" \
             ng-multi-transclude="br-input-validation-errors"></div> \
+          <div class="text-danger" \
+            ng-transclude="br-input-validation-errors"></div> \
         </div> \
       </div>',
     compile: Compile
@@ -142,15 +139,7 @@ function factory(brFormUtilsService) {
     updateOptions(scope, element, attrs.brOptions);
   }
 
-  function postLink(scope, element, attrs, ctrl, transcludeFn) {
-    // backwards-compatibility support for default transclude location
-    transcludeFn(function(clone, transcludeScope) {
-      scope._brInput.legacy = (
-        clone.filter(TRANSCLUDE_SELECTOR).length === 0);
-      clone.remove();
-      transcludeScope.$destroy();
-    });
-
+  function postLink(scope, element, attrs, ctrl) {
     var errorElement = element.find('[name="br-input-validation-errors"]');
 
     scope._brInput.showValidation = function() {
