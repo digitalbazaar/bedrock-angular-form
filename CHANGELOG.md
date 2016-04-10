@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.0.0] - 2016-04-09
+
+### Changed
+- Update to bedrock-angular 2.x.
+
 ## [1.5.3] - 2015-12-14
 
 ### Fixed
@@ -90,7 +95,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.3...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.3...2.0.0
 [1.5.3]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.2...1.5.3
 [1.5.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.0...1.5.1
