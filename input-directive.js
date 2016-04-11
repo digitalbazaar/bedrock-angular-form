@@ -75,7 +75,7 @@ function factory(brFormUtilsService) {
             </button> \
           </span> \
         </div> \
-        <div ng-if="_brInput.options.help" ng-show="_brInput.help.show" \
+        <div ng-if="_brInput.options.help && _brInput.help.show" \
           class="{{_brInput.options.columns.help}} help-block \
             br-fadein br-fadeout" ng-multi-transclude-controller> \
           <div ng-if="_brInput.legacy" ng-transclude class="text-muted"></div> \
