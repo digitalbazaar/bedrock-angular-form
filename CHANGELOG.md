@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.1.1] - 2016-04-10
+
+### Fixed
+- Fix help animation flicker.
+
 ## [2.1.0] - 2016-04-10
 
 ### Added
@@ -100,7 +105,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.0...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.1...HEAD
+[2.1.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.3...2.0.0
 [1.5.3]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.2...1.5.3
