@@ -1,7 +1,7 @@
 /*!
  * Select directive.
  *
- * Copyright (c) 2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
@@ -59,7 +59,7 @@ function factory() {
             </button> \
           </span> \
         </div> \
-        <div ng-if="!options.inline" ng-show="help.show" \
+        <div ng-if="!options.inline && help.show" \
           class="{{options.columns.help}} help-block br-fadein br-fadeout"> \
           <div ng-transclude></div> \
         </div> \

@@ -1,7 +1,7 @@
 /*!
  * Radio Button Group directive.
  *
- * Copyright (c) 2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
@@ -53,7 +53,7 @@ function factory() {
           <span ng-bind-html="item.label"></span> \
         </label> \
         <div ng-if="ctrl.options.help" class="row"> \
-          <div ng-show="ctrl.help.show" \
+          <div ng-if="ctrl.help.show" \
             class="{{ctrl.options.columns.help}} \
               help-block br-fadein br-fadeout"> \
             <div ng-transclude></div> \

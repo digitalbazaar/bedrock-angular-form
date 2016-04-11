@@ -1,7 +1,7 @@
 /*!
  * Textarea directive.
  *
- * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
@@ -69,8 +69,7 @@ function factory($parse, brFormUtilsService) {
             </button> \
           </span> \
         </div> \
-        <div ng-if="!_brTextarea.options.inline" \
-          ng-show="_brTextarea.help.show" \
+        <div ng-if="!_brTextarea.options.inline && _brTextarea.help.show" \
           class="{{_brTextarea.options.columns.help}} \
             help-block br-fadein br-fadeout"> \
           <div ng-transclude></div> \
