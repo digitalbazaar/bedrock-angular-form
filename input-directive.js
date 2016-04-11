@@ -79,8 +79,9 @@ function factory(brFormUtilsService) {
           class="{{_brInput.options.columns.help}} help-block \
             br-fadein br-fadeout" ng-multi-transclude-controller> \
           <div ng-if="_brInput.legacy" ng-transclude class="text-muted"></div> \
-          <div ng-multi-transclude="br-input-help" class="text-muted"></div> \
-          <div ng-transclude="br-input-help" class="text-muted"></div> \
+          <div class="text-muted" \
+            ng-transclude="br-input-help" \
+            ng-multi-transclude="br-input-help"></div> \
         </div> \
         <div ng-show="_brInput.showValidation()" \
           class="{{_brInput.options.columns.validation}}" \
@@ -88,9 +89,8 @@ function factory(brFormUtilsService) {
           <p></p> \
           <div name="br-input-validation-errors" \
             class="text-danger" \
+            ng-transclude="br-input-validation-errors" \
             ng-multi-transclude="br-input-validation-errors"></div> \
-          <div class="text-danger" \
-            ng-transclude="br-input-validation-errors"></div> \
         </div> \
       </div>',
     compile: Compile
