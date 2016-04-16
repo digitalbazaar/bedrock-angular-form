@@ -51,7 +51,10 @@ function factory(brFormUtilsService) {
           for="{{_brInput.options.name}}">{{_brInput.options.label}}</label> \
         <div class="input-group \
           {{(!_brInput.options.inline && \
-            _brInput.options.columns.input) || \'\'}}"> \
+            _brInput.options.columns.input) || \'\'}}" \
+          ng-class="{ \
+            \'input-group-inline\': (_brInput.options.inline && \
+            _brInput.options.columns.input)}"> \
           <span ng-if="_brInput.options.icon" \
             class="input-group-addon"><i \
             class="fa {{_brInput.options.icon}}"></i></span> \
