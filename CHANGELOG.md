@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.1.2] - 2016-04-16
+
+### Fixed
+- Ensure inline inputs expand when columns are set.
+
 ## [2.1.1] - 2016-04-10
 
 ### Fixed
@@ -105,7 +110,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.1...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.2...HEAD
+[2.1.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.3...2.0.0
