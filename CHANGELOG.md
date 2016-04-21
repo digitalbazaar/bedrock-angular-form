@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+- `<br-input>` boolean option `static` that will use a `<p>` vs an `<input>`.
+  Transcludes content from `<br-input-static>`.
+
 ## [2.1.2] - 2016-04-16
 
 ### Fixed
