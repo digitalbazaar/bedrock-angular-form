@@ -49,7 +49,8 @@ function factory(brFormUtilsService) {
           (_brInput.options.inline ? \'inline-\' : \'\') + \'block\'}"> \
         <label ng-if="_brInput.options.label !== undefined" \
           class="{{_brInput.options.columns.label}} control-label" \
-          for="{{_brInput.options.name}}">{{_brInput.options.label}}</label> \
+          for="{{_brInput.options.name}}"> \
+          <span ng-bind-html="_brInput.options.label"></span></label> \
         <div class="input-group \
           {{(!_brInput.options.inline && \
             _brInput.options.columns.input) || \'\'}}" \

@@ -33,7 +33,8 @@ function datepickerFactory($filter, $templateCache, $timeout) {
           (ctrl.options.inline ? \'inline-\' : \'\') + \'block\'}"> \
         <label ng-if="ctrl.options.label !== undefined" \
           class="{{ctrl.options.columns.label}} control-label" \
-          for="{{ctrl.options.name}}">{{ctrl.options.label}}</label> \
+          for="{{ctrl.options.name}}"> \
+          <span ng-bind-html="ctrl.options.label"></span></label> \
         <div class="input-group \
           {{(!ctrl.options.inline && ctrl.options.columns.input) || \'\'}}"> \
           <span ng-if="ctrl.options.icon" \

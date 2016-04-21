@@ -26,7 +26,8 @@ function factory() {
         br-property-path="{{options.name}}"> \
         <label ng-if="!options.inline && options.label !== undefined" \
           class="{{options.columns.label}} control-label" \
-          for="{{options.name}}">{{options.label}}</label> \
+          for="{{options.name}}"> \
+          <span ng-bind-html="options.label"></span></label> \
         <div class="{{options.columns.select}}" \
           ng-class="{ \
             \'input-group\': !options.inline, \

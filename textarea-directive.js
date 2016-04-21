@@ -40,8 +40,8 @@ function factory($parse, brFormUtilsService) {
         <label ng-if="!_brTextarea.options.inline && \
             _brTextarea.options.label !== undefined" \
           class="{{_brTextarea.options.columns.label}} control-label" \
-          for="{{_brTextarea.options.name}}" \
-          >{{_brTextarea.options.label}}</label> \
+          for="{{_brTextarea.options.name}}"> \
+          <span ng-bind-html="_brTextarea.options.label"></span></label> \
         <div class="{{_brTextarea.options.columns.textarea}}" \
           ng-class="{ \
             \'input-group\': !_brTextarea.options.inline, \
