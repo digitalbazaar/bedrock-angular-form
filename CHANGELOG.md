@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [2.2.0] - 2016-04-21
+
 ### Added
 - `<br-input>` boolean option `static` that will use a `<p>` vs an `<input>`.
   Transcludes content from `<br-input-static>`.
@@ -117,7 +119,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.2...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.2.0...HEAD
+[2.2.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.2...2.2.0
 [2.1.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.0.0...2.1.0
