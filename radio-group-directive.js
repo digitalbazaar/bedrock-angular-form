@@ -32,7 +32,7 @@ function factory() {
             ctrl.help.show=!ctrl.help.show"> \
           <a ng-if="ctrl.options.help" br-help-toggle="ctrl.help"><i \
             class="fa fa-question-circle"></i></a> \
-            <span ng-bind-html="ctrl.options.label"></span> \
+          <span ng-bind-html="ctrl.options.label"></span> \
         </label> \
         <div ng-if="!ctrl.options.inline" \
           class="{{ctrl.options.columns.group}}"> \
