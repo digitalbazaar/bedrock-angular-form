@@ -83,7 +83,7 @@ function factory(brFormUtilsService) {
         <div ng-if="_brInput.options.help && _brInput.help.show" \
           class="{{_brInput.options.columns.help}} help-block \
             br-fadein br-fadeout" ng-multi-transclude-controller> \
-          <div ng-if="_brInput.legacy" ng-transclude class="text-muted"></div> \
+          <div ng-transclude class="text-muted"></div> \
           <div class="text-muted" \
             ng-transclude="br-input-help" \
             ng-multi-transclude="br-input-help"></div> \
