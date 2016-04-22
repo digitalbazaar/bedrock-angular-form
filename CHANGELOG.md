@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.3.1] - 2016-04-22
+
+### Fixed
+- Remove invalid `_brInput.legacy` check to re-enable legacy br-input help syntax.
+
 ## [2.3.0] - 2016-04-21
 
 ### Added
@@ -128,7 +133,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.0...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.1...HEAD
+[2.3.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.2.0...2.3.0
 [2.2.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.2...2.2.0
 [2.1.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.1...2.1.2
