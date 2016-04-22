@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Added
+- `<br-form-static>` directive for a properly styled static content form field.
+
+### Removed
+- `<br-input>` `static` support. The dual `br-input` and static usage caused
+  initialization problems.
+
 ## [2.2.0] - 2016-04-21
 
 ### Added

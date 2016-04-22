@@ -33,7 +33,6 @@ function factory(brFormUtilsService) {
     scope: true,
     transclude: {
       'br-input-help': '?brInputHelp',
-      'br-input-static': '?brInputStatic',
       'br-input-validation-errors': '?brInputValidationErrors',
     },
     /* jshint multistr: true */
@@ -63,17 +62,13 @@ function factory(brFormUtilsService) {
           <span ng-if="_brInput.options.image" \
             class="input-group-addon"><img \
             ng-src="{{_brInput.options.image}}"></img></span> \
-          <input ng-if="!_brInput.options.static" \
+          <input \
             class="form-control" \
             name="{{_brInput.options.name}}" \
             placeholder="{{_brInput.options.placeholder}}" \
             ng-disabled="_brInput.options.disabled" \
             br-track-state="_brInput.help" \
             ng-class="{\'br-help-off\': !_brInput.options.help}"/> \
-          <p ng-if="_brInput.options.static" \
-            class="form-control-static" \
-            ng-transclude="br-input-static" \
-            ng-multi-transclude="br-input-static"></p> \
           <span ng-if="_brInput.options.loading" \
             class="br-spinner-inside-input"> \
             <i class="fa fa-refresh fa-spin text-muted"></i> \
@@ -183,6 +178,12 @@ function factory(brFormUtilsService) {
     var options = scope.$eval(value) || {};
     scope._brInput.options = options;
 
+    // update type directly to ensure angular input directives see the change
+    // immediately (angular input directives cache `type` early and don't
+    // check for changes)
+    var input = element.find('input');
+    input[0].type = options.type = options.type || 'text';
+
     options.inline = ('inline' in options) ? options.inline : false;
     options.placeholder = options.placeholder || '';
     // default to no help displayed in inline mode
@@ -207,16 +208,6 @@ function factory(brFormUtilsService) {
     if(!('validation' in columns)) {
       columns.validation = 'col-sm-offset-3 col-sm-8';
     }
-
-    // update type directly to ensure angular input directives see the change
-    // immediately (angular input directives cache `type` early and don't
-    // check for changes)
-    var input = element.find('input');
-    // if <input> not used, return
-    if(input.length === 0) {
-      return;
-    }
-    input[0].type = options.type = options.type || 'text';
 
     if('maxLength' in options) {
       input.attr('maxlength', options.maxLength);

@@ -12,6 +12,7 @@ define([
   './form-field-directive',
   './form-group-directive',
   './form-library-service',
+  './form-static-directive',
   './form-utils-service',
   './help-toggle-directive',
   './input-directive',
@@ -27,6 +28,7 @@ define([
   formFieldDirective,
   formGroupDirective,
   formLibraryService,
+  formStaticDirective,
   formUtilsService,
   helpToggleDirective,
   inputDirective,
@@ -45,6 +47,7 @@ module.directive(formDirective);
 module.directive(formFieldDirective);
 module.directive(formGroupDirective);
 module.service(formLibraryService);
+module.directive(formStaticDirective);
 module.service(formUtilsService);
 module.directive(helpToggleDirective);
 module.directive(inputDirective);

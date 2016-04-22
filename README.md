@@ -87,6 +87,22 @@ Used by `br-form` to display a group of fields.
 
 TODO
 
+### br-form-static
+
+Show a properly styled static form field.
+
+```html
+<br-form-static
+  br-options="{
+    inline: true,
+    name: 'staticInfo',
+    label: 'Static Info'
+  }">
+  <br-form-static-content>Static content.</br-form-static-content>
+  <br-input-help>Help details about static content.</br-input-help>
+</br-form-static>
+```
+
 ### br-help-toggle
 
 Helper to toggle help text.  Used with `br-track-state`.
