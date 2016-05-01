@@ -58,6 +58,9 @@ function factory() {
    *          target the selector for finding the target element.
    */
   service.movePrefixedAttrs = function(options) {
+    // create a separate array of attributes to move to prevent
+    // editing the attribute list while inspecting it
+    var toMove = [];
     angular.forEach(options.element[0].attributes, function(attribute) {
       if(!attribute.specified) {
         return;
@@ -65,12 +68,14 @@ function factory() {
       var attr = attribute.name;
       var normalized = options.attrs.$normalize(attr);
       if(hasAttrPrefix(normalized, options.prefix)) {
-        service.moveAttr(angular.extend({
+        toMove.push(angular.extend({
           attr: attr,
           newAttr: removeAttrPrefix(normalized, options.prefix)
         }, options));
       }
     });
+    // move attributes
+    angular.forEach(toMove, service.moveAttr);
   };
 
   // from Angular.js
