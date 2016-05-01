@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.3.2] - 2016-05-01
+
+### Fixed
+- Ensure all prefixed attributes are moved.
+
 ## [2.3.1] - 2016-04-22
 
 ### Fixed
@@ -133,7 +138,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.1...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.2...HEAD
+[2.3.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.1...2.3.2
 [2.3.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.2.0...2.3.0
 [2.2.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.2...2.2.0
