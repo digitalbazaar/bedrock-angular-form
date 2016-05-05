@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.3.3] - 2016-05-05
+
+### Fixed
+- Remove broken ng-multi-transclude support.
+
 ## [2.3.2] - 2016-05-01
 
 ### Fixed
@@ -138,7 +143,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.2...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.3...HEAD
+[2.3.3]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.2...2.3.3
 [2.3.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.1...2.3.2
 [2.3.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.2.0...2.3.0
