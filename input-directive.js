@@ -33,7 +33,7 @@ function factory(brFormUtilsService) {
     scope: true,
     transclude: {
       'br-input-help': '?brInputHelp',
-      'br-input-validation-errors': '?brInputValidationErrors',
+      'br-input-validation-errors': '?brInputValidationErrors'
     },
     /* jshint multistr: true */
     template: '\
