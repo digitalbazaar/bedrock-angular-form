@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- Bedrock template optimization rules.
+
 ## [2.3.3] - 2016-05-05
 
 ### Fixed

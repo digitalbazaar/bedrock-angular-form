@@ -19,4 +19,12 @@ module.exports = function(bedrock) {
   // ignore angular-ui-select templates
   var ignore = bedrock.config.views.angular.optimize.templates.ignore;
   ignore.packages.push('ui-select');
+
+  var packages = bedrock.config.views.angular.optimize.templates.packages;
+  packages['bedrock-angular-form'] = {
+    src: [
+      '**/*.html',
+      '!bedrock/**/*.html'
+    ]
+  };
 };
