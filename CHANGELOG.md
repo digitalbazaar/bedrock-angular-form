@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [2.3.4] - 2016-05-10
+
 ### Added
 - Bedrock template optimization rules.
 
@@ -146,7 +148,8 @@
 
 - See git history for changes.
 
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.3...HEAD
+[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.4...HEAD
+[2.3.4]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.3...2.3.4
 [2.3.3]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.2...2.3.3
 [2.3.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.1...2.3.2
 [2.3.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.0...2.3.1
