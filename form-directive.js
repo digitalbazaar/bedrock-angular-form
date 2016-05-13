@@ -1,7 +1,7 @@
 /*!
  * Form directive.
  *
- * Copyright (c) 2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
@@ -17,48 +17,7 @@ function factory() {
       groups: '=brGroups',
       model: '=brModel'
     },
-    /* jshint multistr: true */
-    template: '\
-      <div br-lazy-compile="options" br-lazy-compile-id="br-form"> \
-        <!-- \
-        <pre>FORM OPTIONS: {{options|json}}</pre> \
-        <pre>FORM GROUPS: {{groups|json}}</pre> \
-        <pre>FORM MODEL: {{model|json}}</pre> \
-        --> \
-        <form ng-if="options.editable && !options.embedded" \
-          class="form-horizontal"> \
-          <div ng-repeat="group in groups" \
-            ng-switch="group.type"> \
-            <br-form-group ng-switch-when="PropertyGroup" \
-              br-model="model" br-group="group" br-options="{{options}}" /> \
-            <div ng-switch-default> \
-              <p class="text-warning">Unknown group.</p> \
-              <pre>{{group|json}}</pre> \
-            </div> \
-          </div> \
-        </form> \
-        <div ng-if="options.editable && options.embedded"> \
-          <div ng-repeat="group in groups" \
-            ng-switch="group.type"> \
-            <br-form-group ng-switch-when="PropertyGroup" \
-              br-model="model" br-group="group" br-options="{{options}}" /> \
-            <div ng-switch-default> \
-              <p class="text-warning">Unknown group.</p> \
-              <pre>{{group|json}}</pre> \
-            </div> \
-          </div> \
-        </div> \
-        <div ng-if="!options.editable" \
-          ng-repeat="group in groups" \
-          ng-switch="group.type"> \
-          <br-form-group ng-switch-when="PropertyGroup" \
-            br-model="model" br-group="group" br-options="{{options}}" /> \
-          <div ng-switch-default> \
-            <p class="text-warning">Unknown group.</p> \
-            <pre>{{group|json}}</pre> \
-          </div> \
-        </div> \
-      </div>',
+    templateUrl: requirejs.toUrl('bedrock-angular-form/form-directive.html'),
     link: function(scope, element, attrs) {
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
