@@ -31,50 +31,8 @@ function factory($parse, brFormUtilsService) {
     we only set scope variables under the `_brTextarea` property. */
     scope: true,
     transclude: true,
-    /* jshint multistr: true */
-    template: '\
-      <div ng-class="{\'form-group\': !_brTextarea.options.inline}" \
-        br-property-path="{{_brTextarea.options.name}}" \
-        ng-style="{display: \
-          (_brTextarea.options.inline ? \'inline-\' : \'\') + \'block\'}"> \
-        <label ng-if="!_brTextarea.options.inline && \
-            _brTextarea.options.label !== undefined" \
-          class="{{_brTextarea.options.columns.label}} control-label" \
-          for="{{_brTextarea.options.name}}"> \
-          <span ng-bind-html="_brTextarea.options.label"></span></label> \
-        <div class="{{_brTextarea.options.columns.textarea}}" \
-          ng-class="{ \
-            \'input-group\': !_brTextarea.options.inline, \
-            \'input-group-inline\': _brTextarea.options.inline}"> \
-          <span ng-if="_brTextarea.options.icon" \
-            class="input-group-addon"><i \
-            class="fa {{_brTextarea.options.icon}}"></i></span> \
-          <span ng-if="_brTextarea.options.image" \
-            class="input-group-addon"><img \
-            ng-src="{{_brTextarea.options.image}}"></img></span> \
-          <textarea class="form-control {{_brTextarea.options.class}}" \
-            rows="{{_brTextarea.options.rows}}" \
-            name="{{_brTextarea.options.name}}" \
-            placeholder="{{_brTextarea.options.placeholder}}" \
-            ng-disabled="_brTextarea.options.disabled" \
-            br-track-state="_brTextarea.help" \
-            style="{{_brTextarea.options.style}}" \
-            wrap="{{_brTextarea.options.wrap}}" \
-            ng-class="{\'br-help-off\': _brTextarea.options.inline}" \
-            ng-keypress="_brTextarea.localKeypress($event)"/> \
-          <span ng-if="!_brTextarea.options.inline" class="input-group-btn"> \
-            <button type="button" class="btn btn-default" \
-              br-help-toggle="_brTextarea.help"> \
-              <i class="fa fa-question-circle"></i> \
-            </button> \
-          </span> \
-        </div> \
-        <div ng-if="!_brTextarea.options.inline && _brTextarea.help.show" \
-          class="{{_brTextarea.options.columns.help}} \
-            help-block br-fadein br-fadeout"> \
-          <div ng-transclude></div> \
-        </div> \
-      </div>',
+    templateUrl: requirejs.toUrl(
+      'bedrock-angular-form/textarea-directive.html'),
     compile: Compile
   };
 
