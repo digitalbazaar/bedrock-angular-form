@@ -18,40 +18,7 @@ function factory() {
       'br-input-help': '?brInputHelp',
       'br-form-static-content': '?brFormStaticContent'
     },
-    /* jshint multistr: true */
-    template: '\
-      <div ng-class="{ \
-        \'form-group\': !options.inline, \
-        \'form-group-inline\': options.inline}" \
-        br-property-path="{{options.name}}" \
-        class="{{(options.inline && \
-          options.columns.input) || \'\'}}" \
-        ng-style="{display: \
-          (options.inline ? \'inline-\' : \'\') + \'block\'}"> \
-        <label ng-if="options.label !== undefined" \
-          class="{{options.columns.label}} control-label" \
-          for="{{options.name}}" \
-          br-track-state="help" \
-          ng-click="help.help.pressed=!help.help.pressed; \
-            help.show=!options.help.show"> \
-          <a ng-if="options.help" br-help-toggle="help"><i \
-            class="fa fa-question-circle"></i></a> \
-          <span ng-bind-html="options.label"></span></label> \
-        <div class="input-group \
-          {{(!options.inline && options.columns.input) || \'\'}}" \
-          ng-class="{ \
-            \'input-group-inline\': (options.inline && \
-            options.columns.input)}"> \
-          <p class="form-control-static" \
-            ng-transclude="br-form-static-content"></p> \
-        </div> \
-        <div ng-if="options.help && help.show" \
-          class="{{options.columns.help}} help-block br-fadein br-fadeout"> \
-          <div ng-if="legacy" ng-transclude class="text-muted"></div> \
-          <div class="text-muted" \
-            ng-transclude="br-input-help"></div> \
-        </div> \
-      </div>',
+    templateUrl: requirejs.toUrl('bedrock-angular-form/form-static-directive'),
     link: Link
   };
 
