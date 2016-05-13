@@ -35,66 +35,7 @@ function factory(brFormUtilsService) {
       'br-input-help': '?brInputHelp',
       'br-input-validation-errors': '?brInputValidationErrors'
     },
-    /* jshint multistr: true */
-    template: '\
-      <div ng-class="{ \
-        \'form-group\': !_brInput.options.inline, \
-        \'form-group-inline\': _brInput.options.inline, \
-        \'has-error\': _brInput.showValidation()}" \
-        br-property-path="{{_brInput.options.name}}" \
-        class="{{(_brInput.options.inline && \
-          _brInput.options.columns.input) || \'\'}}" \
-        ng-style="{display: \
-          (_brInput.options.inline ? \'inline-\' : \'\') + \'block\'}"> \
-        <label ng-if="_brInput.options.label !== undefined" \
-          class="{{_brInput.options.columns.label}} control-label" \
-          for="{{_brInput.options.name}}"> \
-          <span ng-bind-html="_brInput.options.label"></span></label> \
-        <div class="input-group \
-          {{(!_brInput.options.inline && \
-            _brInput.options.columns.input) || \'\'}}" \
-          ng-class="{ \
-            \'input-group-inline\': (_brInput.options.inline && \
-            _brInput.options.columns.input)}"> \
-          <span ng-if="_brInput.options.icon" \
-            class="input-group-addon"><i \
-            class="fa {{_brInput.options.icon}}"></i></span> \
-          <span ng-if="_brInput.options.image" \
-            class="input-group-addon"><img \
-            ng-src="{{_brInput.options.image}}"></img></span> \
-          <input \
-            class="form-control" \
-            name="{{_brInput.options.name}}" \
-            placeholder="{{_brInput.options.placeholder}}" \
-            ng-disabled="_brInput.options.disabled" \
-            br-track-state="_brInput.help" \
-            ng-class="{\'br-help-off\': !_brInput.options.help}"/> \
-          <span ng-if="_brInput.options.loading" \
-            class="br-spinner-inside-input"> \
-            <i class="fa fa-refresh fa-spin text-muted"></i> \
-          </span> \
-          <span ng-if="_brInput.options.help" class="input-group-btn"> \
-            <button type="button" class="btn btn-default" \
-              br-help-toggle="_brInput.help"> \
-              <i class="fa fa-question-circle"></i> \
-            </button> \
-          </span> \
-        </div> \
-        <div ng-if="_brInput.options.help && _brInput.help.show" \
-          class="{{_brInput.options.columns.help}} help-block \
-            br-fadein br-fadeout"> \
-          <div ng-transclude class="text-muted"></div> \
-          <div class="text-muted" \
-            ng-transclude="br-input-help"></div> \
-        </div> \
-        <div ng-show="_brInput.showValidation()" \
-          class="{{_brInput.options.columns.validation}}"> \
-          <p></p> \
-          <div name="br-input-validation-errors" \
-            class="text-danger" \
-            ng-transclude="br-input-validation-errors"></div> \
-        </div> \
-      </div>',
+    templateUrl: requirejs.toUrl('bedrock-angular-form/input-directive.html'),
     compile: Compile
   };
 
