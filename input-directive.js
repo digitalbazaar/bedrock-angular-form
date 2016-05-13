@@ -10,7 +10,7 @@ define([], function() {
 'use strict';
 
 /* @ngInject */
-function factory(brFormUtilsService) {
+function factory(brFormUtilsService, $timeout) {
   return {
     restrict: 'E',
     require: '?^form',
@@ -79,7 +79,9 @@ function factory(brFormUtilsService) {
     scope._brInput.form = ctrl;
 
     attrs.brOptions = attrs.brOptions || {};
-    updateOptions(scope, element, attrs.brOptions);
+    $timeout(function() {
+      updateOptions(scope, element, attrs.brOptions);
+    });
   }
 
   function postLink(scope, element, attrs, ctrl) {
@@ -135,7 +137,7 @@ function factory(brFormUtilsService) {
 
     var columns = options.columns = options.columns || {};
     if(!('label' in columns)) {
-      columns.label =  'col-sm-3';
+      columns.label = 'col-sm-3';
     }
     if(!('input' in columns)) {
       columns.input = 'col-sm-8';
