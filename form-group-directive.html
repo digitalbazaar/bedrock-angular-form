@@ -1,0 +1,24 @@
+<!-- <pre>GROUP OPTIONS: {{options|json}}</pre> -->
+<div ng-class="{section: !group.collapsed}">
+  <h4 ng-if="!group.collapsed && (group.label || options.embedded)"
+    class="headline">{{group.label || '&nbsp;'}}</h4>
+  <p ng-if="group.comment" class="text-info">{{group.comment}}</p>
+  <p ng-if="group.layout.length == 0" class="text-center">
+    No fields.
+  </p>
+  <div ng-if="options.editable && group.layout.length > 0"
+    ng-class="{well: !options.embedded}">
+    <fieldset>
+      <br-form-field
+        ng-repeat="property in group.layout"
+        br-property="property" br-model="model"
+        br-options="{{options}}"></br-form-field>
+    </fieldset>
+  </div>
+  <dl ng-if="!options.editable && group.layout.length > 0"
+    class="dl-horizontal">
+    <br-form-field ng-repeat="property in group.layout"
+      br-property="property" br-model="model"
+      br-options="{{options}}"></br-form-field>
+  </dl>
+</div>

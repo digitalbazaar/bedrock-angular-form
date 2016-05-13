@@ -1,7 +1,7 @@
 /*!
  * Form group directive.
  *
- * Copyright (c) 2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
@@ -17,32 +17,8 @@ function factory() {
       group: '=brGroup',
       model: '=brModel'
     },
-    /* jshint multistr: true */
-    template: '\
-      <!-- <pre>GROUP OPTIONS: {{options|json}}</pre> --> \
-      <div ng-class="{section: !group.collapsed}"> \
-        <h4 ng-if="!group.collapsed && (group.label || options.embedded)" \
-          class="headline">{{group.label || \'&nbsp;\'}}</h4> \
-        <p ng-if="group.comment" class="text-info">{{group.comment}}</p> \
-        <p ng-if="group.layout.length == 0" class="text-center"> \
-          No fields. \
-        </p> \
-        <div ng-if="options.editable && group.layout.length > 0" \
-          ng-class="{well: !options.embedded}"> \
-          <fieldset> \
-            <br-form-field \
-              ng-repeat="property in group.layout" \
-              br-property="property" br-model="model" \
-              br-options="{{options}}" /> \
-          </fieldset> \
-        </div> \
-        <dl ng-if="!options.editable && group.layout.length > 0" \
-          class="dl-horizontal"> \
-          <br-form-field ng-repeat="property in group.layout" \
-            br-property="property" br-model="model" \
-            br-options="{{options}}" /> \
-        </dl> \
-      </div>',
+    templateUrl: requirejs.toUrl(
+      'bedrock-angular-form/form-group-directive.html'),
     link: function(scope, element, attrs) {
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
