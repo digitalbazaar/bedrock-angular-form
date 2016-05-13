@@ -1,7 +1,7 @@
 /*!
  * Date picker directive.
  *
- * Copyright (c) 2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
@@ -21,52 +21,8 @@ function datepickerFactory($filter, $templateCache, $timeout) {
     controller: Ctrl,
     controllerAs: 'ctrl',
     bindToController: true,
-    /* jshint multistr: true */
-    template: '\
-      <div ng-class="{ \
-        \'form-group\': !ctrl.options.inline, \
-        \'form-group-inline\': ctrl.options.inline}" \
-        br-property-path="{{ctrl.options.name}}" \
-        class="{{(ctrl.options.inline && \
-          ctrl.options.columns.input) || \'\'}}" \
-        ng-style="{display: \
-          (ctrl.options.inline ? \'inline-\' : \'\') + \'block\'}"> \
-        <label ng-if="ctrl.options.label !== undefined" \
-          class="{{ctrl.options.columns.label}} control-label" \
-          for="{{ctrl.options.name}}"> \
-          <span ng-bind-html="ctrl.options.label"></span></label> \
-        <div class="input-group \
-          {{(!ctrl.options.inline && ctrl.options.columns.input) || \'\'}}"> \
-          <span ng-if="ctrl.options.icon" \
-            class="input-group-addon"><i \
-            class="fa {{ctrl.options.icon}}"></i></span> \
-          <span ng-if="ctrl.options.image" \
-            class="input-group-addon"><img \
-            ng-src="{{ctrl.options.image}}"></img></span> \
-          <input class="form-control" \
-            type="text" \
-            name="{{ctrl.options.name}}" \
-            placeholder="{{ctrl.options.placeholder}}" \
-            uib-datepicker-popup="{{ctrl.options.format}}" \
-            is-open="ctrl.calendarOpen" \
-            ng-model="ctrl.date" \
-            ng-change="ctrl.change()" \
-            ng-blur="ctrl.change()" \
-            ng-keyup="($event.which == 13 || $event.which == 27) && \
-              ctrl.hideCalendar($event)" \
-            ng-disabled="ctrl.options.disabled" \
-            br-date-format="{{ctrl.options.format}}" /> \
-          <span ng-if="ctrl.options.loading" \
-            class="br-spinner-inside-input"> \
-            <i class="fa fa-refresh fa-spin text-muted"></i> \
-          </span> \
-          <span class="input-group-btn"> \
-            <button type="button" class="btn btn-default" \
-              ng-click="ctrl.showCalendar()"><i \
-                class="fa fa-calendar"></i></button> \
-          </span> \
-        </div> \
-      </div>',
+    templateUrl: requirejs.toUrl(
+      'bedrock-angular-form/datepicker-directive.html'),
     compile: Compile
   };
 
@@ -93,6 +49,8 @@ function datepickerFactory($filter, $templateCache, $timeout) {
   }
 
   function Compile() {
+    // TODO: move template to separate file
+
     // TODO: remove this and instead put a datepicker directive inside
     // a stackable and reimplement only the necessary bits of
     // datepicker-popup; this would also solve the need for lazy compile and
