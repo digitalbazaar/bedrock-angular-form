@@ -79,30 +79,13 @@ function factory($parse, brFormUtilsService) {
 }
 
 /* @ngInject */
-function Ctrl($attrs, $scope, $timeout) {
+function Ctrl($attrs, $scope) {
   var self = this;
 
   self.$onInit = function() {
     self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
     $attrs.$observe('brOptions', function() {
       self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
-    });
-  };
-
-  // schedule changing toggle visibility using $timeout to ensure that
-  // a mouse transition from the control content to the toggle won't
-  // cause the toggle to quickly disappear and reappear
-  var changeTogglePromise = null;
-
-  self.showToggle = function() {
-    $timeout.cancel(changeTogglePromise);
-    self.showHelpToggle = true;
-  };
-
-  self.scheduleHideToggle = function() {
-    $timeout.cancel(changeTogglePromise);
-    changeTogglePromise = $timeout(function() {
-      self.showHelpToggle = false;
     });
   };
 

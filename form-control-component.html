@@ -26,6 +26,8 @@
         'br-help-toggle-visible': ($ctrl.helpToggle.visible ||
           $ctrl.showHelpToggle),
       }"
+      ng-mouseenter="$ctrl.onMouseEnterContent()"
+      ng-mouseleave="$ctrl.onMouseLeaveContent()"
       ng-transclude="br-form-control-content"></span>
     <span ng-if="$ctrl.options.help"
       class="input-group-btn br-help-toggle

@@ -1,7 +1,4 @@
-<br-form-control br-options="{{brTextAreaCtrl.options|json}}"
-  br-form-control-show-help-toggle="brTextAreaCtrl.showHelpToggle"
-  br-form-control-on-help-toggle-show="brTextAreaCtrl.helpToggleVisible=true"
-  br-form-control-on-help-toggle-hide="brTextAreaCtrl.helpToggleVisible=false">
+<br-form-control br-options="{{brTextAreaCtrl.options|json}}">
   <br-form-control-content>
     <textarea class="form-control
       br-form-control-content br-form-control-content-tall
@@ -12,11 +9,7 @@
       style="{{brTextAreaCtrl.options.style}}"
       wrap="{{brTextAreaCtrl.options.wrap}}"
       ng-disabled="brTextAreaCtrl.options.disabled"
-      ng-readonly="brTextAreaCtrl.options.readonly"
-      ng-focus="brTextAreaCtrl.showToggle()"
-      ng-blur="brTextAreaCtrl.scheduleHideToggle()"
-      ng-mouseenter="brTextAreaCtrl.showToggle()"
-      ng-mouseleave="brTextAreaCtrl.scheduleHideToggle()" />
+      ng-readonly="brTextAreaCtrl.options.readonly" />
   </br-form-control-content>
   <br-form-control-help ng-if="brTextAreaCtrl.options.help">
     <div ng-transclude></div>
