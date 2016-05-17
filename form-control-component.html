@@ -1,0 +1,58 @@
+<div ng-class="{
+  'form-group': !$ctrl.options.inline,
+  'form-group-inline': $ctrl.options.inline,
+  'has-error': $ctrl.isVisible()}"
+  br-property-path="{{$ctrl.options.name}}"
+  class="{{($ctrl.options.inline && $ctrl.options.classes.content) || ''}}"
+  ng-style="{display: ($ctrl.options.inline ? 'inline-' : '') + 'block'}">
+  <label ng-if="$ctrl.options.label !== undefined"
+    class="{{$ctrl.options.classes.label}} control-label"
+    for="{{$ctrl.options.name}}">
+    <span ng-bind-html="$ctrl.options.label"></span></label>
+  <div class="input-group
+    {{(!$ctrl.options.inline && $ctrl.options.classes.content) || ''}}"
+    ng-class="{
+      'input-group-inline': ($ctrl.options.inline &&
+      $ctrl.options.classes.content)}">
+    <span ng-if="$ctrl.options.icon"
+      class="input-group-addon"><i
+      class="fa {{$ctrl.options.icon}}"></i></span>
+    <span ng-if="$ctrl.options.image"
+      class="input-group-addon"><img
+      ng-src="{{$ctrl.options.image}}"></img></span>
+    <span class="br-form-control-wrapper"
+      ng-class="{
+        'br-help-toggle-present': $ctrl.options.help && !$ctrl.options.inline,
+        'br-help-toggle-visible': ($ctrl.helpToggle.visible ||
+          $ctrl.showHelpToggle),
+      }"
+      ng-transclude="br-form-control-content"></span>
+    <span ng-if="$ctrl.options.help"
+      class="input-group-btn br-help-toggle
+        {{$ctrl.options.classes.helpToggle}}">
+      <button type="button" class="btn btn-default"
+        ng-class="{
+          'br-help-toggle-invisible': !($ctrl.helpToggle.visible ||
+            $ctrl.showHelpToggle),
+          active: $ctrl.helpToggle.pressed
+        }"
+        tabindex="-1"
+        ng-click="$ctrl.helpToggle.onClick($event)"
+        ng-mouseenter="$ctrl.helpToggle.onMouseEnter($event)"
+        ng-mouseleave="$ctrl.helpToggle.onMouseLeave($event)">
+        <i class="fa fa-question-circle"></i>
+      </button>
+    </span>
+  </div>
+  <div ng-if="$ctrl.options.help && $ctrl.helpToggle.visible &&
+    $ctrl.helpToggle.helpVisible"
+    class="{{$ctrl.options.classes.help}} help-block br-fadein br-fadeout">
+    <div class="text-muted" ng-transclude="br-form-control-help"></div>
+  </div>
+  <div ng-show="$ctrl.isVisible()"
+    class="{{$ctrl.options.classes.validation}}">
+    <p></p>
+    <div class="br-form-control-validation-errors text-danger"
+      ng-transclude="br-form-control-validation-errors"></div>
+  </div>
+</div>
