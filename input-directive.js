@@ -10,10 +10,9 @@ define([], function() {
 'use strict';
 
 /* @ngInject */
-function factory(brFormUtilsService) {
+function factory($parse, brFormUtilsService) {
   return {
     restrict: 'E',
-    require: '?^form',
     // compile prior to other directives to ensure directives to be
     // moved to the input element are moved prior to their compilation
     priority: 1,
@@ -21,7 +20,7 @@ function factory(brFormUtilsService) {
     because we need to transplant attribute-based directives from the
     `br-input` element to the inner `input` element, for example:
 
-    ng-maxlength="{{expression to be evaluated in the outer scope}}"
+    br-input-ng-maxlength="{{expression to be evaluated in the outer scope}}"
 
     We need to access our own scope variables in expressions on the `input`
     element and can't "transclude attributes" for the other ones (to preserve
@@ -29,14 +28,16 @@ function factory(brFormUtilsService) {
     `br-input` elements, so asking them to include `input` themselves with
     the attributes they want (and then we'd need to modify it further anyway)
     isn't an option. To help avoid shadowing parent scope variables, we
-    only set scope variables under the `_brInput` property. */
+    only set scope variables under the `brInputCtrl` property. */
     scope: true,
     transclude: {
       'br-input-help': '?brInputHelp',
       'br-input-validation-errors': '?brInputValidationErrors'
     },
     templateUrl: requirejs.toUrl('bedrock-angular-form/input-directive.html'),
-    compile: Compile
+    compile: Compile,
+    controller: Ctrl,
+    controllerAs: 'brInputCtrl'
   };
 
   function Compile(tElement, tAttrs) {
@@ -68,64 +69,46 @@ function factory(brFormUtilsService) {
       target: target
     });
 
-    return {
-      pre: preLink,
-      post: postLink
-    };
+    // get input type (*must* be given as a literal), then update it directly
+    // to ensure angular input directives see the change immediately (angular
+    // input directives cache `type` early and don't check for changes)
+    var options = $parse(tAttrs.brOptions || '{}')({});
+    var input = tElement.find('input');
+    input[0].type = options.type || 'text';
   }
+}
 
-  function preLink(scope, element, attrs, ctrl) {
-    scope._brInput = {};
-    scope._brInput.form = ctrl;
+/* @ngInject */
+function Ctrl($attrs, $scope, $timeout) {
+  var self = this;
 
-    attrs.brOptions = attrs.brOptions || {};
-    updateOptions(scope, element, attrs.brOptions);
-  }
-
-  function postLink(scope, element, attrs, ctrl) {
-    var errorElement = element.find('[name="br-input-validation-errors"]');
-
-    scope._brInput.showValidation = function() {
-      // do not show empty validation area
-      if(!$.trim(errorElement.html())) {
-        return false;
-      }
-      // use `showValidation` option if given
-      var options = scope._brInput.options || {};
-      if('showValidation' in options) {
-        if(!options.showValidation) {
-          return options.showValidation;
-        }
-        return ctrl[options.name].$touched && ctrl[options.name].$invalid;
-      }
-      // do not show validation if field not in form
-      if(!ctrl || !('name' in options) || !ctrl[options.name]) {
-        return false;
-      }
-      // default: show if not inline, form submitted, and field invalid
-      return (!options.inline &&
-        ctrl.$submitted && ctrl[options.name].$invalid);
-    };
-
-    attrs.$observe('brOptions', function(value) {
-      updateOptions(scope, element, value);
+  self.$onInit = function() {
+    self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
+    $attrs.$observe('brOptions', function() {
+      self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
     });
-  }
+  };
 
-  function updateOptions(scope, element, value) {
-    var options = scope.$eval(value) || {};
-    scope._brInput.options = options;
+  // schedule changing toggle visibility using $timeout to ensure that
+  // a mouse transition from the control content to the toggle won't
+  // cause the toggle to quickly disappear and reappear
+  var changeTogglePromise = null;
 
-    // update type directly to ensure angular input directives see the change
-    // immediately (angular input directives cache `type` early and don't
-    // check for changes)
-    var input = element.find('input');
-    input[0].type = options.type = options.type || 'text';
+  self.showToggle = function() {
+    $timeout.cancel(changeTogglePromise);
+    self.showHelpToggle = true;
+  };
 
-    options.inline = ('inline' in options) ? options.inline : false;
+  self.scheduleHideToggle = function() {
+    $timeout.cancel(changeTogglePromise);
+    changeTogglePromise = $timeout(function() {
+      self.showHelpToggle = false;
+    });
+  };
+
+  function defaultOptions(options) {
+    options = options || {};
     options.placeholder = options.placeholder || '';
-    // default to no help displayed in inline mode
-    options.help = ('help' in options) ? options.help : !options.inline;
 
     // prefix "fa-" to icon
     if(typeof options.icon === 'string' &&
@@ -133,43 +116,19 @@ function factory(brFormUtilsService) {
       options.icon = 'fa-' + options.icon;
     }
 
-    var columns = options.columns = options.columns || {};
-    if(!('label' in columns)) {
-      columns.label =  'col-sm-3';
-    }
-    if(!('input' in columns)) {
-      columns.input = 'col-sm-8';
-    }
-    if(!('help' in columns)) {
-      columns.help = 'col-sm-offset-3 col-sm-8';
-    }
-    if(!('validation' in columns)) {
-      columns.validation = 'col-sm-offset-3 col-sm-8';
+    // backwards compatibility
+    if('columns' in options) {
+      options.classes = options.columns;
+      if('input' in options.classes) {
+        options.classes.content = options.classes.input;
+      }
     }
 
-    if('maxLength' in options) {
-      input.attr('maxlength', options.maxLength);
-    } else {
-      input.removeAttr('maxlength');
+    if(!('help' in options)) {
+      options.help = !options.inline;
     }
 
-    if('autocomplete' in options) {
-      input.attr('autocomplete', options.autocomplete);
-    } else {
-      input.removeAttr('autocomplete');
-    }
-
-    if(options.autofocus) {
-      input.attr('autofocus', 'autofocus');
-    } else {
-      input.removeAttr('autofocus');
-    }
-
-    if(options.readonly) {
-      input.attr('readonly', 'readonly');
-    } else {
-      input.removeAttr('readonly');
-    }
+    return options;
   }
 }
 

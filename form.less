@@ -95,14 +95,29 @@ br-form-group dd.collapsed {
 .br-help-toggle > .btn:focus {
   outline: 0;
 }
-.input-group textarea + .input-group-btn.br-help-toggle {
+.br-help-toggle-invisible-add, .br-help-toggle-invisible-remove {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+.br-help-toggle-invisible,
+.br-help-toggle-invisible-add.br-help-toggle-invisible-add-active {
+  opacity: 0;
+  display: block !important;
+}
+.br-help-toggle-invisible-remove.br-help-toggle-invisible-remove-active {
+  opacity: 1;
+  display: block !important;
+}
+.br-help-toggle-top {
   vertical-align: top;
 }
-.input-group textarea + .input-group-btn.br-help-toggle > .btn {
+.br-help-toggle-top > .btn {
   .border-left-radius(0);
   .border-right-radius(@input-border-radius);
 }
-/* Correct border-radius for form-controls with help toggles, etc. */
+/* FIXME: deprecate -- Correct border-radius for form-controls with help toggles, etc. */
 .input-group .form-control,
 .input-group .ui-select-bootstrap,
 .input-group .br-select {
@@ -147,17 +162,65 @@ br-form-group dd.collapsed {
     }
   }
 }
-.input-group textarea.form-control:not(.br-help-off).br-help {
-  // restore bottom right border radius
-  &:hover, &:focus, &.br-show, &.br-help-focus, &.br-help-mouseover {
-    border-bottom-right-radius: @input-border-radius;
+.input-group .br-form-control-wrapper {
+  // if first child, use left border radius on content
+  &:first-child .br-form-control-content {
+    &, & .ui-select-bootstrap, & .ui-select-match {
+      .border-left-radius(@input-border-radius);
+    }
+  }
+
+  // if last child or help toggle is present but not visible,
+  // use right border radius on content
+  &:last-child,
+  &.br-help-toggle-present:not(.br-help-toggle-visible) {
+    & .br-form-control-content {
+      &, & .ui-select-bootstrap, & .ui-select-match {
+        .border-right-radius(@input-border-radius);
+      }
+    }
+  }
+
+  // if help toggle is present and visible
+  &.br-help-toggle-present.br-help-toggle-visible {
+    & .br-form-control-content {
+      // remove right border radius on non-tall content
+      &:not(.br-form-control-content-tall) {
+        &, & .ui-select-bootstrap, & .ui-select-match {
+          .border-right-radius(0);
+        }
+      }
+
+      // remove top-right radius on tall content
+      &.br-form-control-content-tall {
+        border-top-right-radius: 0;
+      }
+    }
+  }
+
+  // if middle child
+  &:not(:first-child):not(:last-child) {
+    // no left-border radius on content
+    & .br-form-control-content {
+      &, & .ui-select-bootstrap, & .ui-select-match {
+        .border-left-radius(0);
+      }
+    }
+
+    // if no help toggle is present, use right border radius on content
+    &:not(.br-help-toggle-present) .br-form-control-content {
+      &, & .ui-select-bootstrap, & .ui-select-match {
+        .border-right-radius(@input-border-radius);
+      }
+    }
   }
 }
 
 /* Input Groups */
+/* FIXME: deprecated */
 .input-group .form-control,
 .input-group .ui-select-bootstrap,
-.input-group br-select {
+.input-group .br-select {
   // fix inline padding
   &:not(:first-child):not(:last-child) .input-group-inline {
     padding-left: floor((@grid-gutter-width / 8));
@@ -172,6 +235,29 @@ br-form-group dd.collapsed {
   &:last-child:not(:first-child) .input-group-inline {
     padding-left: floor((@grid-gutter-width / 8));
     padding-right: floor((@grid-gutter-width / 2));
+  }
+}
+.input-group.input-group-inline .br-form-control-wrapper {
+  // fix inline padding
+  &:not(:first-child):not(:last-child) {
+    & .form-control, & .ui-select-bootstrap, & .br-select {
+      padding-left: floor((@grid-gutter-width / 8));
+      padding-right: floor((@grid-gutter-width / 8));
+    }
+  }
+
+  &:first-child:not(:last-child) {
+    & .form-control, & .ui-select-bootstrap, & .br-select {
+      padding-left: floor((@grid-gutter-width / 2));
+      padding-right: floor((@grid-gutter-width / 8));
+    }
+  }
+
+  &:last-child:not(:first-child) {
+    & .form-control, & .ui-select-bootstrap, & .br-select {
+      padding-left: floor((@grid-gutter-width / 8));
+      padding-right: floor((@grid-gutter-width / 2));
+    }
   }
 }
 .input-group {

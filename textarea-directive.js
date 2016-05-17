@@ -10,7 +10,7 @@ define(['angular'], function(angular) {
 'use strict';
 
 /* @ngInject */
-function factory($parse, brFormUtilsService) {
+function factory(brFormUtilsService) {
   return {
     restrict: 'E',
     // compile prior to other directives to ensure directives to be
@@ -20,7 +20,7 @@ function factory($parse, brFormUtilsService) {
     because we need to transplant attribute-based directives from the
     `br-textarea` element to the inner `textarea` element, for example:
 
-    ng-maxlength="{{expression to be evaluated in the outer scope}}"
+    br-textarea-ng-maxlength="{{expression to be evaluated in the outer scope}}"
 
     We need to access our own scope variables in expressions on the `textarea`
     element and can't "transclude attributes" for the other ones (to preserve
@@ -28,12 +28,17 @@ function factory($parse, brFormUtilsService) {
     `br-textarea` elements, so asking them to include `textarea` themselves
     with the attributes they want (and then we'd need to modify it further
     anyway) isn't an option. To help avoid shadowing parent scope variables,
-    we only set scope variables under the `_brTextarea` property. */
+    we only set scope variables under the `brTextAreaCtrl` property. */
     scope: true,
-    transclude: true,
+    transclude: {
+      'br-textarea-help': '?brTextareaHelp',
+      'br-textarea-validation-errors': '?brTextareaValidationErrors'
+    },
     templateUrl: requirejs.toUrl(
       'bedrock-angular-form/textarea-directive.html'),
-    compile: Compile
+    compile: Compile,
+    controller: Ctrl,
+    controllerAs: 'brTextAreaCtrl'
   };
 
   function Compile(tElement, tAttrs) {
@@ -48,6 +53,7 @@ function factory($parse, brFormUtilsService) {
       target: target
     });
 
+    // backwards-compatibility
     // transplant validation to target
     brFormUtilsService.moveAttr({
       element: tElement,
@@ -64,61 +70,69 @@ function factory($parse, brFormUtilsService) {
       prefix: 'brTextarea',
       target: target
     });
+  }
+}
 
-    return function(scope, element, attrs) {
-      scope._brTextarea = {};
+/* @ngInject */
+function Ctrl($attrs, $scope, $timeout) {
+  var self = this;
 
-      attrs.brOptions = attrs.brOptions || {};
-      attrs.$observe('brOptions', function(value) {
-        var options = scope.$eval(value) || {};
-        scope._brTextarea.options = options;
+  self.$onInit = function() {
+    self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
+    $attrs.$observe('brOptions', function() {
+      self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
+    });
+  };
 
-        options.placeholder = options.placeholder || options.label;
-        options.rows = options.rows || '5';
+  // schedule changing toggle visibility using $timeout to ensure that
+  // a mouse transition from the control content to the toggle won't
+  // cause the toggle to quickly disappear and reappear
+  var changeTogglePromise = null;
 
-        // prefix "fa-" to icon
-        if(typeof options.icon === 'string' &&
-          options.icon.indexOf('fa-') !== 0) {
-          options.icon = 'fa-' + options.icon;
-        }
+  self.showToggle = function() {
+    $timeout.cancel(changeTogglePromise);
+    self.showHelpToggle = true;
+  };
 
-        var columns = options.columns = options.columns || {};
-        if(!('label' in columns)) {
-          columns.label =  'col-sm-3';
-        }
-        if(!('textarea' in columns)) {
-          columns.textarea = 'col-sm-8';
-        }
-        if(!('help' in columns)) {
-          columns.help = 'col-sm-offset-3 col-sm-8';
-        }
+  self.scheduleHideToggle = function() {
+    $timeout.cancel(changeTogglePromise);
+    changeTogglePromise = $timeout(function() {
+      self.showHelpToggle = false;
+    });
+  };
 
-        if(options.autofocus) {
-          element.find('textarea').attr('autofocus', 'autofocus');
-        } else {
-          element.find('textarea').removeAttr('autofocus');
-        }
+  function defaultOptions(options) {
+    options = options || {};
+    options.placeholder = options.placeholder || options.label;
+    options.rows = options.rows || '5';
 
-        if(options.readonly) {
-          element.find('textarea').attr('readonly', 'readonly');
-        } else {
-          element.find('textarea').removeAttr('readonly');
-        }
+    // prefix "fa-" to icon
+    if(typeof options.icon === 'string' &&
+      options.icon.indexOf('fa-') !== 0) {
+      options.icon = 'fa-' + options.icon;
+    }
 
-        if(!('wrap' in options)) {
-          options.wrap = 'on';
-        }
-      });
+    if(!('wrap' in options)) {
+      options.wrap = 'on';
+    }
 
-      var keypressFn = $parse(attrs.brKeypress);
-      if(keypressFn === angular.noop) {
-        scope._brTextarea.localKeypress = angular.noop;
-      } else {
-        scope._brTextarea.localKeypress = function(event) {
-          return keypressFn(scope.$parent, {$event: event});
-        };
+    // backwards compatibility
+    if('columns' in options) {
+      options.classes = options.columns;
+      if('textarea' in options.classes) {
+        options.classes.content = options.classes.textarea;
       }
-    };
+    }
+
+    options.classes = angular.merge({
+      helpToggle: 'br-help-toggle-top'
+    }, options.classes || {});
+
+    if(!('help' in options)) {
+      options.help = true;
+    }
+
+    return options;
   }
 }
 
