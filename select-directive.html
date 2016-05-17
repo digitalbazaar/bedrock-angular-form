@@ -18,10 +18,11 @@
       ng-class="{'br-help-off': options.inline}"
       br-tooltip="{{options.tooltip.text}}"
       br-options="options.tooltip">
-      <ui-select ng-model="selection.selected"
-        theme="bootstrap" ng-disabled="options.disabled">
-        <ui-select-match placeholder="{{options.placeholder}}">{{$select.selected.display}}</ui-select-match>
-        <ui-select-choices
+      <ui-select ng-model="selection.selected" theme="bootstrap"
+        ng-disabled="options.disabled">
+        <ui-select-match class="ui-select-match"
+          placeholder="{{options.placeholder}}">{{$select.selected.display}}</ui-select-match>
+        <ui-select-choices class="ui-select-choices"
           br-lazy-compile="$select.open"
           br-lazy-compile-id="br-select-ui-select-choices"
           repeat="item in viewItems | filter: $select.search">
