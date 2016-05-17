@@ -1,7 +1,7 @@
 /*!
  * Form module.
  *
- * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
@@ -9,6 +9,7 @@ define([
   'angular',
   './datepicker-directive',
   './form-directive',
+  './form-control-component',
   './form-field-directive',
   './form-group-directive',
   './form-library-service',
@@ -18,13 +19,14 @@ define([
   './input-directive',
   './input-watcher-directive',
   './radio-group-directive',
-  './select-directive',
+  './select-component',
   './textarea-directive',
   './track-state-directive'
 ], function(
   angular,
   datepickerDirective,
   formDirective,
+  formControlComponent,
   formFieldDirective,
   formGroupDirective,
   formLibraryService,
@@ -34,7 +36,7 @@ define([
   inputDirective,
   inputWatcherDirective,
   radioGroupDirective,
-  selectDirective,
+  selectComponent,
   textareaDirective,
   trackStateDirective) {
 
@@ -42,6 +44,8 @@ define([
 
 var module = angular.module('bedrock.form', ['bedrock.lazyCompile']);
 
+formControlComponent(module);
+selectComponent(module);
 module.directive(datepickerDirective);
 module.directive(formDirective);
 module.directive(formFieldDirective);
@@ -53,7 +57,6 @@ module.directive(helpToggleDirective);
 module.directive(inputDirective);
 module.directive(inputWatcherDirective);
 module.directive(radioGroupDirective);
-module.directive(selectDirective);
 module.directive(textareaDirective);
 module.directive(trackStateDirective);
 
