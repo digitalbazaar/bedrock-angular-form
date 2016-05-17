@@ -79,13 +79,16 @@ function factory($parse, brFormUtilsService) {
 }
 
 /* @ngInject */
-function Ctrl($attrs, $scope) {
+function Ctrl($attrs, $scope, $timeout) {
   var self = this;
 
   self.$onInit = function() {
     self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
     $attrs.$observe('brOptions', function() {
-      self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
+      // FIXME: only fixes initially, then fails again
+      $timeout(function() {
+        self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
+      });
     });
   };
 
