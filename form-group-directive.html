@@ -9,14 +9,14 @@
   <div ng-if="options.editable && group.layout.length > 0"
     ng-class="{well: !options.embedded}">
     <fieldset>
-      <br-form-field ng-repeat="property in group.layout"
+      <br-form-field ng-repeat="property in group.layout track by property.id"
         br-property="property" br-model="model"
         br-options="{{options}}"></br-form-field>
     </fieldset>
   </div>
   <dl ng-if="!options.editable && group.layout.length > 0"
     class="dl-horizontal">
-    <br-form-field ng-repeat="property in group.layout"
+    <br-form-field ng-repeat="property in group.layout track by property.id"
       br-property="property" br-model="model"
       br-options="{{options}}"></br-form-field>
   </dl>
