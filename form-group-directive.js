@@ -10,21 +10,30 @@ define([], function() {
 'use strict';
 
 /* @ngInject */
-function factory() {
+function factory($compile, $templateCache, $templateRequest) {
   return {
     restrict: 'E',
     scope: {
       group: '=brGroup',
       model: '=brModel'
     },
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-form/form-group-directive.html'),
     link: function(scope, element, attrs) {
-      attrs.brOptions = attrs.brOptions || {};
-      attrs.$observe('brOptions', function(value) {
-        var options = scope.options = scope.$eval(value) || {};
-        // TODO: grab vocab via identifier from options
-        // TODO: use repeater in template to pass options to br-form-field(s)
+      var templateUrl = requirejs.toUrl(
+        'bedrock-angular-form/form-group-directive.html');
+      //$templateCache.remove(templateUrl);
+      $templateRequest(templateUrl).then(function(data) {
+        scope.$evalAsync(function() {
+        var linked = $compile(data)(scope);
+        element.append(linked);
+
+        attrs.brOptions = attrs.brOptions || {};
+        scope.options = scope.$eval(attrs.brOptions) || {};
+        attrs.$observe('brOptions', function(value) {
+          var options = scope.options = scope.$eval(value) || {};
+          // TODO: grab vocab via identifier from options
+          // TODO: use repeater in template to pass options to br-form-field(s)
+        });
+        });
       });
     }
   };
