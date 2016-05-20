@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [2.4.0] - 2016-05-19
+
+### Added
+- New br-form-control component to provide common functionality
+  for form controls like help and validation areas.
+
+### Fixed
+- Add missing classes to ui-select in br-select.
+
 ## [2.3.4] - 2016-05-10
 
 ### Added
@@ -147,27 +156,3 @@
 ## 0.1.0 (up to early 2015)
 
 - See git history for changes.
-
-[Unreleased]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.4...HEAD
-[2.3.4]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.3...2.3.4
-[2.3.3]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.2...2.3.3
-[2.3.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.1...2.3.2
-[2.3.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.3.0...2.3.1
-[2.3.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.2.0...2.3.0
-[2.2.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.2...2.2.0
-[2.1.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.1...2.1.2
-[2.1.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.1.0...2.1.1
-[2.1.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/2.0.0...2.1.0
-[2.0.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.3...2.0.0
-[1.5.3]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.2...1.5.3
-[1.5.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.1...1.5.2
-[1.5.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.5.0...1.5.1
-[1.5.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.4.1...1.5.0
-[1.4.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.4.0...1.4.1
-[1.4.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.3.1...1.4.0
-[1.3.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.2...1.3.1
-[1.2.2]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.1...1.2.2
-[1.2.1]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.2.0...1.2.1
-[1.2.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.1.0...1.2.0
-[1.1.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/1.0.0...1.1.0
-[1.0.0]: https://github.com/digitalbazaar/bedrock-angular-form/compare/0.1.0...1.0.0
