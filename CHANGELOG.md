@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [2.4.1] - 2016-05-21
+
+### Fixed
+- Remove '{{' and '}}' from br-options expressions for
+  br-input, br-textarea, and br-select. It now causes a
+  parse error when it was previously required; removal
+  should not change old behavior.
+
 ## [2.4.0] - 2016-05-19
 
 ### Added
