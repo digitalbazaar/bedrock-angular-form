@@ -21,21 +21,20 @@ function register(module) {
       'br-select-help': '?brSelectHelp'
     },
     controller: Ctrl,
-    templateUrl:
-      requirejs.toUrl('bedrock-angular-form/select-component.html')
+    templateUrl: requirejs.toUrl('bedrock-angular-form/select-component.html')
   });
 }
 
 /* @ngInject */
-function Ctrl($attrs, $element, $scope, $timeout) {
+function Ctrl($attrs, $element, $scope) {
   var self = this;
 
   self.$onInit = function() {
     self.selection = {selected: undefined};
 
-    self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
+    self.options = defaultOptions(legacyEval($attrs.brOptions || {}));
     $attrs.$observe('brOptions', function() {
-      self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
+      self.options = defaultOptions(legacyEval($attrs.brOptions || {}));
 
       if(self.options.autofocus) {
         $element.find('.ui-select-match').attr('autofocus', 'autofocus');
@@ -102,6 +101,11 @@ function Ctrl($attrs, $element, $scope, $timeout) {
       self.model = selected.item;
     }, true);
   };
+
+  function legacyEval(expression) {
+    // strip double parentheses
+    return $scope.$eval(expression.replace(/{{|}}/g, ''));
+  }
 
   function defaultOptions(options) {
     options = options || {};

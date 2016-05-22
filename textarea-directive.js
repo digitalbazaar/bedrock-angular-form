@@ -78,11 +78,16 @@ function Ctrl($attrs, $scope) {
   var self = this;
 
   self.$onInit = function() {
-    self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
+    self.options = defaultOptions(legacyEval($attrs.brOptions || {}));
     $attrs.$observe('brOptions', function() {
-      self.options = defaultOptions($scope.$eval($attrs.brOptions || {}));
+      self.options = defaultOptions(legacyEval($attrs.brOptions || {}));
     });
   };
+
+  function legacyEval(expression) {
+    // strip double parentheses
+    return $scope.$eval(expression.replace(/{{|}}/g, ''));
+  }
 
   function defaultOptions(options) {
     options = options || {};
