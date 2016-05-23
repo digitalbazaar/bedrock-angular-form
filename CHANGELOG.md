@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.4.2] - 2016-05-23
+
+### Fixed
+- Fix angular digest iteration bug with form groups.
+
 ## [2.4.1] - 2016-05-21
 
 ### Fixed
