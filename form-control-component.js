@@ -31,6 +31,9 @@ function Ctrl($attrs, $element, $scope, $timeout) {
 
   self.$onInit = function() {
     self.options = self.defaultOptions();
+    $attrs.$observe('brOptions', function() {
+      self.options = self.defaultOptions($scope.$eval($attrs.brOptions || {}));
+    });
   };
 
   var focusListener = function() {
@@ -48,10 +51,6 @@ function Ctrl($attrs, $element, $scope, $timeout) {
 
   self.$postLink = function() {
     errorElement = $element.find('.br-form-control-validation-errors');
-
-    $attrs.$observe('brOptions', function() {
-      self.options = self.defaultOptions($scope.$eval($attrs.brOptions || {}));
-    });
 
     // true = use capture (to capture events on child elements)
     contentElement = $element.find('.br-form-control-wrapper')[0];
