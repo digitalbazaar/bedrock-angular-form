@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [2.4.3] - 2016-05-30
+
+### Fixed
+- Fix left border radius bug when br-form-control-wrapper is
+  not first child but is last.
+
 ## [2.4.2] - 2016-05-23
 
 ### Fixed
