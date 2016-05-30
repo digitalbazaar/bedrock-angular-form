@@ -214,6 +214,16 @@ br-form-group dd.collapsed {
       }
     }
   }
+
+  // if not first child but is last
+  &:not(:first-child):last-child {
+    // no left-border radius on content
+    & .br-form-control-content {
+      &, & .ui-select-bootstrap, & .ui-select-match {
+        .border-left-radius(0);
+      }
+    }
+  }
 }
 
 /* Input Groups */
