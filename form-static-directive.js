@@ -15,8 +15,8 @@ function factory() {
     restrict: 'E',
     scope: true,
     transclude: {
-      'br-input-help': '?brInputHelp',
-      'br-form-static-content': '?brFormStaticContent'
+      'br-form-static-content': '?brFormStaticContent',
+      'br-form-static-help': '?brFormStaticHelp',
     },
     templateUrl: requirejs.toUrl(
       'bedrock-angular-form/form-static-directive.html'),
