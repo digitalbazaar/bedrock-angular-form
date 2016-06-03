@@ -18,7 +18,8 @@ function factory() {
       'br-input-help': '?brInputHelp',
       'br-form-static-content': '?brFormStaticContent'
     },
-    templateUrl: requirejs.toUrl('bedrock-angular-form/form-static-directive'),
+    templateUrl: requirejs.toUrl(
+      'bedrock-angular-form/form-static-directive.html'),
     link: Link
   };
 
