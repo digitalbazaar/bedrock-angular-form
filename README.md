@@ -99,7 +99,7 @@ Show a properly styled static form field.
     label: 'Static Info'
   }">
   <br-form-static-content>Static content.</br-form-static-content>
-  <br-input-help>Help details about static content.</br-input-help>
+  <br-form-static-help>Help details about static content.</br-form-static-help>
 </br-form-static>
 ```
 
