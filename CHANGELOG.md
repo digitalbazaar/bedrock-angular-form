@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.4.4 - 2016-06-03
+
 ### Fixed
 - Static directive template URL typo.
 
