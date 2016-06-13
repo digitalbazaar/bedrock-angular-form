@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.4.5 - 2016-06-13
+
 ### Fixed
 - Don't reset library data on each vocab load. Fixes loading of multiple
   vocabs.
