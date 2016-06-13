@@ -160,9 +160,6 @@ function factory(
           self.graph = state.graph;
 
           // build property and group indexes
-          self.properties = {};
-          self.groups = {};
-          self.hasGroups = false;
           var nodes = jsonld.getValues(framed, '@graph');
           angular.forEach(nodes, function(node) {
             // raise conflict exception, overwrite silently?
