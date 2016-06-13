@@ -6,6 +6,11 @@
 - Don't reset library data on each vocab load. Fixes loading of multiple
   vocabs.
 
+### Changed
+- Properties and groups from multiple vocabs are merged into one collection in
+  the library. Log an info message when the same id is used with identical
+  data. Log a warning when the same id has different data.
+
 ## 2.4.4 - 2016-06-03
 
 ### Fixed

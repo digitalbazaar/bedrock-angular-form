@@ -155,6 +155,15 @@ function factory(
           return jsonld.promises.frame(merged, FRAME, {embed: '@link'});
         }).then(function(framed) {
           // store vocab and update graph
+          if(state.id in self.vocabs) {
+            if(angular.equals(state.vocab, self.vocabs[node.id])) {
+              console.info('Duplicate vocab ID with equal data:',
+                state.id, 'data:', state.vocab);
+            } else {
+              console.warn('Duplicate vocab ID with conflicting data:',
+                state.id, 'old:', self.vocabs[state.id], 'new:', state.vocab);
+            }
+          }
           self.vocabs[state.id] = state.vocab;
           self.hasVocabs = true;
           self.graph = state.graph;
@@ -164,8 +173,28 @@ function factory(
           angular.forEach(nodes, function(node) {
             // raise conflict exception, overwrite silently?
             if(jsonld.hasValue(node, 'type', 'Property')) {
+              if(node.id in self.properties) {
+                if(angular.equals(node, self.properties[node.id])) {
+                  console.info('Duplicate property ID with equal data:',
+                    node.id, 'vocab:', state.id, 'data:', node);
+                } else {
+                  console.warn('Duplicate property ID with conflicting data:',
+                    node.id, 'vocab:', state.id,
+                    'old:', self.properties[node.id], 'new:', node);
+                }
+              }
               self.properties[node.id] = node;
             } else if(jsonld.hasValue(node, 'type', 'PropertyGroup')) {
+              if(node.id in self.groups) {
+                if(angular.equals(node, self.groups[node.id])) {
+                  console.info('Duplicate group ID with equal data:',
+                    node.id, 'vocab:', state.id, 'data:', node);
+                } else {
+                  console.warn('Duplicate group ID with conflicting data:',
+                    node.id, 'vocab:', state.id,
+                    'old:', self.groups[node.id], 'new:', node);
+                }
+              }
               self.groups[node.id] = node;
               self.hasGroups = true;
             }
