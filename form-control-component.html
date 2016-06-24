@@ -19,7 +19,7 @@
       class="fa {{$ctrl.options.icon}}"></i></span>
     <span ng-if="$ctrl.options.image"
       class="input-group-addon"><img
-      ng-src="{{$ctrl.options.image}}"></img></span>
+      ng-src="{{$ctrl.options.image}}"></span>
     <span class="br-form-control-wrapper"
       ng-class="{
         'br-help-toggle-present': $ctrl.options.help && !$ctrl.options.inline,
@@ -51,7 +51,7 @@
     class="{{$ctrl.options.classes.help}} help-block br-fadein br-fadeout">
     <div class="text-muted" ng-transclude="br-form-control-help"></div>
   </div>
-  <div ng-show="$ctrl.isVisible()"
+  <div ng-show="$ctrl.validation.isVisible()"
     class="{{$ctrl.options.classes.validation}}">
     <p></p>
     <div class="br-form-control-validation-errors text-danger"
