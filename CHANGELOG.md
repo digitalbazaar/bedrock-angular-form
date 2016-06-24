@@ -1,6 +1,9 @@
 # bedrock-angular-form ChangeLog
 
-## Unreleased
+## 2.4.6 - 2016-06-24
+
+### Fixed
+- Properly display form validation errors.
 
 ## 2.4.5 - 2016-06-13
 
