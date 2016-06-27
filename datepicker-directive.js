@@ -124,7 +124,11 @@ function datepickerFactory($filter, $templateCache, $timeout) {
           ctrl.date = setTime(ctrl.date, ctrl.options.time);
         }
         if(ctrl.options.modelType === 'string') {
-          ctrl.model = dateFilter(ctrl.date, ctrl.options.format);
+          if(ctrl.options.modelFormat) {
+            ctrl.model = dateFilter(ctrl.date, ctrl.options.modelFormat);
+          } else {
+            ctrl.model = dateFilter(ctrl.date, ctrl.options.format);
+          }
         } else {
           ctrl.model = ctrl.date;
         }
@@ -136,6 +140,8 @@ function datepickerFactory($filter, $templateCache, $timeout) {
     attrs.$observe('brOptions', function(value) {
       var options = ctrl.options = scope.$eval(value) || {};
       options.format = ('format' in options) ? options.format : 'yyyy-MM-dd';
+      options.modelFormat =
+        ('modelFormat' in options) ? options.modelFormat : null;
       options.placeholder = options.placeholder || '';
       options.inline = ('inline' in options) ? options.inline : false;
       options.modelType = ('modelType' in options) ? options.modelType : 'date';
