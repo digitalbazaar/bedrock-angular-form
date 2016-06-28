@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.5.0 - 2016-06-28
+
+### Added
+- Add modelFormat option for date picker.
+
 ## 2.4.6 - 2016-06-24
 
 ### Fixed
