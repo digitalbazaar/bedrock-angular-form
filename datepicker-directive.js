@@ -5,6 +5,7 @@
  *
  * @author Dave Longley
  */
+/* jshint multistr: true */
 define([], function() {
 
 'use strict';
@@ -125,7 +126,15 @@ function datepickerFactory($filter, $templateCache, $timeout) {
         }
         if(ctrl.options.modelType === 'string') {
           if(ctrl.options.modelFormat) {
-            ctrl.model = dateFilter(ctrl.date, ctrl.options.modelFormat);
+            // if modelTimezone is not specified, the timezone of the browser
+            // will be used
+            if(ctrl.options.modelTimezone) {
+              ctrl.model = dateFilter(
+                ctrl.date, ctrl.options.modelFormat,
+                ctrl.options.modelTimezone);
+            } else {
+              ctrl.model = dateFilter(ctrl.date, ctrl.options.modelFormat);
+            }
           } else {
             ctrl.model = dateFilter(ctrl.date, ctrl.options.format);
           }
@@ -145,6 +154,8 @@ function datepickerFactory($filter, $templateCache, $timeout) {
       options.placeholder = options.placeholder || '';
       options.inline = ('inline' in options) ? options.inline : false;
       options.modelType = ('modelType' in options) ? options.modelType : 'date';
+      options.modelTimezone =
+        ('modelTimezone' in options) ? options.modelTimezone : null;
 
       // prefix "fa-" to icon
       if(typeof options.icon === 'string' &&
