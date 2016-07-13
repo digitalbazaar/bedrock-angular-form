@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.6.0 - 2016-07-13
+
+### Added
+- Add modelTimezone option for date picker.
+
 ## 2.5.0 - 2016-06-28
 
 ### Added
