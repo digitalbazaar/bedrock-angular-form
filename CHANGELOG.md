@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.6.1 - 2016-07-14
+
+### Fixed
+- Fix help toggle for static form components.
+
 ## 2.6.0 - 2016-07-13
 
 ### Added
