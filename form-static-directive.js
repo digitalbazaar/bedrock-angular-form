@@ -18,34 +18,31 @@ function factory() {
       'br-form-static-content': '?brFormStaticContent',
       'br-form-static-help': '?brFormStaticHelp',
     },
+    controller: function() {},
+    controllerAs: 'ctrl',
+    bindToController: true,
     templateUrl: requirejs.toUrl(
       'bedrock-angular-form/form-static-directive.html'),
-    link: Link
+    link: function(scope, element, attrs, ctrl) {
+      attrs.brOptions = attrs.brOptions || {};
+      attrs.$observe('brOptions', function(value) {
+        var options = ctrl.options = scope.$eval(value) || {};
+        options.inline = ('inline' in options) ? options.inline : false;
+        options.help = ('help' in options) ? options.help : !options.inline;
+
+        var columns = options.columns = options.columns || {};
+        if(!('label' in columns)) {
+          columns.label =  'col-sm-3';
+        }
+        if(!('content' in columns)) {
+          columns.content = 'col-sm-8';
+        }
+        if(!('help' in columns)) {
+          columns.help = 'col-sm-offset-3 col-sm-8';
+        }
+      });
+    }
   };
-
-  function Link(scope, element, attrs) {
-    var options = scope.options = {};
-
-    // get options
-    attrs.brOptions = attrs.brOptions || {};
-    attrs.$observe('brOptions', function(value) {
-      scope.options = options = scope.$eval(value) || {};
-      options.inline = ('inline' in options) ? options.inline : false;
-      // default to no help displayed in inline mode
-      options.help = ('help' in options) ? options.help : !options.inline;
-
-      var columns = options.columns = options.columns || {};
-      if(!('label' in columns)) {
-        columns.label =  'col-sm-3';
-      }
-      if(!('static' in columns)) {
-        columns.static = 'col-sm-8';
-      }
-      if(!('help' in columns)) {
-        columns.help = 'col-sm-offset-3 col-sm-8';
-      }
-    });
-  }
 }
 
 return {brFormStatic: factory};
