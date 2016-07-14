@@ -179,8 +179,8 @@ function factory($rootScope, config, brAlertService, brResourceService) {
         // store vocab and update graph
         if(state.id in self.vocabs) {
           if(angular.equals(state.vocab, self.vocabs[state.id])) {
-            console.info('Duplicate vocab ID with equal data:',
-              state.id, 'data:', state.vocab);
+            //console.info('Duplicate vocab ID with equal data:',
+            //  state.id, 'data:', state.vocab);
           } else {
             console.warn('Duplicate vocab ID with conflicting data:',
               state.id, 'old:', self.vocabs[state.id], 'new:', state.vocab);
