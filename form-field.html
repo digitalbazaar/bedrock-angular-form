@@ -24,9 +24,24 @@
       <br-form ng-if="ctrl.selected.propertyGroup"
         br-model="ctrl.value[ctrl.key]"
         br-groups="[ctrl.selected.propertyGroup]"
+        br-library="ctrl.library"
+        br-path="ctrl.path"
         br-options="{editable: true, embedded: true}"></br-form>
-      <br-input ng-if="!ctrl.property.optional && ctrl.rangeOptions <= 1"
+      <br-input ng-if="!ctrl.property.optional && ctrl.rangeOptions <= 1 &&
+        !ctrl.value[ctrl.key].id"
         br-model="ctrl.value[ctrl.key]"
+        br-options="{
+          icon: 'globe',
+          name: '{{ctrl.key}}',
+          label: '{{ctrl.schema.label}}',
+          type: 'url',
+          placeholder: 'Resource URL'
+        }">
+        {{ctrl.schema.comment}}
+      </br-input>
+      <br-input ng-if="!ctrl.property.optional && ctrl.rangeOptions <= 1 &&
+        ctrl.value[ctrl.key].id"
+        br-model="ctrl.value[ctrl.key].id"
         br-options="{
           icon: 'globe',
           name: '{{ctrl.key}}',
@@ -143,8 +158,12 @@
 </div>
 <div ng-if="!ctrl.options.editable && ctrl.value[ctrl.key]">
   <!-- FIXME: add schema.comment as help text -->
-  <dt ng-class="{collapsed: ctrl.schema.collapsed}">{{ctrl.schema.label}}</dt>
+  <!--
+  <dt ng-class="{collapsed: ctrl.schema.collapsed}"><span title="{{ctrl.schema.label || ctrl.schema.id}}">{{ctrl.schema.label || ctrl.schema.id}}</span></dt>
   <dd ng-class="{collapsed: ctrl.schema.collapsed}">
+  -->
+  <dt ng-class="{collapsed: ctrl.path[ctrl.path.length-1].property.hideHierarchy}"><span title="{{ctrl.schema.label || ctrl.schema.id}}">{{ctrl.schema.label || ctrl.schema.id}}</span></dt>
+  <dd ng-class="{collapsed: ctrl.path[ctrl.path.length-1].property.hideHierarchy}">
     <ul class="list-unstyled">
       <!-- FIXME: repeat over array -->
       <li ng-switch="ctrl.range">
@@ -152,38 +171,42 @@
           <div ng-if="ctrl.propertyGroups.length > 0">
             <br-form br-model="ctrl.value[ctrl.key]"
               br-groups="ctrl.propertyGroups"
+              br-library="ctrl.library"
+              br-path="ctrl.path"
               br-options="{editable: false, embedded: true}"></br-form>
           </div>
           <div ng-if="ctrl.propertyGroups.length === 0">
-            <!-- FIXME: improve handling of id vs object with id -->
+            <!-- image -->
             <div ng-if="!ctrl.selected.propertyGroup &&
-              ctrl.schema.contentType.indexOf('image/') === 0 &&
+              ctrl.schema.contentType.indexOf('image/') === 0">
+              <!-- no-id image -->
+              <div ng-if="!ctrl.value[ctrl.key].id">
+                <img ng-src="{{ctrl.value[ctrl.key]}}" />
+              </div>
+              <!-- id image -->
+              <div ng-if="ctrl.value[ctrl.key].id">
+                <img ng-src="{{ctrl.value[ctrl.key].id}}" />
+              </div>
+            </div>
+            <!-- non-object resource -->
+            <div ng-if="!ctrl.selected.propertyGroup &&
+              ctrl.schema.contentType.indexOf('image/') !== 0 &&
               !ctrl.value[ctrl.key].id">
-              <img ng-src="{{ctrl.value[ctrl.key]}}" />
+              <!-- FIXME: lookup display data -->
+              <a ng-if="ctrl.value[ctrl.key].indexOf('http') === 0"
+                href="{{ctrl.value[ctrl.key]}}">{{ctrl.value[ctrl.key]}}</a>
+              <span ng-if="ctrl.value[ctrl.key].indexOf('http') !== 0">{{ctrl.value[ctrl.key]}}</a>
             </div>
+            <!-- object resource -->
             <div ng-if="!ctrl.selected.propertyGroup &&
-              ctrl.schema.contentType.indexOf('image/') === 0 &&
+              ctrl.schema.contentType.indexOf('image/') !== 0 &&
               ctrl.value[ctrl.key].id">
-              <img ng-src="{{ctrl.value[ctrl.key].id}}" />
+              <!-- FIXME: lookup display data if needed -->
+              <a ng-if="ctrl.value[ctrl.key].id.indexOf('http') === 0"
+                href="{{ctrl.value[ctrl.key].id}}">{{ctrl.value[ctrl.key].label || ctrl.valueSchema.label || ctrl.value[ctrl.key].id}}</a>
+              <span ng-if="ctrl.value[ctrl.key].id.indexOf('http') !== 0" title="{{ctrl.value[ctrl.key].id}}">{{ctrl.value[ctrl.key].label || ctrl.valueSchema.label || ctrl.value[ctrl.key].id}}</a>
             </div>
-            <a ng-if="!ctrl.selected.propertyGroup &&
-              ctrl.value[ctrl.key].indexOf('http') === 0 &&
-              ctrl.schema.contentType.indexOf('image/') !== 0 &&
-              !ctrl.value[ctrl.key].id"
-              href="{{ctrl.value[ctrl.key]}}">{{ctrl.value[ctrl.key]}}</a>
-            <a ng-if="!ctrl.selected.propertyGroup &&
-              ctrl.value[ctrl.key].indexOf('http') === 0 &&
-              ctrl.schema.contentType.indexOf('image/') !== 0 &&
-              ctrl.value[ctrl.key].id"
-              href="{{ctrl.value[ctrl.key]}}">{{ctrl.value[ctrl.key].id}}</a>
-            <span ng-if="!ctrl.selected.propertyGroup &&
-              ctrl.value[ctrl.key].indexOf('http') !== 0 &&
-              ctrl.schema.contentType.indexOf('image/') !== 0 &&
-              !ctrl.value[ctrl.key].id">{{ctrl.value[ctrl.key]}}</span>
-            <span ng-if="!ctrl.selected.propertyGroup &&
-              ctrl.value[ctrl.key].indexOf('http') !== 0 &&
-              ctrl.schema.contentType.indexOf('image/') !== 0 &&
-              ctrl.value[ctrl.key].id">{{ctrl.value[ctrl.key].id}}</span>
+            <!-- group, try to display something -->
             <div ng-if="ctrl.selected.propertyGroup">
               {{ctrl.value[ctrl.key].label || ctrl.value[ctrl.key].id || ctrl.value[ctrl.key].type}}
             </div>
@@ -201,7 +224,7 @@
         </div>
         -->
         <div ng-switch-when="Date">
-          {{ctrl.value[ctrl.key]['@value'] | date:'medium'}}
+          <span title="{{ctrl.value[ctrl.key]['@value'] | date:'medium'}}">{{ctrl.value[ctrl.key]['@value'] | date:'medium'}}</span>
         </div>
         <div ng-switch-default>
           <p class="text-error">Unknown property type. Contact support.</p>
@@ -216,6 +239,8 @@
   <br-form
     br-model="ctrl.value[ctrl.key]"
     br-groups="[ctrl.selected.propertyGroup]"
+    br-library="ctrl.library"
+    br-path="ctrl.path"
     br-options="{
       editable: false,
       embedded: true

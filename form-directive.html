@@ -8,7 +8,8 @@
     class="form-horizontal">
     <div ng-repeat="group in groups track by group.id" ng-switch="group.type">
       <br-form-group ng-switch-when="PropertyGroup"
-        br-model="model" br-group="group" br-options="{{options}}"></br-form-group>
+        br-model="model" br-group="group" br-library="library"
+        br-options="{{options}}" br-path="path"></br-form-group>
       <div ng-switch-default>
         <p class="text-warning">Unknown group.</p>
         <pre>{{group|json}}</pre>
@@ -18,7 +19,8 @@
   <div ng-if="options.editable && options.embedded">
     <div ng-repeat="group in groups track by group.id" ng-switch="group.type">
       <br-form-group ng-switch-when="PropertyGroup"
-        br-model="model" br-group="group" br-options="{{options}}"></br-form-group>
+        br-model="model" br-group="group" br-library="library"
+        br-options="{{options}}" br-path="path"></br-form-group>
       <div ng-switch-default>
         <p class="text-warning">Unknown group.</p>
         <pre>{{group|json}}</pre>
@@ -28,7 +30,8 @@
   <div ng-if="!options.editable" ng-repeat="group in groups track by group.id"
     ng-switch="group.type">
     <br-form-group ng-switch-when="PropertyGroup"
-      br-model="model" br-group="group" br-options="{{options}}"></br-form-group>
+      br-model="model" br-group="group" br-library="library"
+      br-options="{{options}}" br-path="path"></br-form-group>
     <div ng-switch-default>
       <p class="text-warning">Unknown group.</p>
       <pre>{{group|json}}</pre>

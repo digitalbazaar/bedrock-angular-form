@@ -1,7 +1,12 @@
 <!-- <pre>GROUP OPTIONS: {{options|json}}</pre> -->
+<!--
 <div ng-class="{section: !group.collapsed}">
   <h4 ng-if="!group.collapsed && (group.label || options.embedded)"
     class="headline">{{group.label || '&nbsp;'}}</h4>
+-->
+<div ng-class="{section: !path[path.length-1].property.hideHeader}">
+  <h4 ng-if="!path[path.length-1].property.hideHeader && (group.label || options.embedded)"
+    class="headline">{{headerLabel}}</h4>
   <p ng-if="group.comment" class="text-info">{{group.comment}}</p>
   <p ng-if="group.layout.length == 0" class="text-center">
     No fields.
@@ -10,14 +15,14 @@
     ng-class="{well: !options.embedded}">
     <fieldset>
       <br-form-field ng-repeat="property in group.layout track by property.id"
-        br-property="property" br-model="model"
-        br-options="{{options}}"></br-form-field>
+        br-property="property" br-model="model" br-library="library"
+        br-options="{{options}}" br-path="path"></br-form-field>
     </fieldset>
   </div>
   <dl ng-if="!options.editable && group.layout.length > 0"
     class="dl-horizontal">
     <br-form-field ng-repeat="property in group.layout track by property.id"
-      br-property="property" br-model="model"
-      br-options="{{options}}"></br-form-field>
+      br-property="property" br-model="model" br-library="library"
+      br-options="{{options}}" br-path="path"></br-form-field>
   </dl>
 </div>

@@ -15,10 +15,13 @@ function factory() {
     restrict: 'E',
     scope: {
       groups: '=brGroups',
-      model: '=brModel'
+      library: '<?brLibrary',
+      model: '=brModel',
+      path: '<?brPath'
     },
     templateUrl: requirejs.toUrl('bedrock-angular-form/form-directive.html'),
     link: function(scope, element, attrs) {
+      scope.path = scope.path || [];
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
         var options = scope.options = scope.$eval(value) || {};

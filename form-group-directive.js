@@ -5,17 +5,20 @@
  *
  * @author Dave Longley
  */
-define([], function() {
+define(['angular'], function(angular) {
 
 'use strict';
 
 /* @ngInject */
-function factory($compile, $templateCache, $templateRequest, $timeout) {
+function factory($compile, $templateCache, $templateRequest, $timeout,
+  brFormUtilsService) {
   return {
     restrict: 'E',
     scope: {
       group: '=brGroup',
-      model: '=brModel'
+      library: '<?brLibrary',
+      model: '=brModel',
+      path: '<?brPath'
     },
     link: function(scope, element, attrs) {
       /* Default template fetch, compile, and link circumvention hack:
@@ -63,6 +66,30 @@ function factory($compile, $templateCache, $templateRequest, $timeout) {
           });
         });
       });
+
+      if(angular.equals(scope.model, {}) && 'br:default' in scope.group) {
+        // copy default and remove bnode ids
+        var defaults = brFormUtilsService.copyValue(scope.group['br:default']);
+        // FIXME: improve JSON-LD sub-tree merge
+        angular.merge(scope.model, defaults);
+      }
+
+      var hs = scope.group.headerStyle;
+      if(!hs || hs === 'GroupLabel') {
+        scope.headerLabel = scope.group.label || '&nbsp;';
+      } else if(hs === 'PathLabel') {
+        scope.headerLabel = scope.group.label || '&nbsp;';
+        var path = scope.path.map(function(path) {
+          return path.property.property.label;
+        });
+        if(scope.group.label) {
+          path = path.concat(scope.group.label);
+        }
+        scope.headerLabel = path.join('/');
+      } else {
+        console.warn('Unknown group header style:', scope.group);
+        scope.headerLabel = '&nbsp;';
+      }
     }
   };
 }

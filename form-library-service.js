@@ -23,7 +23,7 @@ function factory($rootScope, config, brAlertService, brResourceService) {
       type: '@type',
       rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
       rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
-      schema: "http://schema.org/",
+      schema: 'http://schema.org/',
       xsd: 'http://www.w3.org/2001/XMLSchema#',
       br: 'urn:bedrock:',
       layout: {'@id': 'br:layout', '@type': '@id', '@container': '@list'},
@@ -43,6 +43,11 @@ function factory($rootScope, config, brAlertService, brResourceService) {
         '@type': '@vocab'
       },
       collapsed: {'@id': 'br:collapsed', '@type': 'xsd:boolean'},
+      hideHeader: {'@id': 'br:hideHeader', '@type': 'xsd:boolean'},
+      hideHierarchy: {'@id': 'br:hideHierarchy', '@type': 'xsd:boolean'},
+      headerStyle: {'@id': 'br:headerStyle', '@type': '@vocab'},
+      GroupLabel: 'br:GroupLabel',
+      PathLabel: 'br:PathLabel',
       comment: 'rdfs:comment',
       contentType: 'br:contentType',
       displayType: 'br:displayType',
@@ -50,16 +55,19 @@ function factory($rootScope, config, brAlertService, brResourceService) {
       value: 'rdf:value',
       Property: 'rdf:Property',
       PropertyGroup: 'br:PropertyGroup',
-      Date: "xsd:dateTime",
-      String: "rdfs:Literal",
-      URL: "rdfs:Resource"
+      Class: 'rdfs:Class',
+      Date: 'xsd:dateTime',
+      String: 'rdfs:Literal',
+      URL: 'rdfs:Resource',
+      Displayer: 'br:Displayer',
+      displayerFor: {'@id': 'br:displayerFor', '@type': '@id'}
     }
   };
 
   // frames properties and property groups
   var FRAME = {
     '@context': service._CONTEXT['@context'],
-    type: ['Property', 'PropertyGroup']
+    type: ['Class', 'Displayer', 'Property', 'PropertyGroup']
   };
 
   service.create = function(options) {
@@ -78,6 +86,10 @@ function factory($rootScope, config, brAlertService, brResourceService) {
     // all groups from all loaded vocabs
     self.groups = {};
     self.hasGroups = false;
+    // all classes from all loaded vocabs
+    self.classes = {};
+    // all displayers
+    self.displayers = {};
     // flattened graph of all properties and groups
     self.graph = {'@context': service._CONTEXT['@context'], '@graph': []};
 
@@ -185,8 +197,8 @@ function factory($rootScope, config, brAlertService, brResourceService) {
           if(jsonld.hasValue(node, 'type', 'Property')) {
             if(node.id in self.properties) {
               if(angular.equals(node, self.properties[node.id])) {
-                console.info('Duplicate property ID with equal data:',
-                  node.id, 'vocab:', state.id, 'data:', node);
+                //console.info('Duplicate property ID with equal data:',
+                //  node.id, 'vocab:', state.id, 'data:', node);
               } else {
                 console.warn('Duplicate property ID with conflicting data:',
                   node.id, 'vocab:', state.id,
@@ -197,8 +209,8 @@ function factory($rootScope, config, brAlertService, brResourceService) {
           } else if(jsonld.hasValue(node, 'type', 'PropertyGroup')) {
             if(node.id in self.groups) {
               if(angular.equals(node, self.groups[node.id])) {
-                console.info('Duplicate group ID with equal data:',
-                  node.id, 'vocab:', state.id, 'data:', node);
+                //console.info('Duplicate group ID with equal data:',
+                //  node.id, 'vocab:', state.id, 'data:', node);
               } else {
                 console.warn('Duplicate group ID with conflicting data:',
                   node.id, 'vocab:', state.id,
@@ -207,6 +219,33 @@ function factory($rootScope, config, brAlertService, brResourceService) {
             }
             self.groups[node.id] = node;
             self.hasGroups = true;
+          } else if(jsonld.hasValue(node, 'type', 'Class')) {
+            if(node.id in self.classes) {
+              if(angular.equals(node, self.classes[node.id])) {
+                //console.info('Duplicate class ID with equal data:',
+                //  node.id, 'vocab:', state.id, 'data:', node);
+              } else {
+                console.warn('Duplicate class ID with conflicting data:',
+                  node.id, 'vocab:', state.id,
+                  'old:', self.classes[node.id], 'new:', node);
+              }
+            }
+            self.classes[node.id] = node;
+          } else if(jsonld.hasValue(node, 'type', 'Displayer')) {
+            if(node.id in self.displayers) {
+              if(angular.equals(node, self.displayers[node.id])) {
+                //console.info('Duplicate class ID with equal data:',
+                //  node.id, 'vocab:', state.id, 'data:', node);
+              } else {
+                console.warn('Duplicate displayer ID with conflicting data:',
+                  node.id, 'vocab:', state.id,
+                  'old:', self.displayers[node.id], 'new:', node);
+              }
+            }
+            self.displayers[node.id] = node;
+          } else {
+            console.warn('Unknown type:',
+              node.id, 'vocab:', state.id, 'node:', node);
           }
         });
 

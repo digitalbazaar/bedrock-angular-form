@@ -86,6 +86,43 @@ function factory() {
     });
   };
 
+  /**
+   * Remove blank node ids to avoid conflicts when using copied values.
+   */
+  function removeBlankIds(target) {
+    if(angular.isObject(target) && 'id' in target &&
+      target.id.indexOf('_:') === 0) {
+      delete target.id;
+    }
+    angular.forEach(target, function(value, key) {
+      if(angular.isObject(value) || angular.isArray(value)) {
+        removeBlankIds(value);
+      }
+    });
+    return target;
+  }
+
+  /**
+   * Copy a value and remove blank node ids.
+   *
+   * Used for values that have been loaded into a library and processing has
+   * assigned blank node ids.
+   *
+   * @param options
+   *          idOnly: if object, only copy id
+   *
+   * @return copy of value
+   */
+  service.copyValue = function(target, options) {
+    if(angular.isObject(target) && options && options.idOnly) {
+      if(target.id) {
+        return removeBlankIds({id: target.id});
+      }
+      return {};
+    }
+    return removeBlankIds(angular.copy(target));
+  }
+
   function hasAttrPrefix(attr, prefix) {
     return (
       attr.length > prefix.length &&

@@ -11,12 +11,14 @@ define(['angular', 'jsonld'], function(angular, jsonld) {
 'use strict';
 
 /* @ngInject */
-function factory() {
+function factory(brFormUtilsService) {
   return {
     restrict: 'E',
     scope: {
-      property: '=brProperty',
-      model: '=brModel'
+      library: '<?brLibrary',
+      model: '=brModel',
+      path: '<?brPath',
+      property: '=brProperty'
     },
     controller: function() {},
     controllerAs: 'ctrl',
@@ -26,6 +28,11 @@ function factory() {
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
         ctrl.options = scope.$eval(value) || {};
+        if(ctrl.options.editable) {
+          ctrl.valueSchema = null;
+        } else {
+          lookupValue();
+        }
       });
 
       // property is for @id
@@ -42,6 +49,7 @@ function factory() {
       ctrl.propertyGroups = jsonld.getValues(ctrl.property, 'propertyGroup');
       ctrl.range = ctrl.schema.range;
       ctrl.value = ctrl.model;
+      ctrl.valueSchema = null;
       ctrl.key = ctrl.propertyId;
       ctrl.rangeOptions = [];
       ctrl.selected = null;
@@ -52,14 +60,9 @@ function factory() {
           var opt = ctrl.property.rangeOption[i];
           var option = {
             label: opt.label,
-            value: angular.copy(opt.value)
+            // FIXME: add support for non-idOnly values
+            value: brFormUtilsService.copyValue(opt.value, {idOnly: true})
           };
-          if(angular.isObject(option.value) && 'id' in option.value &&
-            option.value.id.indexOf('_:') === 0) {
-            // remove blank node ID from value to avoid conflicts with
-            // the model's blank nodes
-            delete option.value.id;
-          }
           if(opt.propertyGroup) {
             option.propertyGroup = opt.propertyGroup;
           }
@@ -109,6 +112,12 @@ function factory() {
         });
       }
 
+      // update path
+      ctrl.path = ctrl.path ? ctrl.path.slice() : [];
+      ctrl.path.push({
+        property: ctrl.property
+      });
+
       if(ctrl.value[ctrl.key] === undefined) {
         initValue();
       }
@@ -123,10 +132,15 @@ function factory() {
 
         if('value' in ctrl.property) {
           // use value from property description
-          ctrl.value[ctrl.key] = angular.copy(ctrl.property.value);
+          ctrl.value[ctrl.key] =
+            // FIXME: add support for non-idOnly values
+            brFormUtilsService.copyValue(ctrl.property.value, {idOnly: true});
         } else if('br:default' in ctrl.schema) {
           // use default from schema description
-          ctrl.value[ctrl.key] = angular.copy(ctrl.schema['br:default']);
+          ctrl.value[ctrl.key] =
+            // FIXME: add support for non-idOnly values
+            brFormUtilsService.copyValue(ctrl.schema['br:default'],
+              {idOnly: true});
         } else {
           // use default value
           if(ctrl.range === 'Date') {
@@ -136,6 +150,24 @@ function factory() {
             };
           } else {
             ctrl.value[ctrl.key] = null;
+          }
+        }
+      }
+
+      // lookup value as needed for display
+      function lookupValue() {
+        if(ctrl.library && ctrl.schema.range === 'URL') {
+          var id;
+          if(angular.isString(ctrl.value[ctrl.key])) {
+            id = ctrl.value[ctrl.key];
+          } else if(angular.isObject(ctrl.value[ctrl.key]) &&
+            Object.keys(ctrl.value[ctrl.key]).length === 1 &&
+            'id' in ctrl.value[ctrl.key]) {
+            id = ctrl.value[ctrl.key].id;
+          }
+          if(id) {
+            ctrl.valueSchema = ctrl.library.classes[id] ||
+              ctrl.library.properties[id];
           }
         }
       }
