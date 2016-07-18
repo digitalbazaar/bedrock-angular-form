@@ -11,8 +11,7 @@ define(['angular', 'jsonld'], function(angular, jsonld) {
 'use strict';
 
 /* @ngInject */
-function factory(
-  $rootScope, config, brAlertService, brRefreshService, brResourceService) {
+function factory($rootScope, config, brAlertService, brResourceService) {
   var service = {};
 
   // collection of all vocabs
@@ -82,6 +81,11 @@ function factory(
     // flattened graph of all properties and groups
     self.graph = {'@context': service._CONTEXT['@context'], '@graph': []};
 
+    /* A private queue for ensuring vocabularies are merged in the order
+    they are loaded; allows fetching to occur asynchronously prior to
+    merging. */
+    self._mergeQueue = [];
+
     // preload configured vocabs
     if(config.data.forms && options.loadVocabs !== false) {
       Promise.all((config.data.forms.vocabs || []).map(function(id) {
@@ -98,10 +102,6 @@ function factory(
       });
     }
   }
-
-  /* A private queue for ensuring vocabularies are merged in the order
-  they are loaded; allows fetching to occur asynchronously prior to merging. */
-  var mergeQueue = [];
 
   Library.prototype.load = function(id, options) {
     var self = this;
@@ -120,18 +120,25 @@ function factory(
         options.base = id;
       }
     }
-    return promise.then(function(vocab) {
+
+    promise = promise.then(function(vocab) {
       return jsonld.promises.expand(vocab, options);
     }).then(function(vocab) {
       // compact with standard context
       return jsonld.promises.compact(
         vocab, service._CONTEXT, {skipExpansion: true});
-    }).then(function(vocab) {
-      mergeQueue.push({
+    });
+
+    return new Promise(function(resolve, reject) {
+      self._mergeQueue.push({
         id: id,
-        vocab: vocab
+        promise: promise,
+        resolve: resolve,
+        reject: reject
       });
-      return _mergeVocabs();
+      if(self._mergeQueue.length === 1) {
+        _mergeVocab();
+      }
     }).then(function() {
       return self.vocabs[id];
     });
@@ -140,67 +147,77 @@ function factory(
     // library is considered defunct; it's not considered easy to recover
     // a library where one vocab fails to load.
 
-    function _mergeVocabs() {
-      if(mergeQueue.length === 0 || mergeQueue.length > 1) {
-        return Promise.resolve();
-      }
-
+    function _mergeVocab() {
       // merge in new vocab w/o merging existing nodes
-      var state = mergeQueue.pop();
-      return jsonld.promises.merge(
-        [self.graph, state.vocab], null, {mergeNodes: false})
-        .then(function(merged) {
-          state.graph = merged;
-          // reframe merged data w/properties and groups filtered and linked
-          return jsonld.promises.frame(merged, FRAME, {embed: '@link'});
-        }).then(function(framed) {
-          // store vocab and update graph
-          if(state.id in self.vocabs) {
-            if(angular.equals(state.vocab, self.vocabs[node.id])) {
-              console.info('Duplicate vocab ID with equal data:',
-                state.id, 'data:', state.vocab);
-            } else {
-              console.warn('Duplicate vocab ID with conflicting data:',
-                state.id, 'old:', self.vocabs[state.id], 'new:', state.vocab);
-            }
+      var state = self._mergeQueue[0];
+      return state.promise.then(function(vocab) {
+        state.vocab = vocab;
+      }).then(function() {
+        return jsonld.promises.merge(
+          [self.graph, state.vocab], null, {mergeNodes: false});
+      }).then(function(merged) {
+        state.graph = merged;
+        // reframe merged data w/properties and groups filtered and linked
+        return jsonld.promises.frame(merged, FRAME, {embed: '@link'});
+      }).catch(function(err) {
+        self._mergeQueue.shift();
+        state.reject(err);
+        throw err;
+      }).then(function(framed) {
+        // store vocab and update graph
+        if(state.id in self.vocabs) {
+          if(angular.equals(state.vocab, self.vocabs[state.id])) {
+            console.info('Duplicate vocab ID with equal data:',
+              state.id, 'data:', state.vocab);
+          } else {
+            console.warn('Duplicate vocab ID with conflicting data:',
+              state.id, 'old:', self.vocabs[state.id], 'new:', state.vocab);
           }
-          self.vocabs[state.id] = state.vocab;
-          self.hasVocabs = true;
-          self.graph = state.graph;
+        }
+        self.vocabs[state.id] = state.vocab;
+        self.hasVocabs = true;
+        self.graph = state.graph;
 
-          // build property and group indexes
-          var nodes = jsonld.getValues(framed, '@graph');
-          angular.forEach(nodes, function(node) {
-            // raise conflict exception, overwrite silently?
-            if(jsonld.hasValue(node, 'type', 'Property')) {
-              if(node.id in self.properties) {
-                if(angular.equals(node, self.properties[node.id])) {
-                  console.info('Duplicate property ID with equal data:',
-                    node.id, 'vocab:', state.id, 'data:', node);
-                } else {
-                  console.warn('Duplicate property ID with conflicting data:',
-                    node.id, 'vocab:', state.id,
-                    'old:', self.properties[node.id], 'new:', node);
-                }
+        // build property and group indexes
+        var nodes = jsonld.getValues(framed, '@graph');
+        angular.forEach(nodes, function(node) {
+          // raise conflict exception, overwrite silently?
+          if(jsonld.hasValue(node, 'type', 'Property')) {
+            if(node.id in self.properties) {
+              if(angular.equals(node, self.properties[node.id])) {
+                console.info('Duplicate property ID with equal data:',
+                  node.id, 'vocab:', state.id, 'data:', node);
+              } else {
+                console.warn('Duplicate property ID with conflicting data:',
+                  node.id, 'vocab:', state.id,
+                  'old:', self.properties[node.id], 'new:', node);
               }
-              self.properties[node.id] = node;
-            } else if(jsonld.hasValue(node, 'type', 'PropertyGroup')) {
-              if(node.id in self.groups) {
-                if(angular.equals(node, self.groups[node.id])) {
-                  console.info('Duplicate group ID with equal data:',
-                    node.id, 'vocab:', state.id, 'data:', node);
-                } else {
-                  console.warn('Duplicate group ID with conflicting data:',
-                    node.id, 'vocab:', state.id,
-                    'old:', self.groups[node.id], 'new:', node);
-                }
-              }
-              self.groups[node.id] = node;
-              self.hasGroups = true;
             }
-          });
-          return _mergeVocabs();
+            self.properties[node.id] = node;
+          } else if(jsonld.hasValue(node, 'type', 'PropertyGroup')) {
+            if(node.id in self.groups) {
+              if(angular.equals(node, self.groups[node.id])) {
+                console.info('Duplicate group ID with equal data:',
+                  node.id, 'vocab:', state.id, 'data:', node);
+              } else {
+                console.warn('Duplicate group ID with conflicting data:',
+                  node.id, 'vocab:', state.id,
+                  'old:', self.groups[node.id], 'new:', node);
+              }
+            }
+            self.groups[node.id] = node;
+            self.hasGroups = true;
+          }
         });
+
+        self._mergeQueue.shift();
+        state.resolve();
+
+        // more to merge
+        if(self._mergeQueue.length > 0) {
+          _mergeVocab();
+        }
+      });
     }
   };
 
