@@ -155,6 +155,53 @@ function factory($rootScope, config, brAlertService, brResourceService) {
       return self.vocabs[id];
     });
 
+    /**
+     * Check if two partial JSON-LD objects are equal. Only uses basic JSON
+     * comparisons and assumes similar compacted data. Special equality
+     * function needed in order to ignore blank node ids.
+     */
+    function _equals(o1, o2) {
+      // TODO: track object stack to avoid loops
+      if(o1 === o2) {
+        return true;
+      }
+      if(typeof o1 !== typeof o2) {
+        return false;
+      }
+      var i;
+      if(angular.isArray(o1)) {
+        for(i = 0; i < o1.length; ++i) {
+          if(!_equals(o1[i], o2[i])) {
+            return false;
+          }
+        }
+        return true;
+      }
+      if(angular.isObject(o1)) {
+        var key;
+        var seen = {};
+        for(key in o1) {
+          if(key === 'id' && o1[key].indexOf('_:') === 0) {
+            continue;
+          }
+          if(!(key in o2) || !_equals(o1[key], o2[key])) {
+            return false;
+          }
+          seen[key] = true;
+        }
+        for(key in o2) {
+          if(key === 'id' && o2[key].indexOf('_:') === 0) {
+            continue;
+          }
+          if(!(key in seen)) {
+            return false;
+          }
+        }
+        return true;
+      }
+      return false;
+    }
+
     // Note: If an error occurs while any vocab is loading, the entire
     // library is considered defunct; it's not considered easy to recover
     // a library where one vocab fails to load.
@@ -178,7 +225,7 @@ function factory($rootScope, config, brAlertService, brResourceService) {
       }).then(function(framed) {
         // store vocab and update graph
         if(state.id in self.vocabs) {
-          if(angular.equals(state.vocab, self.vocabs[state.id])) {
+          if(_equals(state.vocab, self.vocabs[state.id])) {
             //console.info('Duplicate vocab ID with equal data:',
             //  state.id, 'data:', state.vocab);
           } else {
@@ -196,7 +243,7 @@ function factory($rootScope, config, brAlertService, brResourceService) {
           // raise conflict exception, overwrite silently?
           if(jsonld.hasValue(node, 'type', 'Property')) {
             if(node.id in self.properties) {
-              if(angular.equals(node, self.properties[node.id])) {
+              if(_equals(node, self.properties[node.id])) {
                 //console.info('Duplicate property ID with equal data:',
                 //  node.id, 'vocab:', state.id, 'data:', node);
               } else {
@@ -208,7 +255,7 @@ function factory($rootScope, config, brAlertService, brResourceService) {
             self.properties[node.id] = node;
           } else if(jsonld.hasValue(node, 'type', 'PropertyGroup')) {
             if(node.id in self.groups) {
-              if(angular.equals(node, self.groups[node.id])) {
+              if(_equals(node, self.groups[node.id])) {
                 //console.info('Duplicate group ID with equal data:',
                 //  node.id, 'vocab:', state.id, 'data:', node);
               } else {
@@ -221,7 +268,7 @@ function factory($rootScope, config, brAlertService, brResourceService) {
             self.hasGroups = true;
           } else if(jsonld.hasValue(node, 'type', 'Class')) {
             if(node.id in self.classes) {
-              if(angular.equals(node, self.classes[node.id])) {
+              if(_equals(node, self.classes[node.id])) {
                 //console.info('Duplicate class ID with equal data:',
                 //  node.id, 'vocab:', state.id, 'data:', node);
               } else {
@@ -233,7 +280,7 @@ function factory($rootScope, config, brAlertService, brResourceService) {
             self.classes[node.id] = node;
           } else if(jsonld.hasValue(node, 'type', 'Displayer')) {
             if(node.id in self.displayers) {
-              if(angular.equals(node, self.displayers[node.id])) {
+              if(_equals(node, self.displayers[node.id])) {
                 //console.info('Duplicate class ID with equal data:',
                 //  node.id, 'vocab:', state.id, 'data:', node);
               } else {
