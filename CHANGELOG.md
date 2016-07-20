@@ -1,5 +1,7 @@
 # bedrock-angular-form ChangeLog
 
+## 2.7.0 - 2016-07-20
+
 ### Fixed
 - Merge queue bugs.
 
