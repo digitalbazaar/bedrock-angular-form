@@ -98,6 +98,13 @@ function factory($rootScope, config, brAlertService, brResourceService) {
     merging. */
     self._mergeQueue = [];
 
+    // TODO: move code below to `load` function and change load API so
+    // `load` may only be called once per library (and must be called
+    // to initialize it) ... and the options must include all vocabs
+    // that are to be loaded (or the `options.loadVocabs` flag is
+    // set which will load everything from the config); this change is
+    // necessary to create a consistent view of a library
+
     // preload configured vocabs
     if(config.data.forms && options.loadVocabs !== false) {
       Promise.all((config.data.forms.vocabs || []).map(function(id) {
