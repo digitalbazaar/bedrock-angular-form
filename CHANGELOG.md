@@ -1,5 +1,22 @@
 # bedrock-angular-form ChangeLog
 
+### Fixed
+- Merge queue bugs.
+
+### Changed
+- Added library parameter.
+- Keep track of property path.
+- Lookup schema for values as needed.
+- Improve correctness of data while editing.
+- Improve field display. (edge cases, objects with ids)
+- Index Class types.
+- Warn when loading vocab ids with different data.
+
+### Added
+- Add alternate to "collapsed". Layout objects can specify "hideHierarchy" and "hideHeader" for fine display control.
+- Add "headerStyle" group option.
+- Add vocab Displayer type to tie a PropertyGroup to an object type.
+
 ## 2.6.1 - 2016-07-14
 
 ### Fixed
