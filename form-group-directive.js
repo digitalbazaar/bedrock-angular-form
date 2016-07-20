@@ -10,8 +10,8 @@ define(['angular'], function(angular) {
 'use strict';
 
 /* @ngInject */
-function factory($compile, $templateCache, $templateRequest, $timeout,
-  brFormUtilsService) {
+function factory(
+  $compile, $templateRequest, $timeout, brFormUtilsService) {
   return {
     restrict: 'E',
     scope: {
@@ -70,7 +70,7 @@ function factory($compile, $templateCache, $templateRequest, $timeout,
       if(angular.equals(scope.model, {}) && 'br:default' in scope.group) {
         // copy default and remove bnode ids
         var defaults = brFormUtilsService.copyValue(scope.group['br:default']);
-        // FIXME: improve JSON-LD sub-tree merge
+        // FIXME: improve JSON-LD sub-tree merge (use `jsonld.merge`?)
         angular.merge(scope.model, defaults);
       }
 

@@ -139,8 +139,8 @@ function factory(brFormUtilsService) {
           // use default from schema description
           ctrl.value[ctrl.key] =
             // FIXME: add support for non-idOnly values
-            brFormUtilsService.copyValue(ctrl.schema['br:default'],
-              {idOnly: true});
+            brFormUtilsService.copyValue(
+              ctrl.schema['br:default'], {idOnly: true});
         } else {
           // use default value
           if(ctrl.range === 'Date') {
