@@ -158,12 +158,8 @@
 </div>
 <div ng-if="!ctrl.options.editable && ctrl.value[ctrl.key]">
   <!-- FIXME: add schema.comment as help text -->
-  <!--
-  <dt ng-class="{collapsed: ctrl.schema.collapsed}"><span title="{{ctrl.schema.label || ctrl.schema.id}}">{{ctrl.schema.label || ctrl.schema.id}}</span></dt>
-  <dd ng-class="{collapsed: ctrl.schema.collapsed}">
-  -->
-  <dt ng-class="{collapsed: ctrl.path[ctrl.path.length-1].property.hideHierarchy}"><span title="{{ctrl.schema.label || ctrl.schema.id}}">{{ctrl.schema.label || ctrl.schema.id}}</span></dt>
-  <dd ng-class="{collapsed: ctrl.path[ctrl.path.length-1].property.hideHierarchy}">
+  <dt ng-class="{collapsed: ctrl.schema.collapsed || ctrl.path[ctrl.path.length-1].property.hideHierarchy}"><span title="{{ctrl.schema.label || ctrl.schema.id}}">{{ctrl.schema.label || ctrl.schema.id}}</span></dt>
+  <dd ng-class="{collapsed: ctrl.schema.collapsed || ctrl.path[ctrl.path.length-1].property.hideHierarchy}">
     <ul class="list-unstyled">
       <!-- FIXME: repeat over array -->
       <li ng-switch="ctrl.range">

@@ -1,11 +1,6 @@
 <!-- <pre>GROUP OPTIONS: {{options|json}}</pre> -->
-<!--
-<div ng-class="{section: !group.collapsed}">
-  <h4 ng-if="!group.collapsed && (group.label || options.embedded)"
-    class="headline">{{group.label || '&nbsp;'}}</h4>
--->
-<div ng-class="{section: !path[path.length-1].property.hideHeader}">
-  <h4 ng-if="!path[path.length-1].property.hideHeader && (group.label || options.embedded)"
+<div ng-class="{section: !group.collapsed && !path[path.length-1].property.hideHeader}">
+  <h4 ng-if="!group.collapsed && !path[path.length-1].property.hideHeader && (group.label || options.embedded)"
     class="headline">{{headerLabel}}</h4>
   <p ng-if="group.comment" class="text-info">{{group.comment}}</p>
   <p ng-if="group.layout.length == 0" class="text-center">
