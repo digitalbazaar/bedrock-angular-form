@@ -121,7 +121,7 @@ function factory() {
       return {};
     }
     return removeBlankIds(angular.copy(target));
-  }
+  };
 
   function hasAttrPrefix(attr, prefix) {
     return (
