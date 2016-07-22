@@ -1,5 +1,8 @@
 # bedrock-angular-form ChangeLog
 
+### Added
+- Add `lowerCaseOnly` option (true by default) for email brInput types.
+
 ## 2.7.0 - 2016-07-20
 
 ### Fixed

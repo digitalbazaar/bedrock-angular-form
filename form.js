@@ -46,6 +46,8 @@ var module = angular.module('bedrock.form', ['bedrock.lazyCompile']);
 
 formControlComponent(module);
 selectComponent(module);
+inputDirective(module);
+
 module.directive(datepickerDirective);
 module.directive(formDirective);
 module.directive(formFieldDirective);
@@ -54,7 +56,6 @@ module.service(formLibraryService);
 module.directive(formStaticDirective);
 module.service(formUtilsService);
 module.directive(helpToggleDirective);
-module.directive(inputDirective);
 module.directive(inputWatcherDirective);
 module.directive(radioGroupDirective);
 module.directive(textareaDirective);

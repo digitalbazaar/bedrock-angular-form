@@ -9,6 +9,11 @@ define([], function() {
 
 'use strict';
 
+function register(module) {
+  module.directive('brInput', factory);
+  module.directive('brInputManipulator', brInputManipulator);
+}
+
 /* @ngInject */
 function factory($parse, brFormUtilsService) {
   return {
@@ -116,6 +121,11 @@ function Ctrl($attrs, $scope) {
       options.help = !options.inline;
     }
 
+    // email addresses are case insensitive, so force to lower case by default
+    if(options.type === 'email' && !('lowerCaseOnly' in options)) {
+      options.lowerCaseOnly = true;
+    }
+
     return options;
   }
 }
@@ -124,6 +134,27 @@ function fixLegacyExpression(expression) {
   return expression.replace(/{{|}}/g, '');
 }
 
-return {brInput: factory};
+/* @ngInject */
+function brInputManipulator() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ctrl) {
+      if(element[0].type === 'email' &&
+        scope.brInputCtrl.options &&
+        scope.brInputCtrl.options.lowerCaseOnly) {
+        ctrl.$parsers.push(function(value) {
+          var transformed = value.toLowerCase();
+          if(transformed !== value) {
+            ctrl.$setViewValue(transformed);
+            ctrl.$render();
+          }
+          return transformed;
+        });
+      }
+    }
+  };
+}
+
+return register;
 
 });
