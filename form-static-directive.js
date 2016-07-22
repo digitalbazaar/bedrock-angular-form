@@ -16,7 +16,7 @@ function factory() {
     scope: true,
     transclude: {
       'br-form-static-content': '?brFormStaticContent',
-      'br-form-static-help': '?brFormStaticHelp',
+      'br-form-static-help': '?brFormStaticHelp'
     },
     controller: function() {},
     controllerAs: 'ctrl',
