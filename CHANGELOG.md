@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.8.1 - 2016-07-22
+
+### Fixed
+- Always create nodes (expanded form `@id`) for range URL properties.
+
 ## 2.8.0 - 2016-07-22
 
 ### Added
