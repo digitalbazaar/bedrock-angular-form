@@ -27,7 +27,7 @@
         br-library="ctrl.library"
         br-path="ctrl.path"
         br-options="{editable: true, embedded: true}"></br-form>
-      <br-input ng-if="!ctrl.property.optional && ctrl.rangeOptions <= 1"
+      <br-input ng-if="ctrl.rangeOptions.length === 0"
         br-model="ctrl.value[ctrl.key].id"
         br-options="{
           icon: 'globe',
@@ -53,8 +53,7 @@
         }">
         {{ctrl.schema.comment}}
       </br-select>
-      <br-input
-        ng-if="!ctrl.property.optional && ctrl.rangeOptions.length <= 1"
+      <br-input ng-if="ctrl.rangeOptions.length === 0"
         br-model="ctrl.value[ctrl.key]"
         br-options="{
           icon: 'pencil',
@@ -91,7 +90,7 @@
       </br-select>
       <!-- Time here is (24*60*60*1000 - 1), 24 hours minus one millisecond. -->
       <br-datepicker
-        ng-if="!ctrl.property.optional && ctrl.rangeOptions.length <= 1"
+        ng-if="ctrl.rangeOptions.length === 0"
         br-model="ctrl.value[ctrl.key]['@value']"
         br-options="{
           name: '{{ctrl.key}}',
