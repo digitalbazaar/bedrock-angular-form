@@ -103,6 +103,10 @@ function Ctrl($attrs, $scope) {
     options = options || {};
     options.placeholder = options.placeholder || '';
 
+    if(!('showValidation' in options)) {
+      options.showValidation = true;
+    }
+
     // prefix "fa-" to icon
     if(typeof options.icon === 'string' &&
       options.icon.indexOf('fa-') !== 0) {

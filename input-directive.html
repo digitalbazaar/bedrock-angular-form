@@ -17,6 +17,11 @@
     <div ng-transclude="br-input-help"></div>
   </br-form-control-help>
   <br-form-control-validation-errors ng-if="brInputCtrl.options.showValidation">
-    <div ng-transclude="br-input-validation-errors"></div>
+    <!-- FIXME Validation errors may display weirdly for inline inputs. -->
+    <div ng-transclude="br-input-validation-errors">
+      <br-input-validation-errors>
+        An error was detected in the input above.
+      </br-input-validation-errors>
+    </div>
   </br-form-control-validation-errors>
 </br-form-control>
