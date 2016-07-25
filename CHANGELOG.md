@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.8.2 - 2016-07-25
+
+### Fixed
+- Use non-selector component when no range options are given.
+
 ## 2.8.1 - 2016-07-22
 
 ### Fixed
