@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.9.0 - 2016-07-25
+
+### Added
+- Enable showValidation by default with br-input.
+
 ## 2.8.2 - 2016-07-25
 
 ### Fixed
