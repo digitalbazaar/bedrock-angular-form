@@ -154,22 +154,24 @@ function Ctrl($attrs, $element, $scope, $timeout) {
   var validation = self.validation = {};
 
   validation.isVisible = function() {
+    var options = self.options;
+
     // do not show empty validation area
     if(!$.trim(errorElement.html())) {
       return false;
     }
+    // do not show validation if field not in form
+    if(!self.form || !('name' in options) || !self.form[options.name]) {
+      return false;
+    }
+
     // use `showValidation` option if given
-    var options = self.options;
     if('showValidation' in options) {
       if(!options.showValidation) {
         return false;
       }
       return (self.form[options.name].$touched &&
         self.form[options.name].$invalid);
-    }
-    // do not show validation if field not in form
-    if(!self.form || !('name' in options) || !self.form[options.name]) {
-      return false;
     }
     // default: show if not inline, form submitted, and field invalid
     return (!options.inline &&

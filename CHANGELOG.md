@@ -1,5 +1,8 @@
 # bedrock-angular-form ChangeLog
 
+### Fixed
+- Check for form existence when computing validation visibility.
+
 ## 2.9.0 - 2016-07-25
 
 ### Added
