@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.9.2 - 2016-09-13
+
+### Fixed
+- Default `Date` fields to null instead of `new Date()`.
+
 ## 2.9.1 - 2016-07-26
 
 ### Fixed
