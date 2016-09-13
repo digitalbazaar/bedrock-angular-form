@@ -146,7 +146,7 @@ function factory(brFormUtilsService) {
           if(ctrl.range === 'Date') {
             ctrl.value[ctrl.key] = {
               type: 'xsd:dateTime',
-              '@value': new Date()
+              '@value': null
             };
           } else {
             ctrl.value[ctrl.key] = null;
