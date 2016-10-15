@@ -1,6 +1,6 @@
 {
   "name": "bedrock-angular-form",
-  "version": "2.9.3",
+  "version": "2.9.4-0",
   "main": [
     "./form.js",
     "./form.less"
