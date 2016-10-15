@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.9.3 - 2016-10-14
+
+### Changed
+- Expand use of options.lowerCaseOnly in br-input.
+
 ## 2.9.2 - 2016-09-13
 
 ### Fixed
