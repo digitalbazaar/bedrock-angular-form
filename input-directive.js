@@ -143,9 +143,7 @@ function brInputManipulator() {
   return {
     require: 'ngModel',
     link: function(scope, element, attrs, ctrl) {
-      if(element[0].type === 'email' &&
-        scope.brInputCtrl.options &&
-        scope.brInputCtrl.options.lowerCaseOnly) {
+      if(scope.brInputCtrl.options && scope.brInputCtrl.options.lowerCaseOnly) {
         ctrl.$parsers.push(function(value) {
           var transformed = value.toLowerCase();
           if(transformed !== value) {
