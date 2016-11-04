@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.10.0 - 2016-11-04
+
+### Added
+- Directive: `sameAs` validator.
+
 ## 2.9.3 - 2016-10-14
 
 ### Changed
