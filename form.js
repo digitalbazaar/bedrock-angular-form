@@ -21,7 +21,8 @@ define([
   './radio-group-directive',
   './select-component',
   './textarea-directive',
-  './track-state-directive'
+  './track-state-directive',
+  './validator-same-as-directive'
 ], function(
   angular,
   datepickerDirective,
@@ -38,7 +39,9 @@ define([
   radioGroupDirective,
   selectComponent,
   textareaDirective,
-  trackStateDirective) {
+  trackStateDirective,
+  validatorSameAs
+) {
 
 'use strict';
 
@@ -47,6 +50,7 @@ var module = angular.module('bedrock.form', ['bedrock.lazyCompile']);
 formControlComponent(module);
 selectComponent(module);
 inputDirective(module);
+validatorSameAs(module);
 
 module.directive(datepickerDirective);
 module.directive(formDirective);
