@@ -157,7 +157,7 @@ function Ctrl($attrs, $element, $scope, $timeout) {
     var options = self.options;
 
     // do not show empty validation area
-    if(!$.trim(errorElement.html())) {
+    if(!errorElement.html().trim()) {
       return false;
     }
     // do not show validation if field not in form
