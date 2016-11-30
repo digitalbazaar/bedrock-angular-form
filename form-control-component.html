@@ -7,8 +7,29 @@
   ng-style="{display: ($ctrl.options.inline ? 'inline-' : '') + 'block'}">
   <label ng-if="$ctrl.options.label !== undefined"
     class="{{$ctrl.options.classes.label}} control-label"
-    for="{{$ctrl.options.name}}">
-    <span ng-bind-html="$ctrl.options.label"></span></label>
+    for="{{$ctrl.options.name}}"
+    ng-click="$ctrl.options.help &&
+      $ctrl.options.helpTogglePosition === 'label' && $ctrl.helpToggle.onClick($event)"
+    ng-mouseenter="$ctrl.onMouseEnterContent()"
+    ng-mouseleave="$ctrl.onMouseLeaveContent()">
+    <span style="white-space: nowrap">
+      <a ng-if="$ctrl.options.help && $ctrl.options.helpTogglePosition === 'label'"
+        ng-class="{
+          'br-help-toggle-invisible': !($ctrl.helpToggle.visible ||
+            $ctrl.showHelpToggle),
+          active: $ctrl.helpToggle.pressed
+        }"
+        ng-style="{
+          visibility: (($ctrl.helpToggle.visible ||
+            $ctrl.showHelpToggle) && 'visible') || 'hidden'
+        }"
+        ng-mouseenter="$ctrl.helpToggle.onMouseEnter($event)"
+        ng-mouseleave="$ctrl.helpToggle.onMouseLeave($event)"
+        tabindex="-1"><i class="fa fa-question-circle"></i></a>
+      <span ng-bind-html="$ctrl.firstLabelWord"></span>
+    </span>
+    <span ng-bind-html="$ctrl.restLabelWords"></span>
+  </label>
   <div class="input-group
     {{(!$ctrl.options.inline && $ctrl.options.classes.content) || ''}}"
     ng-class="{
@@ -22,14 +43,15 @@
       ng-src="{{$ctrl.options.image}}"></span>
     <span class="br-form-control-wrapper"
       ng-class="{
-        'br-help-toggle-present': $ctrl.options.help && !$ctrl.options.inline,
-        'br-help-toggle-visible': ($ctrl.helpToggle.visible ||
-          $ctrl.showHelpToggle),
+        'br-help-toggle-present': ($ctrl.options.help && !$ctrl.options.inline &&
+          $ctrl.options.helpTogglePosition === 'content'),
+        'br-help-toggle-visible': ($ctrl.options.helpTogglePosition === 'content' &&
+          ($ctrl.helpToggle.visible || $ctrl.showHelpToggle)),
       }"
       ng-mouseenter="$ctrl.onMouseEnterContent()"
       ng-mouseleave="$ctrl.onMouseLeaveContent()"
       ng-transclude="br-form-control-content"></span>
-    <span ng-if="$ctrl.options.help"
+    <span ng-if="$ctrl.options.help && $ctrl.options.helpTogglePosition === 'content'"
       class="input-group-btn br-help-toggle
         {{$ctrl.options.classes.helpToggle}}">
       <button type="button" class="btn btn-default"

@@ -51,6 +51,10 @@ function Ctrl($attrs, $element, $scope, $timeout) {
 
     $attrs.$observe('brOptions', function() {
       self.options = self.defaultOptions($scope.$eval($attrs.brOptions || {}));
+      var labelWords = (self.options.label || '').split(' ');
+      self.firstLabelWord = labelWords[0] || '';
+      labelWords.shift();
+      self.restLabelWords = labelWords.join(' ');
     });
 
     // true = use capture (to capture events on child elements)
@@ -142,6 +146,7 @@ function Ctrl($attrs, $element, $scope, $timeout) {
     return angular.merge({
       inline: false,
       help: !options.inline,
+      helpTogglePosition: 'content',
       classes: {
         label: 'col-sm-3',
         content: 'col-sm-8',

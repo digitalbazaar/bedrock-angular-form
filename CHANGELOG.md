@@ -1,5 +1,8 @@
 # bedrock-angular-form ChangeLog
 
+### Added
+- Option to position help trigger near label for form controls.
+
 ## 2.10.0 - 2016-11-04
 
 ### Added
