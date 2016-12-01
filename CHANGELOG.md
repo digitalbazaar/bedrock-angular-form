@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.11.1 - 2016-12-01
+
+### Fixed
+- Remove obsolete `version` tag from bower.json.
+
 ## 2.11.0 - 2016-12-01
 
 ### Added
