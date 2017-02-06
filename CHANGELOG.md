@@ -1,5 +1,11 @@
 # bedrock-angular-form ChangeLog
 
+## 2.12.0 - 2017-02-06
+
+### Added
+- Show validation errors by default in textarea directive.
+- Add default validation text in textarea directive.
+
 ## 2.11.1 - 2016-12-01
 
 ### Fixed
