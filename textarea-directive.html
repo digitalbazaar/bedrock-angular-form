@@ -16,6 +16,8 @@
     <div ng-transclude="br-textarea-help"></div>
   </br-form-control-help>
   <br-form-control-validation-errors ng-if="brTextAreaCtrl.options.showValidation">
-    <div ng-transclude="br-textarea-validation-errors"></div>
+    <div ng-transclude="br-textarea-validation-errors">
+      An error was detected in the input above.
+    </div>
   </br-form-control-validation-errors>
 </br-form-control>

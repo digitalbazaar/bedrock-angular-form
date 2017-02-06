@@ -100,6 +100,10 @@ function Ctrl($attrs, $scope) {
       options.icon = 'fa-' + options.icon;
     }
 
+    if(!('showValidation' in options)) {
+      options.showValidation = true;
+    }
+
     if(!('wrap' in options)) {
       options.wrap = 'on';
     }
