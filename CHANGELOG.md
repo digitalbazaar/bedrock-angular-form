@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.12.1 - 2017-02-15
+
+### Fixed
+- Fix bug where options are not specified as a literal.
+
 ## 2.12.0 - 2017-02-06
 
 ### Added
