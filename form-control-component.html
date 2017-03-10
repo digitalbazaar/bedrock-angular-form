@@ -9,7 +9,9 @@
     class="{{$ctrl.options.classes.label}} control-label"
     for="{{$ctrl.options.name}}"
     ng-click="$ctrl.options.help &&
-      $ctrl.options.helpTogglePosition === 'label' && $ctrl.helpToggle.onClick($event)"
+      ($ctrl.options.helpTogglePosition === 'label' ||
+        $ctrl.options.helpTogglePosition === 'afterLabel') &&
+      $ctrl.helpToggle.onClick($event)"
     ng-mouseenter="$ctrl.onMouseEnterContent()"
     ng-mouseleave="$ctrl.onMouseLeaveContent()">
     <span style="white-space: nowrap">
@@ -29,6 +31,19 @@
       <span ng-bind-html="$ctrl.firstLabelWord"></span>
     </span>
     <span ng-bind-html="$ctrl.restLabelWords"></span>
+    <a ng-if="$ctrl.options.help && $ctrl.options.helpTogglePosition === 'afterLabel'"
+      ng-class="{
+        'br-help-toggle-invisible': !($ctrl.helpToggle.visible ||
+          $ctrl.showHelpToggle),
+        active: $ctrl.helpToggle.pressed
+      }"
+      ng-style="{
+        visibility: (($ctrl.helpToggle.visible ||
+          $ctrl.showHelpToggle) && 'visible') || 'hidden'
+      }"
+      ng-mouseenter="$ctrl.helpToggle.onMouseEnter($event)"
+      ng-mouseleave="$ctrl.helpToggle.onMouseLeave($event)"
+      tabindex="-1"> <i class="fa fa-question-circle"></i></a>
   </label>
   <div class="input-group
     {{(!$ctrl.options.inline && $ctrl.options.classes.content) || ''}}"
