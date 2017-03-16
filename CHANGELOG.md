@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 2.13.1 - 2017-03-16
+
+### Fixed
+- Fix the default `compare` function in the `brSelect` component.
+
 ## 2.13.0 - 2017-03-10
 
 ### Added
