@@ -50,9 +50,9 @@ function Ctrl($attrs, $element, $scope) {
     });
 
     // set default compare item method
-    if(!$attrs.brCompareItem) {
-      self.compare = function(item1, item2) {
-        return item1 === item2;
+    if(!self.compare) {
+      self.compare = function(items) {
+        return items.item1 === items.item2;
       };
     }
 
