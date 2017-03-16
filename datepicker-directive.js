@@ -165,7 +165,7 @@ function datepickerFactory($filter, $templateCache, $timeout) {
 
       var columns = options.columns = options.columns || {};
       if(!('label' in columns)) {
-        columns.label =  'col-sm-3';
+        columns.label = 'col-sm-3';
       }
       if(!('input' in columns)) {
         columns.input = 'col-sm-8';

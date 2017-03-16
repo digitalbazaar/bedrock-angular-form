@@ -177,7 +177,7 @@
               <!-- FIXME: lookup display data -->
               <a ng-if="ctrl.value[ctrl.key].indexOf('http') === 0"
                 href="{{ctrl.value[ctrl.key]}}">{{ctrl.value[ctrl.key]}}</a>
-              <span ng-if="ctrl.value[ctrl.key].indexOf('http') !== 0">{{ctrl.value[ctrl.key]}}</a>
+              <span ng-if="ctrl.value[ctrl.key].indexOf('http') !== 0">{{ctrl.value[ctrl.key]}}</span>
             </div>
             <!-- object resource -->
             <div ng-if="!ctrl.selected.propertyGroup &&
@@ -186,7 +186,7 @@
               <!-- FIXME: lookup display data if needed -->
               <a ng-if="ctrl.value[ctrl.key].id.indexOf('http') === 0"
                 href="{{ctrl.value[ctrl.key].id}}">{{ctrl.value[ctrl.key].label || ctrl.valueSchema.label || ctrl.value[ctrl.key].id}}</a>
-              <span ng-if="ctrl.value[ctrl.key].id.indexOf('http') !== 0" title="{{ctrl.value[ctrl.key].id}}">{{ctrl.value[ctrl.key].label || ctrl.valueSchema.label || ctrl.value[ctrl.key].id}}</a>
+              <span ng-if="ctrl.value[ctrl.key].id.indexOf('http') !== 0" title="{{ctrl.value[ctrl.key].id}}">{{ctrl.value[ctrl.key].label || ctrl.valueSchema.label || ctrl.value[ctrl.key].id}}</span>
             </div>
             <!-- group, try to display something -->
             <div ng-if="ctrl.selected.propertyGroup">

@@ -77,7 +77,8 @@ function factory($parse, brFormUtilsService) {
     // get input type (*must* be given as a literal), then update it directly
     // to ensure angular input directives see the change immediately (angular
     // input directives cache `type` early and don't check for changes)
-    var options = $parse(fixLegacyExpression(tAttrs.brOptions || '{}'))({}) || {};
+    var options =
+      $parse(fixLegacyExpression(tAttrs.brOptions || '{}'))({}) || {};
     var input = tElement.find('input');
     input[0].type = options.type || 'text';
   }

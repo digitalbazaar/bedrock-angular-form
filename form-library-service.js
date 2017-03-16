@@ -32,7 +32,7 @@ function factory($rootScope, config, brAlertService, brResourceService) {
       optional: {'@id': 'br:optional', '@type': '@xsd:boolean'},
       resource: {'@id': 'br:resource', '@type': '@id'},
       date: {'@id': 'br:date', '@type': 'xsd:dateTime'},
-      domain: {'@id': 'rdfs:domain',  '@type': '@id'},
+      domain: {'@id': 'rdfs:domain', '@type': '@id'},
       range: {'@id': 'rdfs:range', '@type': '@vocab'},
       rangeOption: {
         '@id': 'br:rangeOption',

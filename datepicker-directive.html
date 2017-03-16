@@ -7,15 +7,16 @@
   <label ng-if="ctrl.options.label !== undefined"
     class="{{ctrl.options.columns.label}} control-label"
     for="{{ctrl.options.name}}">
-    <span ng-bind-html="ctrl.options.label"></span></label>
+    <span ng-bind-html="ctrl.options.label"></span>
+  </label>
   <div class="input-group
     {{(!ctrl.options.inline && ctrl.options.columns.input) || ''}}">
-    <span ng-if="ctrl.options.icon"
-      class="input-group-addon"><i
-      class="fa {{ctrl.options.icon}}"></i></span>
-    <span ng-if="ctrl.options.image"
-      class="input-group-addon"><img
-      ng-src="{{ctrl.options.image}}"></img></span>
+    <span ng-if="ctrl.options.icon" class="input-group-addon">
+      <i class="fa {{ctrl.options.icon}}"></i>
+    </span>
+    <span ng-if="ctrl.options.image" class="input-group-addon">
+      <img ng-src="{{ctrl.options.image}}">
+    </span>
     <input class="form-control"
       type="text"
       name="{{ctrl.options.name}}"
@@ -29,14 +30,13 @@
         ctrl.hideCalendar($event)"
       ng-disabled="ctrl.options.disabled"
       br-date-format="{{ctrl.options.format}}" />
-    <span ng-if="ctrl.options.loading"
-      class="br-spinner-inside-input">
+    <span ng-if="ctrl.options.loading" class="br-spinner-inside-input">
       <i class="fa fa-refresh fa-spin text-muted"></i>
     </span>
     <span class="input-group-btn">
-      <button type="button" class="btn btn-default"
-        ng-click="ctrl.showCalendar()"><i
-          class="fa fa-calendar"></i></button>
+      <button type="button" class="btn btn-default" ng-click="ctrl.showCalendar()">
+        <i class="fa fa-calendar"></i>
+      </button>
     </span>
   </div>
 </div>
