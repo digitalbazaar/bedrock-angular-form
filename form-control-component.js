@@ -44,11 +44,8 @@ function Ctrl($attrs, $element, $scope, $timeout) {
     }
   };
   var contentElement;
-  var errorElement;
 
   self.$postLink = function() {
-    errorElement = $element.find('.br-form-control-validation-errors');
-
     $attrs.$observe('brOptions', function() {
       self.options = self.defaultOptions($scope.$eval($attrs.brOptions || {}));
       var labelWords = (self.options.label || '').split(' ');
@@ -161,10 +158,6 @@ function Ctrl($attrs, $element, $scope, $timeout) {
   validation.isVisible = function() {
     var options = self.options;
 
-    // do not show empty validation area
-    if(!errorElement.html().trim()) {
-      return false;
-    }
     // do not show validation if field not in form
     if(!self.form || !('name' in options) || !self.form[options.name]) {
       return false;

@@ -88,7 +88,7 @@
     class="{{$ctrl.options.classes.help}} help-block br-fadein br-fadeout">
     <div class="text-muted" ng-transclude="br-form-control-help"></div>
   </div>
-  <div ng-show="$ctrl.validation.isVisible()"
+  <div ng-if="$ctrl.validation.isVisible()"
     class="{{$ctrl.options.classes.validation}}">
     <p></p>
     <div class="br-form-control-validation-errors text-danger"
