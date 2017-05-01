@@ -1,5 +1,11 @@
 # bedrock-angular-form ChangeLog
 
+## 2.13.2 - 2017-05-01
+
+## Fixed
+- Fix bug that briefly flashed validation input.
+- Remove erroneous checking for presence of error html.
+
 ## 2.13.1 - 2017-03-16
 
 ### Fixed
