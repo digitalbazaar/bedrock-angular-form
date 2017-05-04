@@ -1,5 +1,11 @@
 # bedrock-angular-form ChangeLog
 
+## 2.13.3 - 2017-05-04
+
+## Fixed
+- Set error class on field when validation is visible.
+- Ensure `contentElement` is found when setting event handler.
+
 ## 2.13.2 - 2017-05-01
 
 ## Fixed
