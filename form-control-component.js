@@ -56,13 +56,17 @@ function Ctrl($attrs, $element, $scope, $timeout) {
 
     // true = use capture (to capture events on child elements)
     contentElement = $element.find('.br-form-control-wrapper')[0];
-    contentElement.addEventListener('focus', focusListener, true);
-    contentElement.addEventListener('blur', blurListener, true);
+    if(contentElement) {
+      contentElement.addEventListener('focus', focusListener, true);
+      contentElement.addEventListener('blur', blurListener, true);
+    }
   };
 
   self.$onDestroy = function() {
-    contentElement.removeEventListener('focus', focusListener, true);
-    contentElement.removeEventListener('blur', blurListener, true);
+    if(contentElement) {
+      contentElement.removeEventListener('focus', focusListener, true);
+      contentElement.removeEventListener('blur', blurListener, true);
+    }
   };
 
   var helpToggle = self.helpToggle = {

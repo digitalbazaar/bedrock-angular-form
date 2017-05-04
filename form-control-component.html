@@ -1,7 +1,7 @@
 <div ng-class="{
   'form-group': !$ctrl.options.inline,
   'form-group-inline': $ctrl.options.inline,
-  'has-error': $ctrl.isVisible()}"
+  'has-error': $ctrl.validation.isVisible()}"
   br-property-path="{{$ctrl.options.name}}"
   class="{{($ctrl.options.inline && $ctrl.options.classes.content) || ''}}"
   ng-style="{display: ($ctrl.options.inline ? 'inline-' : '') + 'block'}">
