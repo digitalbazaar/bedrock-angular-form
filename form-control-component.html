@@ -1,6 +1,6 @@
 <div ng-show="$ctrl.options.theme === 'material'"
   ng-click="$ctrl.options.help && $ctrl.onMaterialClick($event)"
-  ng-mouseleave="$ctrl.helpToggle.onMouseLeaveContent()">
+  ng-mouseleave="$ctrl.helpToggle.onMouseLeaveContent()" tabindex="-1">
   <md-input-container style="width: 100%">
     <label ng-if="$ctrl.options.label !== undefined"
       for="{{$ctrl.options.name}}">
