@@ -1,11 +1,15 @@
 <div ng-show="$ctrl.options.theme === 'material'"
   ng-click="$ctrl.options.help && $ctrl.onMaterialClick($event)"
   ng-mouseleave="$ctrl.helpToggle.onMouseLeaveContent()" tabindex="-1">
-  <md-input-container style="width: 100%">
+  <md-input-container style="width: 100%"
+    ng-class="{
+      'md-icon-left': $ctrl.options.icon
+    }">
     <label ng-if="$ctrl.options.label !== undefined"
       for="{{$ctrl.options.name}}">
       <span class="br-form-control-label">{{$ctrl.options.label}}</span>
     </label>
+    <md-icon ng-if="$ctrl.options.icon" class="fa {{$ctrl.options.icon}}"></md-icon>
     <span class="br-form-control-wrapper"
       ng-transclude="br-form-control-content"></span>
     <div ng-if="$ctrl.options.help && $ctrl.helpToggle.helpVisible"
