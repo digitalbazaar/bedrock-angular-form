@@ -1,4 +1,24 @@
-<div ng-class="{
+<div ng-show="$ctrl.options.theme === 'material'"
+  ng-click="$ctrl.options.help && $ctrl.onMaterialClick($event)"
+  ng-mouseleave="$ctrl.helpToggle.onMouseLeaveContent()">
+  <md-input-container style="width: 100%">
+    <label ng-if="$ctrl.options.label !== undefined"
+      for="{{$ctrl.options.name}}">
+      <span class="br-form-control-label">{{$ctrl.options.label}}</span>
+    </label>
+    <span class="br-form-control-wrapper"
+      ng-transclude="br-form-control-content"></span>
+    <div ng-if="$ctrl.options.help && $ctrl.helpToggle.helpVisible"
+      class="help-block br-fadein br-fadeout">
+      <div class="text-muted" ng-transclude="br-form-control-help"></div>
+    </div>
+    <div ng-if="$ctrl.validation.isVisible()" class="help-block">
+      <div class="br-form-control-validation-errors"
+        ng-transclude="br-form-control-validation-errors"></div>
+    </div>
+  </md-input-container>
+</div>
+<div ng-if="$ctrl.options.theme !== 'material'" ng-class="{
   'form-group': !$ctrl.options.inline,
   'form-group-inline': $ctrl.options.inline,
   'has-error': $ctrl.validation.isVisible()}"

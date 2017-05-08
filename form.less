@@ -86,6 +86,20 @@ br-form-group dd.collapsed {
   margin-left: 0;
 }
 
+/* Angular material adjustments */
+br-form-control md-input-container label:not(.md-container-ignore).md-required:after {
+  content: none
+}
+br-form-control md-input-container label:not(.md-container-ignore).md-required .br-form-control-label:after {
+  content: ' *'
+}
+br-form-control .help-block {
+  font-size: floor((@font-size-base * 0.75));
+}
+.md-errors-spacer {
+  display: none;
+}
+
 /* Help */
 .form-horizontal .help-block {
   margin-top: 10px;

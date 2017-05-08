@@ -35,12 +35,20 @@ function Ctrl($attrs, $element, $scope, $timeout) {
 
   var focusListener = function() {
     helpToggle.contentFocus = true;
-    helpToggle.visible = true;
+    if(self.options.theme === 'material') {
+      helpToggle.helpVisible = true;
+    } else {
+      helpToggle.visible = true;
+    }
   };
   var blurListener = function() {
     helpToggle.contentFocus = false;
-    if(!helpToggle.contentMouseOver) {
-      helpToggle.scheduleHide();
+    if(self.options.theme === 'material') {
+      helpToggle.helpVisible = false;
+    } else {
+      if(!helpToggle.contentMouseOver) {
+        helpToggle.scheduleHide();
+      }
     }
   };
   var contentElement;

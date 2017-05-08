@@ -1,7 +1,7 @@
 /*!
  * Form Utility service.
  *
- * Copyright (c) 2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2015-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
@@ -14,6 +14,14 @@ var SNAKE_CASE_REGEXP = /[A-Z]/g;
 /* @ngInject */
 function factory() {
   var service = {};
+
+  /**
+   * Defaults for form components.
+   */
+  service.defaults = {
+    theme: 'bootstrap'
+    //theme: 'material'
+  };
 
   /**
    * Moves an attribute (typically one that triggers a validation directive) to

@@ -102,6 +102,7 @@ function Ctrl($attrs, $scope) {
 
   function defaultOptions(options) {
     options = options || {};
+    // Note: deprecated, use `br-input-placeholder` instead
     options.placeholder = options.placeholder || '';
 
     if(!('showValidation' in options)) {
