@@ -1,24 +1,31 @@
 /*!
  * Select component.
  *
- * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define([], function() {
+/* global requirejs */
+define(['angular'], function(angular) {
 
 'use strict';
 
 function register(module) {
   module.component('brSelect', {
+    require: {
+      form: '?^form'
+    },
     bindings: {
       model: '=brModel',
       items: '<brItems',
+      // `brDisplayItem` is deprecated, use transclusion?
       display: '&?brDisplayItem',
-      compare: '&?brCompareItem'
+      compare: '&?brCompareItem',
+      onSelect: '&?brOnSelect'
     },
     transclude: {
-      'br-select-help': '?brSelectHelp'
+      'br-select-help': '?brSelectHelp',
+      'br-select-validation-errors': '?brSelectValidationErrors'
     },
     controller: Ctrl,
     templateUrl: requirejs.toUrl('bedrock-angular-form/select-component.html')
@@ -26,8 +33,12 @@ function register(module) {
 }
 
 /* @ngInject */
-function Ctrl($attrs, $element, $scope) {
+function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
   var self = this;
+
+  // TODO: A major rewrite of this component is called for once support for
+  // ui-select is dropped; the md-autocomplete API is much simpler and the
+  // watches and other complexities below can be dropped as a result of it
 
   self.$onInit = function() {
     self.selection = {selected: undefined};
@@ -36,16 +47,18 @@ function Ctrl($attrs, $element, $scope) {
     $attrs.$observe('brOptions', function() {
       self.options = defaultOptions(legacyEval($attrs.brOptions || {}));
 
-      if(self.options.autofocus) {
-        $element.find('.ui-select-match').attr('autofocus', 'autofocus');
-      } else {
-        $element.find('.ui-select-match').removeAttr('autofocus');
-      }
+      if(self.options.theme !== 'material') {
+        if(self.options.autofocus) {
+          $element.find('.ui-select-match').attr('autofocus', 'autofocus');
+        } else {
+          $element.find('.ui-select-match').removeAttr('autofocus');
+        }
 
-      if(self.options.readonly) {
-        $element.find('.ui-select-match').attr('readonly', 'readonly');
-      } else {
-        $element.find('.ui-select-match').removeAttr('readonly');
+        if(self.options.readonly) {
+          $element.find('.ui-select-match').attr('readonly', 'readonly');
+        } else {
+          $element.find('.ui-select-match').removeAttr('readonly');
+        }
       }
     });
 
@@ -92,14 +105,90 @@ function Ctrl($attrs, $element, $scope) {
         return;
       }
 
-      if('key' in self.options) {
+      if('key' in self.options && selected && selected.item) {
         self.model = selected.item[self.options.key];
         return;
       }
 
       // default selects full item
-      self.model = selected.item;
+      self.model = selected ? selected.item : undefined;
     }, true);
+  };
+
+  self.$postLink = function() {
+    if(self.options.theme !== 'material') {
+      return;
+    }
+
+    /* Note: Help and validation errors elements cannot be transcluded using
+      the `ng-transclude` multislot mechanism so this custom code will
+      perform the transclusion instead. The `md-autocomplete` component makes
+      some internal template changes that somehow unanchor our slot identifiers
+      thereby triggering an angular error "No parent directive that
+      requires a transclusion found". To remedy this, we wait for a digest
+      cycle to complete (via $timeout) to allow the `md-autocomplete` component
+      to add its `md-input-container` where our transcluded slots appear. Then
+      we find those slots manually and fill them. */
+    $timeout(function() {
+      var help = $element[0].querySelector(
+        '[br-late-transclude=br-select-help]');
+      if(help) {
+        $transclude(function(clone) {
+          angular.element(help).append(clone);
+        }, help, 'br-select-help');
+      }
+
+      var errors = $element[0].querySelector(
+        '[br-late-transclude=br-select-validation-errors]');
+      if(errors) {
+        $transclude(function(clone) {
+          angular.element(errors).append(clone);
+        }, errors, 'br-select-validation-errors');
+      }
+    });
+  };
+
+  self.filterItems = function(query) {
+    if(!query) {
+      return self.viewItems;
+    }
+    query = query.toLowerCase();
+    return self.viewItems.filter(function(viewItem) {
+      // TODO: need to allow `filterItems` to be passed in via API
+      // when customizing item display with a template
+      return viewItem.display.toLowerCase().indexOf(query) === 0;
+    });
+  };
+
+  self.onSelectItem = function(viewItem) {
+    var selected = viewItem ? viewItem.item : viewItem;
+    if(self.onSelect) {
+      self.onSelect({selected: selected});
+    }
+  };
+
+  var validation = self.validation = {};
+
+  validation.isVisible = function() {
+    var options = self.options;
+
+    // do not show validation if field not in form
+    if(!self.form || !('name' in options) || !self.form[options.name]) {
+      return false;
+    }
+
+    // use `showValidation` option if given
+    if('showValidation' in options) {
+      if(!options.showValidation) {
+        return false;
+      }
+      return (self.form[options.name].$touched &&
+        self.form[options.name].$invalid);
+    }
+
+    // default: show if not inline, form submitted, and field invalid
+    return (!options.inline &&
+      self.form.$submitted && self.form[options.name].$invalid);
   };
 
   function legacyEval(expression) {
@@ -109,9 +198,11 @@ function Ctrl($attrs, $element, $scope) {
 
   function defaultOptions(options) {
     options = options || {};
-    options.label = ('label' in options) ? options.label : 'Choose...';
-    options.placeholder = ('placeholder' in options ?
-      options.placeholder : (options.label + '...'));
+    if(options.theme !== 'material') {
+      options.label = ('label' in options) ? options.label : 'Choose...';
+      options.placeholder = ('placeholder' in options ?
+        options.placeholder : (options.label + '...'));
+    }
     options.tooltip = options.tooltip || {};
 
     // prefix "fa-" to icon
