@@ -99,8 +99,9 @@ br-form-control md-input-container label:not(.md-container-ignore).md-required .
 .br-theme-material .br-form-control-validation-errors {
   font-size: floor((@font-size-base * 0.75));
 }
-.md-errors-spacer {
-  display: none;
+.md-input-container {
+  /* remove bottom margin; md-errors-spacer takes care of it */
+  margin: 18px 0 0 0;
 }
 
 /* Help */
