@@ -1,4 +1,5 @@
-<div ng-if="$ctrl.options.theme === 'material'"
+<div class="br-theme-material"
+  ng-if="$ctrl.options.theme === 'material'"
   ng-click="$ctrl.options.help && $ctrl.onMaterialClick($event)"
   ng-mouseleave="$ctrl.helpToggle.onMouseLeaveContent()" tabindex="-1">
   <md-input-container style="width: 100%"
@@ -22,7 +23,8 @@
     </div>
   </md-input-container>
 </div>
-<div ng-if="$ctrl.options.theme !== 'material'" ng-class="{
+<div class="br-theme-default"
+  ng-if="$ctrl.options.theme !== 'material'" ng-class="{
   'form-group': !$ctrl.options.inline,
   'form-group-inline': $ctrl.options.inline,
   'has-error': $ctrl.validation.isVisible()}"

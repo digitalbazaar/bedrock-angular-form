@@ -30,6 +30,8 @@ function Ctrl($attrs, $element, $scope, $timeout) {
   var SHOW_HELP_DELAY = 500;
 
   self.$onInit = function() {
+    // TODO: should deprecate br-options and use specific attributes and
+    // `ng-attr-` prefix as needed
     self.options = self.defaultOptions();
   };
 
@@ -40,6 +42,7 @@ function Ctrl($attrs, $element, $scope, $timeout) {
     } else {
       helpToggle.visible = true;
     }
+    $scope.$apply();
   };
   var blurListener = function() {
     helpToggle.contentFocus = false;
@@ -50,6 +53,7 @@ function Ctrl($attrs, $element, $scope, $timeout) {
         helpToggle.scheduleHide();
       }
     }
+    $scope.$apply();
   };
   var contentElement;
 
@@ -62,12 +66,20 @@ function Ctrl($attrs, $element, $scope, $timeout) {
       self.restLabelWords = labelWords.join(' ');
     });
 
-    // true = use capture (to capture events on child elements)
-    contentElement = $element.find('.br-form-control-wrapper')[0];
-    if(contentElement) {
-      contentElement.addEventListener('focus', focusListener, true);
-      contentElement.addEventListener('blur', blurListener, true);
-    }
+    // wait until after a digest cycle that will handle `self.options.theme`
+    // and cause elements to appear before attaching event listeners
+    $timeout(function() {
+      // true = use capture (to capture events on child elements)
+      var theme = self.options.theme || 'default';
+      contentElement = $element
+        .find('.br-theme-' + theme)
+        .find('.br-form-control-wrapper');
+      contentElement = contentElement[0];
+      if(contentElement) {
+        contentElement.addEventListener('focus', focusListener, true);
+        contentElement.addEventListener('blur', blurListener, true);
+      }
+    });
   };
 
   self.$onDestroy = function() {
