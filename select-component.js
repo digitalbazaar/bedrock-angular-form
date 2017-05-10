@@ -167,6 +167,12 @@ function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
     }
   };
 
+  self.onFocus = function() {
+    if(!self.options.disabled) {
+      self.helpVisible = true;
+    }
+  };
+
   var validation = self.validation = {};
 
   validation.isVisible = function() {

@@ -17,7 +17,7 @@
     ng-attr-required="{{$ctrl.options.required}}"
     xng-attr-placeholder="{{$ctrl.options.placeholder}}"
     ng-attr-md-floating-label="{{$ctrl.options.label || $ctrl.options.placeholder}}"
-    ng-focus="$ctrl.helpVisible=true"
+    ng-focus="$ctrl.onFocus()"
     ng-blur="$ctrl.helpVisible=false"
     md-menu-class="{{$ctrl.options.classes.menu}}">
     <md-item-template>
