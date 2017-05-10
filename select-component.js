@@ -130,6 +130,7 @@ function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
       to add its `md-input-container` where our transcluded slots appear. Then
       we find those slots manually and fill them. */
     $timeout(function() {
+      // TODO: use .find()?
       var help = $element[0].querySelector(
         '[br-late-transclude=br-select-help]');
       if(help) {
@@ -209,6 +210,7 @@ function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
       options.placeholder = ('placeholder' in options ?
         options.placeholder : (options.label + '...'));
     }
+    options.autocomplete = (options.autocomplete !== false);
     options.tooltip = options.tooltip || {};
 
     // prefix "fa-" to icon

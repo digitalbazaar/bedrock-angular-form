@@ -42,7 +42,6 @@ function Ctrl($attrs, $element, $scope, $timeout) {
     } else {
       helpToggle.visible = true;
     }
-    $scope.$apply();
   };
   var blurListener = function() {
     helpToggle.contentFocus = false;
@@ -53,7 +52,6 @@ function Ctrl($attrs, $element, $scope, $timeout) {
         helpToggle.scheduleHide();
       }
     }
-    $scope.$apply();
   };
   var contentElement;
 
