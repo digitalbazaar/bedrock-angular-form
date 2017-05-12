@@ -45,6 +45,7 @@
       md-on-close="$ctrl.searchText = ''"
       ng-disabled="$ctrl.options.disabled"
       ng-attr-placeholder="{{$ctrl.options.placeholder}}"
+      ng-change="$ctrl.onSelectItem($ctrl.selection.selected)"
       data-md-container-class="br-select"
       xmd-selected-text="$ctrl.getSelectedText()">
       <md-select-header class="br-select-header">

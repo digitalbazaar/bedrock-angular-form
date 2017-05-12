@@ -249,7 +249,10 @@ function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
   }
 
   function display(item) {
-    var rval = self.display({item: item});
+    var rval;
+    if(self.display) {
+      rval = self.display({item: item});
+    }
     if(rval === undefined) {
       return '' + item;
     }
