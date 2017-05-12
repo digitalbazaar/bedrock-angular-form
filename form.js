@@ -44,8 +44,9 @@ define([
 ) {
 
 'use strict';
-
-var module = angular.module('bedrock.form', ['bedrock.lazyCompile']);
+// TODO: how to make `ngMaterial` optional?
+var module = angular.module(
+  'bedrock.form', ['bedrock.lazyCompile', 'ngMaterial']);
 
 formControlComponent(module);
 selectComponent(module);

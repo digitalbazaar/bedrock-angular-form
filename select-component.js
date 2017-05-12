@@ -30,6 +30,27 @@ function register(module) {
     controller: Ctrl,
     templateUrl: requirejs.toUrl('bedrock-angular-form/select-component.html')
   });
+
+  /* @ngInject */
+  module.config(function($provide) {
+    /* @ngInject */
+    $provide.decorator('$mdSelect', function($delegate) {
+      var show = $delegate.show;
+      $delegate.show = function(options) {
+        options = options || {};
+        if(!('parent' in options)) {
+          var dialog = angular.element('dialog:not(:has(dialog))');
+          if(dialog[0]) {
+            options.parent = 'dialog';
+          } else {
+            options.parent = 'body';
+          }
+        }
+        return show.call($delegate, options);
+      };
+      return $delegate;
+    });
+  });
 }
 
 /* @ngInject */
