@@ -43,7 +43,7 @@ function register(module) {
         if(!('parent' in options)) {
           var dialog = angular.element('dialog:not(:has(dialog))');
           if(dialog[0]) {
-            options.parent = 'dialog';
+            options.parent = dialog;
           }
         }
         return show.call($delegate, options);
