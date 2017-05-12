@@ -35,6 +35,8 @@ function register(module) {
   module.config(function($provide) {
     /* @ngInject */
     $provide.decorator('$mdSelect', function($delegate) {
+      // enable md-select to work in dialogs by making the default parent
+      // use the deepest dialog if present
       var show = $delegate.show;
       $delegate.show = function(options) {
         options = options || {};
@@ -42,8 +44,6 @@ function register(module) {
           var dialog = angular.element('dialog:not(:has(dialog))');
           if(dialog[0]) {
             options.parent = 'dialog';
-          } else {
-            options.parent = 'body';
           }
         }
         return show.call($delegate, options);
