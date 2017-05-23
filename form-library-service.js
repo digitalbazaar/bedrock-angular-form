@@ -1,17 +1,17 @@
 /*!
  * Form library service.
  *
- * Copyright (c) 2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  * @author David I. Lehn
  */
-define(['angular', 'jsonld'], function(angular, jsonld) {
-
-'use strict';
+import angular from 'angular';
+import jsonld from 'jsonld';
 
 /* @ngInject */
-function factory($rootScope, config, brAlertService, brResourceService) {
+export default function factory(
+  $rootScope, config, brAlertService, brResourceService) {
   var service = {};
 
   // collection of all vocabs
@@ -233,10 +233,11 @@ function factory($rootScope, config, brAlertService, brResourceService) {
         // store vocab and update graph
         if(state.id in self.vocabs) {
           if(_equals(state.vocab, self.vocabs[state.id])) {
-            //console.info('Duplicate vocab ID with equal data:',
+            // console.info('Duplicate vocab ID with equal data:',
             //  state.id, 'data:', state.vocab);
           } else {
-            console.warn('Duplicate vocab ID with conflicting data:',
+            console.warn(
+              'Duplicate vocab ID with conflicting data:',
               state.id, 'old:', self.vocabs[state.id], 'new:', state.vocab);
           }
         }
@@ -251,10 +252,11 @@ function factory($rootScope, config, brAlertService, brResourceService) {
           if(jsonld.hasValue(node, 'type', 'Property')) {
             if(node.id in self.properties) {
               if(_equals(node, self.properties[node.id])) {
-                //console.info('Duplicate property ID with equal data:',
+                // console.info('Duplicate property ID with equal data:',
                 //  node.id, 'vocab:', state.id, 'data:', node);
               } else {
-                console.warn('Duplicate property ID with conflicting data:',
+                console.warn(
+                  'Duplicate property ID with conflicting data:',
                   node.id, 'vocab:', state.id,
                   'old:', self.properties[node.id], 'new:', node);
               }
@@ -263,10 +265,11 @@ function factory($rootScope, config, brAlertService, brResourceService) {
           } else if(jsonld.hasValue(node, 'type', 'PropertyGroup')) {
             if(node.id in self.groups) {
               if(_equals(node, self.groups[node.id])) {
-                //console.info('Duplicate group ID with equal data:',
+                // console.info('Duplicate group ID with equal data:',
                 //  node.id, 'vocab:', state.id, 'data:', node);
               } else {
-                console.warn('Duplicate group ID with conflicting data:',
+                console.warn(
+                  'Duplicate group ID with conflicting data:',
                   node.id, 'vocab:', state.id,
                   'old:', self.groups[node.id], 'new:', node);
               }
@@ -276,10 +279,11 @@ function factory($rootScope, config, brAlertService, brResourceService) {
           } else if(jsonld.hasValue(node, 'type', 'Class')) {
             if(node.id in self.classes) {
               if(_equals(node, self.classes[node.id])) {
-                //console.info('Duplicate class ID with equal data:',
+                // console.info('Duplicate class ID with equal data:',
                 //  node.id, 'vocab:', state.id, 'data:', node);
               } else {
-                console.warn('Duplicate class ID with conflicting data:',
+                console.warn(
+                  'Duplicate class ID with conflicting data:',
                   node.id, 'vocab:', state.id,
                   'old:', self.classes[node.id], 'new:', node);
               }
@@ -288,10 +292,11 @@ function factory($rootScope, config, brAlertService, brResourceService) {
           } else if(jsonld.hasValue(node, 'type', 'Displayer')) {
             if(node.id in self.displayers) {
               if(_equals(node, self.displayers[node.id])) {
-                //console.info('Duplicate class ID with equal data:',
+                // console.info('Duplicate class ID with equal data:',
                 //  node.id, 'vocab:', state.id, 'data:', node);
               } else {
-                console.warn('Duplicate displayer ID with conflicting data:',
+                console.warn(
+                  'Duplicate displayer ID with conflicting data:',
                   node.id, 'vocab:', state.id,
                   'old:', self.displayers[node.id], 'new:', node);
               }
@@ -316,14 +321,10 @@ function factory($rootScope, config, brAlertService, brResourceService) {
 
   // TODO: does refresh make sense for vocabs?
   // register for system-wide refreshes
-  //brRefreshService.register(service.collection);
+  // brRefreshService.register(service.collection);
 
   // expose service to scope
   $rootScope.app.services.form = service;
 
   return service;
 }
-
-return {brFormLibraryService: factory};
-
-});

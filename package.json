@@ -1,0 +1,23 @@
+{
+  "name": "bedrock-angular-form",
+  "version": "2.0.0",
+  "description": "A bedrock AngularJS module that provides services and directives for creating and handling forms.",
+  "main": "index.js",
+  "less": "form.less",
+  "dependencies": {
+    "angular": "~1.6.4",
+    "angular-sanitize": "~1.6.4",
+    "angular-ui-select": "https://github.com/digitalbazaar/ui-select.git#allow-lazy-compile-dist",
+    "bedrock-angular-alert": "^3.0.0",
+    "bedrock-angular-lazy-compile": "^3.0.0",
+    "bedrock-angular-resource": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digitalbazaar/bedrock-angular-form.git"
+  },
+  "bugs": {
+    "url": "https://github.com/digitalbazaar/bedrock-angular-form/issues"
+  },
+  "homepage": "https://github.com/digitalbazaar/bedrock-angular-form#readme"
+}

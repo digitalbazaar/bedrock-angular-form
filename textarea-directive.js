@@ -1,16 +1,14 @@
 /*!
  * Textarea directive.
  *
- * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define(['angular'], function(angular) {
-
-'use strict';
+import angular from 'angular';
 
 /* @ngInject */
-function factory(brFormUtilsService) {
+export default function factory(brFormUtilsService) {
   return {
     restrict: 'E',
     // compile prior to other directives to ensure directives to be
@@ -34,8 +32,7 @@ function factory(brFormUtilsService) {
       'br-textarea-help': '?brTextareaHelp',
       'br-textarea-validation-errors': '?brTextareaValidationErrors'
     },
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-form/textarea-directive.html'),
+    templateUrl: 'bedrock-angular-form/textarea-directive.html',
     compile: Compile,
     controller: Ctrl,
     controllerAs: 'brTextAreaCtrl'
@@ -59,7 +56,9 @@ function factory(brFormUtilsService) {
       element: tElement,
       attrs: tAttrs,
       attr: [
-        'required', 'ng-minlength', 'ng-maxlength', 'pattern', 'ng-pattern'],
+        'required', 'ng-minlength', 'ng-maxlength', 'pattern',
+        'ng-pattern'
+      ],
       target: target
     });
 
@@ -127,7 +126,3 @@ function Ctrl($attrs, $scope) {
     return options;
   }
 }
-
-return {brTextarea: factory};
-
-});

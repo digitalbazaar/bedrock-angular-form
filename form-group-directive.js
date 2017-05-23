@@ -1,16 +1,14 @@
 /*!
  * Form group directive.
  *
- * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define(['angular'], function(angular) {
-
-'use strict';
+import angular from 'angular';
 
 /* @ngInject */
-function factory(
+export default function factory(
   $compile, $templateRequest, $timeout, brFormUtilsService) {
   return {
     restrict: 'E',
@@ -49,8 +47,7 @@ function factory(
       template fetching, compilation, and linking code. We manually fetch
       the template for this directive, compile its contents, and link it,
       after ensuring we've forced a new digest loop by using `$timeout`. */
-      var templateUrl = requirejs.toUrl(
-        'bedrock-angular-form/form-group-directive.html');
+      var templateUrl = 'bedrock-angular-form/form-group-directive.html';
       $timeout(function() {
         $templateRequest(templateUrl).then(function(data) {
           var linked = $compile(data)(scope);
@@ -93,7 +90,3 @@ function factory(
     }
   };
 }
-
-return {brFormGroup: factory};
-
-});

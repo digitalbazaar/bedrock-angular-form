@@ -1,16 +1,12 @@
 /*!
  * Radio Button Group directive.
  *
- * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define([], function() {
-
-'use strict';
-
 /* @ngInject */
-function factory() {
+export default function factory() {
   return {
     restrict: 'E',
     scope: {
@@ -21,8 +17,7 @@ function factory() {
     controllerAs: 'ctrl',
     bindToController: true,
     transclude: true,
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-form/radio-group-directive.html'),
+    templateUrl: 'bedrock-angular-form/radio-group-directive.html',
     link: function(scope, element, attrs, ctrl) {
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
@@ -44,7 +39,3 @@ function factory() {
     }
   };
 }
-
-return {brRadioGroup: factory};
-
-});

@@ -1,81 +1,64 @@
 /*!
  * Form module.
  *
- * Copyright (c) 2012-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define([
-  'angular',
-  './datepicker-directive',
-  './form-directive',
-  './form-control-component',
-  './form-field-directive',
-  './form-group-directive',
-  './form-library-service',
-  './form-static-directive',
-  './form-utils-service',
-  './help-toggle-directive',
-  './input-directive',
-  './input-watcher-directive',
-  './radio-group-directive',
-  './select-component',
-  './textarea-directive',
-  './track-state-directive',
-  './validator-same-as-directive'
-], function(
-  angular,
-  datepickerDirective,
-  formDirective,
-  formControlComponent,
-  formFieldDirective,
-  formGroupDirective,
-  formLibraryService,
-  formStaticDirective,
-  formUtilsService,
-  helpToggleDirective,
-  inputDirective,
-  inputWatcherDirective,
-  radioGroupDirective,
-  selectComponent,
-  textareaDirective,
-  trackStateDirective,
-  validatorSameAs
-) {
+import angular from 'angular';
+import DatepickerDirective from './datepicker-directive.js';
+import DateFormatDirective from './date-format-directive.js';
+import FormDirective from './form-directive.js';
+import FormControlComponent from './form-control-component.js';
+import FormFieldDirective from './form-field-directive.js';
+import FormGroupDirective from './form-group-directive.js';
+import FormLibraryService from './form-library-service.js';
+import FormStaticDirective from './form-static-directive.js';
+import FormUtilsService from './form-utils-service.js';
+import HelpToggleDirective from './help-toggle-directive.js';
+import InputDirective from './input-directive.js';
+import InputManipulatorDirective from './input-manipulator-directive.js';
+import InputWatcherDirective from './input-watcher-directive.js';
+import RadioGroupDirective from './radio-group-directive.js';
+import SelectComponent from './select-component.js';
+import TextareaDirective from './textarea-directive.js';
+import TrackStateDirective from './track-state-directive.js';
+import ValidatorSameAsDirective from './validator-same-as-directive.js';
 
-'use strict';
 // TODO: how to make `ngMaterial` optional?
 var module = angular.module(
-  'bedrock.form', ['bedrock.lazyCompile', 'ngMaterial']);
+  'bedrock.form', ['bedrock.lazyCompile', 'ngMaterial', 'ngSanitize']);
 
-formControlComponent(module);
-selectComponent(module);
-inputDirective(module);
-validatorSameAs(module);
-
-module.directive(datepickerDirective);
-module.directive(formDirective);
-module.directive(formFieldDirective);
-module.directive(formGroupDirective);
-module.service(formLibraryService);
-module.directive(formStaticDirective);
-module.service(formUtilsService);
-module.directive(helpToggleDirective);
-module.directive(inputWatcherDirective);
-module.directive(radioGroupDirective);
-module.directive(textareaDirective);
-module.directive(trackStateDirective);
+module.component('brFormControl', FormControlComponent);
+module.component('brSelect', SelectComponent);
+module.directive('brInput', InputDirective);
+module.directive('brInputManipulator', InputManipulatorDirective);
+module.directive('brDatepicker', DatepickerDirective);
+module.directive('brDateFormat', DateFormatDirective);
+module.directive('brForm', FormDirective);
+module.directive('brFormField', FormFieldDirective);
+module.directive('brFormGroup', FormGroupDirective);
+module.directive('brFormStatic', FormStaticDirective);
+module.directive('brHelpToggle', HelpToggleDirective);
+module.directive('brInputWatcher', InputWatcherDirective);
+module.directive('brRadioGroup', RadioGroupDirective);
+module.directive('brTextarea', TextareaDirective);
+module.directive('brTrackState', TrackStateDirective);
+module.directive('brValidatorSameAs', ValidatorSameAsDirective);
+module.service('brFormLibraryService', FormLibraryService);
+module.service('brFormUtilsService', FormUtilsService);
 
 module.run(function(config) {
   var constants = config.constants = config.constants || {};
 
   constants.monthNames = [
-    'January','February','March','April',
-    'May','June','July','August',
-    'September','October','November','December'
+    'January', 'February', 'March', 'April',
+    'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'
   ];
   constants.monthNumbers = [
-    '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'
+    '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11',
+    '12'
   ];
 
   // country map sorted by display order
@@ -332,8 +315,4 @@ module.run(function(config) {
   for(var i = 0; i < 10; ++i) {
     constants.years.push(year + i);
   }
-});
-
-return module.name;
-
 });

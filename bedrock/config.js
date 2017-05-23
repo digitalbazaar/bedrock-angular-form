@@ -1,7 +1,7 @@
 /*
  * Bedrock Configuration.
  *
- * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2017 Digital Bazaar, Inc. All rights reserved.
  */
 var fs = require('fs');
 var path = require('path');

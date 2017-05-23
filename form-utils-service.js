@@ -5,14 +5,12 @@
  *
  * @author Dave Longley
  */
-define(['angular'], function(angular) {
-
-'use strict';
+import angular from 'angular';
 
 var SNAKE_CASE_REGEXP = /[A-Z]/g;
 
 /* @ngInject */
-function factory() {
+export default function factory() {
   var service = {};
 
   /**
@@ -20,7 +18,7 @@ function factory() {
    */
   service.defaults = {
     theme: 'bootstrap'
-    //theme: 'material'
+    // theme: 'material'
   };
 
   /**
@@ -102,7 +100,7 @@ function factory() {
       target.id.indexOf('_:') === 0) {
       delete target.id;
     }
-    angular.forEach(target, function(value, key) {
+    angular.forEach(target, function(value) {
       if(angular.isObject(value) || angular.isArray(value)) {
         removeBlankIds(value);
       }
@@ -145,7 +143,3 @@ function factory() {
 
   return service;
 }
-
-return {brFormUtilsService: factory};
-
-});

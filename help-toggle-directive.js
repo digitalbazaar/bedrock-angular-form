@@ -3,16 +3,14 @@
  *
  * FIXME: DEPRECATED - remove in major version 3
  *
- * Copyright (c) 2012-2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define(['angular'], function(angular) {
-
-'use strict';
+import angular from 'angular';
 
 /* @ngInject */
-function factory($parse, $timeout) {
+export default function factory($parse, $timeout) {
   return {
     restrict: 'A',
     link: Link
@@ -143,7 +141,3 @@ function factory($parse, $timeout) {
     }
   }
 }
-
-return {brHelpToggle: factory};
-
-});

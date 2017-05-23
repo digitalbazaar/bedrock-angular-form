@@ -5,53 +5,27 @@
  *
  * @author Dave Longley
  */
-/* global requirejs */
-define(['angular'], function(angular) {
+import angular from 'angular';
 
-'use strict';
-
-function register(module) {
-  module.component('brSelect', {
-    require: {
-      form: '?^form'
-    },
-    bindings: {
-      model: '=brModel',
-      items: '<brItems',
-      // `brDisplayItem` is deprecated, use transclusion?
-      display: '&?brDisplayItem',
-      compare: '&?brCompareItem',
-      onSelect: '&?brOnSelect'
-    },
-    transclude: {
-      'br-select-help': '?brSelectHelp',
-      'br-select-validation-errors': '?brSelectValidationErrors'
-    },
-    controller: Ctrl,
-    templateUrl: requirejs.toUrl('bedrock-angular-form/select-component.html')
-  });
-
-  /* @ngInject */
-  module.config(function($provide) {
-    /* @ngInject */
-    $provide.decorator('$mdSelect', function($delegate) {
-      // enable md-select to work in dialogs by making the default parent
-      // use the deepest dialog if present
-      var show = $delegate.show;
-      $delegate.show = function(options) {
-        options = options || {};
-        if(!('parent' in options)) {
-          var dialog = angular.element('dialog:not(:has(dialog))');
-          if(dialog[0]) {
-            options.parent = dialog;
-          }
-        }
-        return show.call($delegate, options);
-      };
-      return $delegate;
-    });
-  });
-}
+export default {
+  require: {
+    form: '?^form'
+  },
+  bindings: {
+    model: '=brModel',
+    items: '<brItems',
+    // `brDisplayItem` is deprecated, use transclusion?
+    display: '&?brDisplayItem',
+    compare: '&?brCompareItem',
+    onSelect: '&?brOnSelect'
+  },
+  transclude: {
+    'br-select-help': '?brSelectHelp',
+    'br-select-validation-errors': '?brSelectValidationErrors'
+  },
+  controller: Ctrl,
+  templateUrl: 'bedrock-angular-form/select-component.html'
+};
 
 /* @ngInject */
 function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
@@ -280,7 +254,3 @@ function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
     return rval;
   }
 }
-
-return register;
-
-});

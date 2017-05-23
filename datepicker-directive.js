@@ -1,19 +1,14 @@
 /*!
  * Date picker directive.
  *
- * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-/* jshint multistr: true */
-define([], function() {
-
-'use strict';
-
 var templateReplaced = false;
 
 /* @ngInject */
-function datepickerFactory($filter, $templateCache, $timeout) {
+export default function factory($filter, $templateCache, $timeout) {
   return {
     restrict: 'E',
     scope: {
@@ -22,8 +17,7 @@ function datepickerFactory($filter, $templateCache, $timeout) {
     controller: Ctrl,
     controllerAs: 'ctrl',
     bindToController: true,
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-form/datepicker-directive.html'),
+    templateUrl: 'bedrock-angular-form/datepicker-directive.html',
     compile: Compile
   };
 
@@ -59,7 +53,8 @@ function datepickerFactory($filter, $templateCache, $timeout) {
     // this my just replacing other datepicker-related templates w/o any
     // extra code
     if(!templateReplaced) {
-      var tpl = '\
+      var tpl =
+        '\
       <div> \
         <ul br-lazy-compile="isOpen" br-lazy-compile-id="br-datepicker-popup" \
           class="dropdown-menu" ng-style="{ \
@@ -107,8 +102,8 @@ function datepickerFactory($filter, $templateCache, $timeout) {
       return ctrl.model;
     }, function(value) {
       if(value) {
-        if(typeof value === 'string' || (
-          ctrl.options && ctrl.options.modelType === 'string')) {
+        if(typeof value === 'string' ||
+          (ctrl.options && ctrl.options.modelType === 'string')) {
           ctrl.date = new Date(value);
         } else {
           ctrl.date = value;
@@ -200,32 +195,3 @@ function datepickerFactory($filter, $templateCache, $timeout) {
     return date;
   }
 }
-
-/* @ngInject */
-function dateFormatFactory($filter) {
-  // FIXME: this directive is merely a bug fix for ui-bootstrap datepicker
-  // rendering (enforces the date format and prevents date changes while
-  // the input field is in focus); remove it once the bug is fixed
-  // TODO: submit PR (that uses formatters, etc. instead of replacing $render)
-  return {
-    restrict: 'A',
-    require: 'ngModel',
-    link: function(scope, element, attrs, ctrl) {
-      var dateFormat = 'yyyy-MM-dd';
-      var dateFilter = $filter('date');
-      ctrl.$render = function() {
-        if(element.is(':focus')) {
-          return;
-        }
-        element.val(dateFilter(ctrl.$modelValue, dateFormat));
-      };
-      attrs.$observe('brDateFormat', function(value) {
-        dateFormat = value;
-      });
-    }
-  };
-}
-
-return {brDatepicker: datepickerFactory, brDateFormat: dateFormatFactory};
-
-});

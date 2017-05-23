@@ -1,16 +1,12 @@
 /*!
  * Static Form Field directive.
  *
- * Copyright (c) 2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2016-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author David I. Lehn
  */
-define([], function() {
-
-'use strict';
-
 /* @ngInject */
-function factory() {
+export default function factory() {
   return {
     restrict: 'E',
     scope: true,
@@ -21,8 +17,7 @@ function factory() {
     controller: function() {},
     controllerAs: 'ctrl',
     bindToController: true,
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-form/form-static-directive.html'),
+    templateUrl: 'bedrock-angular-form/form-static-directive.html',
     link: function(scope, element, attrs, ctrl) {
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
@@ -44,7 +39,3 @@ function factory() {
     }
   };
 }
-
-return {brFormStatic: factory};
-
-});

@@ -1,17 +1,16 @@
 /*!
  * Form field directive.
  *
- * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  * @author David I. Lehn
  */
-define(['angular', 'jsonld'], function(angular, jsonld) {
-
-'use strict';
+import angular from 'angular';
+import jsonld from 'jsonld';
 
 /* @ngInject */
-function factory(brFormUtilsService) {
+export default function factory(brFormUtilsService) {
   return {
     restrict: 'E',
     scope: {
@@ -23,7 +22,7 @@ function factory(brFormUtilsService) {
     controller: function() {},
     controllerAs: 'ctrl',
     bindToController: true,
-    templateUrl: requirejs.toUrl('bedrock-angular-form/form-field.html'),
+    templateUrl: 'bedrock-angular-form/form-field.html',
     link: function(scope, element, attrs, ctrl) {
       attrs.brOptions = attrs.brOptions || {};
       attrs.$observe('brOptions', function(value) {
@@ -174,7 +173,3 @@ function factory(brFormUtilsService) {
     }
   };
 }
-
-return {brFormField: factory};
-
-});

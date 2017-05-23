@@ -1,16 +1,12 @@
 /*!
  * Form directive.
  *
- * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define([], function() {
-
-'use strict';
-
 /* @ngInject */
-function factory() {
+export default function factory() {
   return {
     restrict: 'E',
     scope: {
@@ -19,7 +15,7 @@ function factory() {
       model: '=brModel',
       path: '<?brPath'
     },
-    templateUrl: requirejs.toUrl('bedrock-angular-form/form-directive.html'),
+    templateUrl: 'bedrock-angular-form/form-directive.html',
     link: function(scope, element, attrs) {
       scope.path = scope.path || [];
       attrs.brOptions = attrs.brOptions || {};
@@ -31,7 +27,3 @@ function factory() {
     }
   };
 }
-
-return {brForm: factory};
-
-});

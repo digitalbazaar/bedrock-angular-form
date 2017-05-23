@@ -1,26 +1,21 @@
 /*!
  * Copyright (c) 2016-2017 Digital Bazaar, Inc. All rights reserved.
  */
-define(['angular'], function(angular) {
+import angular from 'angular';
 
-'use strict';
-
-function register(module) {
-  module.component('brFormControl', {
-    require: {
-      form: '?^form'
-    },
-    bindings: {},
-    transclude: {
-      'br-form-control-content': 'brFormControlContent',
-      'br-form-control-help': '?brFormControlHelp',
-      'br-form-control-validation-errors': '?brFormControlValidationErrors'
-    },
-    controller: Ctrl,
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-form/form-control-component.html')
-  });
-}
+export default {
+  require: {
+    form: '?^form'
+  },
+  bindings: {},
+  transclude: {
+    'br-form-control-content': 'brFormControlContent',
+    'br-form-control-help': '?brFormControlHelp',
+    'br-form-control-validation-errors': '?brFormControlValidationErrors'
+  },
+  controller: Ctrl,
+  templateUrl: 'bedrock-angular-form/form-control-component.html'
+};
 
 /* @ngInject */
 function Ctrl($attrs, $element, $scope, $timeout) {
@@ -57,7 +52,8 @@ function Ctrl($attrs, $element, $scope, $timeout) {
 
   self.$postLink = function() {
     $attrs.$observe('brOptions', function() {
-      self.options = self.defaultOptions($scope.$eval($attrs.brOptions || {}));
+      self.options = self.defaultOptions($scope.$eval($attrs.brOptions ||
+        {}));
       var labelWords = (self.options.label || '').split(' ');
       self.firstLabelWord = labelWords[0] || '';
       labelWords.shift();
@@ -198,7 +194,3 @@ function Ctrl($attrs, $element, $scope, $timeout) {
       self.form.$submitted && self.form[options.name].$invalid);
   };
 }
-
-return register;
-
-});

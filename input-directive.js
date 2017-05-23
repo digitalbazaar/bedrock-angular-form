@@ -1,21 +1,12 @@
 /*!
  * Input directive.
  *
- * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define([], function() {
-
-'use strict';
-
-function register(module) {
-  module.directive('brInput', factory);
-  module.directive('brInputManipulator', brInputManipulator);
-}
-
 /* @ngInject */
-function factory($parse, brFormUtilsService) {
+export default function factory($parse, brFormUtilsService) {
   return {
     restrict: 'E',
     // compile prior to other directives to ensure directives to be
@@ -39,7 +30,7 @@ function factory($parse, brFormUtilsService) {
       'br-input-help': '?brInputHelp',
       'br-input-validation-errors': '?brInputValidationErrors'
     },
-    templateUrl: requirejs.toUrl('bedrock-angular-form/input-directive.html'),
+    templateUrl: 'bedrock-angular-form/input-directive.html',
     compile: Compile,
     controller: Ctrl,
     controllerAs: 'brInputCtrl'
@@ -139,26 +130,3 @@ function Ctrl($attrs, $scope) {
 function fixLegacyExpression(expression) {
   return expression.replace(/{{|}}/g, '');
 }
-
-/* @ngInject */
-function brInputManipulator() {
-  return {
-    require: 'ngModel',
-    link: function(scope, element, attrs, ctrl) {
-      if(scope.brInputCtrl.options && scope.brInputCtrl.options.lowerCaseOnly) {
-        ctrl.$parsers.push(function(value) {
-          var transformed = value.toLowerCase();
-          if(transformed !== value) {
-            ctrl.$setViewValue(transformed);
-            ctrl.$render();
-          }
-          return transformed;
-        });
-      }
-    }
-  };
-}
-
-return register;
-
-});

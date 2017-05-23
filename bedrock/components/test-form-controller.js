@@ -1,9 +1,10 @@
-define([], function() {
-
-'use strict';
-
+/*!
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
+ *
+ * @author Dave Longley
+ */
 /* @ngInject */
-function factory($scope, brTestFormLibraryService) {
+export default function factory($scope, brTestFormLibraryService) {
   var self = this;
 
   self.doc = {
@@ -19,7 +20,3 @@ function factory($scope, brTestFormLibraryService) {
     $scope.$apply();
   });
 }
-
-return {brTestFormController: factory};
-
-});
