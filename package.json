@@ -7,10 +7,13 @@
   "dependencies": {
     "angular": "~1.6.4",
     "angular-sanitize": "~1.6.4",
-    "angular-ui-select": "https://github.com/digitalbazaar/ui-select.git#allow-lazy-compile-dist",
+    "ui-select": "https://github.com/digitalbazaar/ui-select.git#allow-lazy-compile-dist",
     "bedrock-angular-alert": "^3.0.0",
     "bedrock-angular-lazy-compile": "^3.0.0",
     "bedrock-angular-resource": "^3.0.0"
+  },
+  "bedrock": {
+    "browserDependencies": "all"
   },
   "repository": {
     "type": "git",
