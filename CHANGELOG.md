@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 3.0.2 - 2017-05-30
+
+### Fixed
+- Update deps.
+
 ## 3.0.1 - 2017-05-30
 
 ### Fixed
