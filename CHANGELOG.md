@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 3.0.1 - 2017-05-30
+
+### Fixed
+- Add `bootstrap` dependency.
+
 ## 3.0.0 - 2017-05-26
 
 ### Changed
