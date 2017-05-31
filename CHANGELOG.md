@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 3.0.3 - 2017-05-31
+
+### Fixed
+- Ensure all input element types are updated in br-input.
+
 ## 3.0.2 - 2017-05-30
 
 ### Fixed
