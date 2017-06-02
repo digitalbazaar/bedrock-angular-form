@@ -17,7 +17,12 @@
     "ui-select": "https://github.com/digitalbazaar/ui-select.git#allow-lazy-compile-dist"
   },
   "bedrock": {
-    "browserDependencies": "all"
+    "browserDependencies": "all",
+    "manifest": {
+      "angular-material": {
+        "css": "angular-material.css"
+      }
+    }
   },
   "repository": {
     "type": "git",
