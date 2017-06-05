@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 3.0.6 - 2017-06-05
+
+### Fixed
+- Remove angular `ui-select` dependency.
+
 ## 3.0.5 - 2017-06-05
 
 ### Changed
