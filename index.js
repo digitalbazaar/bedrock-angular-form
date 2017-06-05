@@ -29,7 +29,7 @@ import ValidatorSameAsDirective from './validator-same-as-directive.js';
 var module = angular.module(
   'bedrock.form', [
     'bedrock.alert', 'bedrock.lazyCompile', 'bedrock.resource', 'ngMaterial',
-    'ngSanitize', 'ui.select'
+    'ngSanitize'
   ]);
 
 module.component('brFormControl', FormControlComponent);
