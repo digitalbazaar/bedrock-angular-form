@@ -65,10 +65,8 @@ function Ctrl($attrs, $element, $scope, $timeout) {
     $timeout(function() {
       // true = use capture (to capture events on child elements)
       var theme = self.options.theme || 'default';
-      contentElement = $element
-        .find('.br-theme-' + theme)
-        .find('.br-form-control-wrapper');
-      contentElement = contentElement[0];
+      contentElement = $element[0].querySelector(
+        '.br-theme-' + theme + ' .br-form-control-wrapper');
       if(contentElement) {
         contentElement.addEventListener('focus', focusListener, true);
         contentElement.addEventListener('blur', blurListener, true);
