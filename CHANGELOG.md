@@ -1,5 +1,11 @@
 # bedrock-angular-form ChangeLog
 
+## 3.0.7 - 2017-08-10
+
+### Fixed
+- Use `querySelector` for CSS selector instead of jqLite `.find`
+  which only supports tag names.
+
 ## 3.0.6 - 2017-06-05
 
 ### Fixed
