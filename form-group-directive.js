@@ -54,9 +54,9 @@ export default function factory(
           element.append(linked);
 
           attrs.brOptions = attrs.brOptions || {};
-          scope.options = scope.$eval(attrs.brOptions) || {};
+          scope.options = scope.$parent.$eval(attrs.brOptions) || {};
           attrs.$observe('brOptions', function(value) {
-            var options = scope.options = scope.$eval(value) || {};
+            var options = scope.options = scope.$parent.$eval(value) || {};
             // TODO: grab vocab via identifier from options
             // TODO: use repeater in template to pass options to
             // br-form-field(s)

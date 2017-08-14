@@ -195,7 +195,7 @@ function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
 
   function legacyEval(expression) {
     // strip double parentheses
-    return $scope.$eval(expression.replace(/{{|}}/g, ''));
+    return $scope.$parent.$eval(expression.replace(/{{|}}/g, ''));
   }
 
   function defaultOptions(options) {

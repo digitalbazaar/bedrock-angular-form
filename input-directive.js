@@ -91,7 +91,7 @@ function Ctrl($attrs, $scope) {
 
   function legacyEval(expression) {
     // strip double parentheses
-    return $scope.$eval(fixLegacyExpression(expression));
+    return $scope.$parent.$eval(fixLegacyExpression(expression));
   }
 
   function defaultOptions(options) {

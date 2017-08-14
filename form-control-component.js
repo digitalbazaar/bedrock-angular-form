@@ -52,8 +52,8 @@ function Ctrl($attrs, $element, $scope, $timeout) {
 
   self.$postLink = function() {
     $attrs.$observe('brOptions', function() {
-      self.options = self.defaultOptions($scope.$eval($attrs.brOptions ||
-        {}));
+      self.options = self.defaultOptions(
+        $scope.$parent.$eval($attrs.brOptions || {}));
       var labelWords = (self.options.label || '').split(' ');
       self.firstLabelWord = labelWords[0] || '';
       labelWords.shift();

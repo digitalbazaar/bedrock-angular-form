@@ -85,7 +85,7 @@ function Ctrl($attrs, $scope) {
 
   function legacyEval(expression) {
     // strip double parentheses
-    return $scope.$eval(expression.replace(/{{|}}/g, ''));
+    return $scope.$parent.$eval(expression.replace(/{{|}}/g, ''));
   }
 
   function defaultOptions(options) {
