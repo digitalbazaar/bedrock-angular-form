@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 3.0.8 - 2017-08-18
+
+### Fixed
+- Evaluate `brOptions` in the context of the parent scope.
+
 ## 3.0.7 - 2017-08-10
 
 ### Fixed
