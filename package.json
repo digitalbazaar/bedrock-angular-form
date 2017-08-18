@@ -1,6 +1,6 @@
 {
   "name": "bedrock-angular-form",
-  "version": "3.0.8",
+  "version": "3.0.9-0",
   "description": "A bedrock AngularJS module that provides services and directives for creating and handling forms.",
   "main": "index.js",
   "less": "form.less",
