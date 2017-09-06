@@ -1,5 +1,15 @@
 # bedrock-angular-form ChangeLog
 
+## 3.1.0 - 2017-09-06
+
+### Changed
+- Remove single internal use of bedrock-angular-alert to
+  avoid need for the dependency. Single use was for a
+  configuration or network error that may occur when
+  preloading vocabularies in the form library service.
+  This is not useful information for a user nor is it
+  recoverable; it has been moved to use console.error().
+
 ## 3.0.8 - 2017-08-18
 
 ### Fixed
