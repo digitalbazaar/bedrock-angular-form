@@ -10,8 +10,7 @@ import angular from 'angular';
 import jsonld from 'jsonld';
 
 /* @ngInject */
-export default function factory(
-  $rootScope, config, brAlertService, brResourceService) {
+export default function factory($rootScope, config, brResourceService) {
   var service = {};
 
   // collection of all vocabs
@@ -115,7 +114,8 @@ export default function factory(
         }
         return self.load(id, options);
       })).catch(function(err) {
-        brAlertService.add('error', err);
+        // core config or network error
+        console.error(err);
       }).then(function() {
         $rootScope.$apply();
       });

@@ -28,8 +28,7 @@ import ValidatorSameAsDirective from './validator-same-as-directive.js';
 // TODO: how to make `ngMaterial` optional?
 var module = angular.module(
   'bedrock.form', [
-    'bedrock.alert', 'bedrock.lazyCompile', 'bedrock.resource', 'ngMaterial',
-    'ngSanitize'
+    'bedrock.lazyCompile', 'bedrock.resource', 'ngMaterial', 'ngSanitize'
   ]);
 
 module.component('brFormControl', FormControlComponent);
