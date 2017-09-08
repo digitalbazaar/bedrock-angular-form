@@ -323,8 +323,5 @@ export default function factory($rootScope, config, brResourceService) {
   // register for system-wide refreshes
   // brRefreshService.register(service.collection);
 
-  // expose service to scope
-  $rootScope.app.services.form = service;
-
   return service;
 }
