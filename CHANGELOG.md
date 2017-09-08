@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 3.1.1 - 2017-09-08
+
+### Fixed
+- Remove legacy code.
+
 ## 3.1.0 - 2017-09-06
 
 ### Changed
