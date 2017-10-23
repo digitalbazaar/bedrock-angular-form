@@ -5,11 +5,10 @@
   "main": "index.js",
   "less": "form.less",
   "dependencies": {
-    "angular": "~1.6.4",
-    "angular-animate": "~1.6.4",
-    "angular-aria": "~1.6.4",
     "angular-sanitize": "~1.6.4",
+    "bedrock-angular": "^4.0.0",
     "bedrock-angular-bootstrap": "^1.0.0",
+    "bedrock-angular-jsonld": "^1.0.1",
     "bedrock-angular-lazy-compile": "^3.0.0",
     "bedrock-angular-material": "^1.0.0",
     "bedrock-angular-resource": "^3.0.0"
