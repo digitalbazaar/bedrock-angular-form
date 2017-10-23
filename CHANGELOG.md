@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+## 3.1.2 - 2017-10-23
+
+### Fixed
+- Add missing jsonld dependency by way of bedrock-angular-jsonld.
+
 ## 3.1.1 - 2017-09-08
 
 ### Fixed
