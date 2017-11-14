@@ -5,7 +5,9 @@
   "main": "index.js",
   "less": "form.less",
   "dependencies": {
-    "angular-sanitize": "~1.6.4",
+    "angular-sanitize": "~1.6.4"
+  },
+  "peerDependencies": {
     "bedrock-angular": "^4.0.0",
     "bedrock-angular-bootstrap": "^1.0.0",
     "bedrock-angular-jsonld": "^1.0.1",
