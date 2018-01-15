@@ -1,5 +1,4 @@
-<div ng-if="$ctrl.options.theme === 'material' && $ctrl.options.autocomplete"
-  class="br-theme-material">
+<div ng-if="$ctrl.options.autocomplete" class="br-theme-material">
   <md-autocomplete style="width: 100%"
     ng-class="{
       'md-icon-left': $ctrl.options.icon
@@ -39,8 +38,7 @@
 </div>
 <br-form-control ng-if="!$ctrl.options.autocomplete"
   br-options="{{$ctrl.options|json}}">
-  <br-form-control-content ng-if="$ctrl.options.theme === 'material'"
-    class="br-theme-material">
+  <br-form-control-content class="br-theme-material">
     <md-select ng-model="$ctrl.selection.selected"
       md-on-close="$ctrl.searchText = ''"
       ng-disabled="$ctrl.options.disabled"
@@ -61,21 +59,6 @@
         </md-option>
       </md-optgroup>
     </md-select>
-  </br-form-control-content>
-  <br-form-control-content ng-if="$ctrl.options.theme !== 'material'">
-    <div class="br-select br-form-control-content {{brInputCtrl.options.class}}"
-      br-tooltip="{{$ctrl.options.tooltip.text}}"
-      br-options="$ctrl.options.tooltip">
-      <ui-select ng-model="$ctrl.selection.selected" theme="bootstrap"
-        ng-disabled="$ctrl.options.disabled">
-        <ui-select-match class="ui-select-match"
-          placeholder="{{$ctrl.options.placeholder}}">{{$select.selected.display}}</ui-select-match>
-        <ui-select-choices class="ui-select-choices"
-          repeat="item in $ctrl.viewItems | filter: $select.search">
-          <div ng-bind-html="item.display | highlight: $select.search"></div>
-        </ui-select-choices>
-      </ui-select>
-    </div>
   </br-form-control-content>
   <br-form-control-help ng-if="$ctrl.options.help">
     <div ng-transclude></div>

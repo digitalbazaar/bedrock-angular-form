@@ -10,9 +10,9 @@ Uses features from [bedrock-angular-alert][] and [bedrock-angular-resource][].
 
 ```html
 <div ng-controller="TestController as model">
-  <form class="well form-horizontal" role="form">
+  <form role="form">
     <fieldset>
-      <br-input br-model="model.name" 
+      <br-input br-model="model.name"
         br-options="{icon: 'tag', name: 'name', label: 'Name'}">
         Please enter your name.
       </br-input>
@@ -51,10 +51,7 @@ Show a date picker form component.
   br-model="model.date"
   br-options="{
     format: 'yyyy/MM/dd',
-    time: (24*60*60*1000 - 1),
-    columns: {
-      input: '...'
-    }
+    time: (24*60*60*1000 - 1)
   }"></br-datepicker>
 ```
 
@@ -103,36 +100,6 @@ Show a properly styled static form field.
 </br-form-static>
 ```
 
-### br-help-toggle
-
-Helper to toggle help text.  Used with `br-track-state`.
-
-```html
-<form class="well form-vertical">
-  <fieldset>
-    <div class="form-group" br-property-path="label">
-      <label for="name">Name</label>
-      <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-tag"></i></span>
-        <input class="form-control" type="text" name="label"
-          ng-model="model.identityLabel"
-          br-track-state="model.help.identityLabel" />
-        <span class="input-group-btn">
-          <button class="btn btn-default"
-            br-help-toggle="model.help.identityLabel">
-            <i class="fa fa-question-circle"></i>
-          </button>
-        </span>
-      </div>
-      <p ng-show="model.help.identityLabel.show"
-        class="help-block br-fadein br-fadeout">
-        Enter your identity name.
-      </p>
-    </div>
-  </fieldset>
-</form>
-```
-
 ### br-input
 
 Show an input field form component.
@@ -148,17 +115,6 @@ Show an input field form component.
   }">
   Please enter a name.
 </br-input>
-```
-
-### br-input-watcher
-
-Rate limited input watcher.
-
-```html
-<span br-input-watcher="model.search.input"
-  br-input-watcher-state="model.search.state"
-  br-input-change="search(input, state, callback)">
-</span>
 ```
 
 ### br-radio-group
@@ -218,10 +174,6 @@ Show a textarea form component.
   Please enter a comment.
 </br-textarea>
 ```
-
-### br-track-state
-
-See `br-help-toggle`.
 
 ### brFormLibraryService
 

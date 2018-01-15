@@ -4,8 +4,7 @@
   <pre>FORM GROUPS: {{groups|json}}</pre>
   <pre>FORM MODEL: {{model|json}}</pre>
   -->
-  <form ng-if="options.editable && !options.embedded"
-    class="form-horizontal">
+  <form ng-if="options.editable && !options.embedded">
     <div ng-repeat="group in groups track by group.id" ng-switch="group.type">
       <br-form-group ng-switch-when="PropertyGroup"
         br-model="model" br-group="group" br-library="library"

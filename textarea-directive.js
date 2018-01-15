@@ -107,17 +107,7 @@ function Ctrl($attrs, $scope) {
       options.wrap = 'on';
     }
 
-    // backwards compatibility
-    if('columns' in options) {
-      options.classes = options.columns;
-      if('textarea' in options.classes) {
-        options.classes.content = options.classes.textarea;
-      }
-    }
-
-    options.classes = angular.merge({
-      helpToggle: 'br-help-toggle-top'
-    }, options.classes || {});
+    options.classes = options.classes || {};
 
     if(!('help' in options)) {
       options.help = true;

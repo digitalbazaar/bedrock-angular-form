@@ -41,20 +41,6 @@ function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
     self.options = defaultOptions(legacyEval($attrs.brOptions || {}));
     $attrs.$observe('brOptions', function() {
       self.options = defaultOptions(legacyEval($attrs.brOptions || {}));
-
-      if(self.options.theme !== 'material') {
-        if(self.options.autofocus) {
-          $element.find('.ui-select-match').attr('autofocus', 'autofocus');
-        } else {
-          $element.find('.ui-select-match').removeAttr('autofocus');
-        }
-
-        if(self.options.readonly) {
-          $element.find('.ui-select-match').attr('readonly', 'readonly');
-        } else {
-          $element.find('.ui-select-match').removeAttr('readonly');
-        }
-      }
     });
 
     // set default compare item method
@@ -111,10 +97,6 @@ function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
   };
 
   self.$postLink = function() {
-    if(self.options.theme !== 'material') {
-      return;
-    }
-
     /* Note: Help and validation errors elements cannot be transcluded using
       the `ng-transclude` multislot mechanism so this custom code will
       perform the transclusion instead. The `md-autocomplete` component makes
@@ -200,11 +182,6 @@ function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
 
   function defaultOptions(options) {
     options = options || {};
-    if(options.theme !== 'material') {
-      options.label = ('label' in options) ? options.label : 'Choose...';
-      options.placeholder = ('placeholder' in options ?
-        options.placeholder : (options.label + '...'));
-    }
     options.autocomplete = (options.autocomplete !== false);
     options.tooltip = options.tooltip || {};
 
@@ -212,14 +189,6 @@ function Ctrl($attrs, $element, $scope, $timeout, $transclude) {
     if(typeof options.icon === 'string' &&
       options.icon.indexOf('fa-') !== 0) {
       options.icon = 'fa-' + options.icon;
-    }
-
-    // backwards compatibility
-    if('columns' in options) {
-      options.classes = options.columns;
-      if('select' in options.classes) {
-        options.classes.content = options.classes.select;
-      }
     }
 
     if(!('help' in options)) {

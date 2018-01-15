@@ -17,8 +17,7 @@ export default function factory() {
    * Defaults for form components.
    */
   service.defaults = {
-    theme: 'bootstrap'
-    // theme: 'material'
+    theme: 'material'
   };
 
   /**

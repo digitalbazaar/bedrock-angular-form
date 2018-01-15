@@ -1,64 +1,14 @@
 /*
  * Bedrock form style
  *
- * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2018 Digital Bazaar, Inc. All rights reserved.
  */
+@form-font-size: 14px;
 
 /* Forms */
 .form-horizontal .radio-inline,
 .form-horizontal .checkbox-inline {
   vertical-align: baseline;
-}
-.form-group-inline {
-  // padding of grid classes for small screens since columns stack
-  &[class*="col-"] {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-  @media (min-width: @screen-sm) {
-    // Undo padding of grid classes for x-small screens
-    &[class*="col-xs"] {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-  @media (min-width: @screen-sm) {
-    // Undo padding of grid classes for small screens
-    &[class*="col-sm"] {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-  @media (min-width: @screen-md) {
-    // Undo padding of grid classes for medium screens
-    &[class*="col-md"] {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-  @media (min-width: @screen-lg) {
-    // Undo padding of grid classes for large screens
-    &[class*="col-lg"] {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-
-  // Add input-group-inline option to fully-expand inline form inputs
-  @media (min-width: @screen-sm-min) {
-    .input-group-inline {
-      width: 100%;
-
-      .input-group-addon,
-      .input-group-btn {
-        width: 1%
-      }
-      .form-control {
-        width: 100%;
-      }
-    }
-  }
 }
 br-form-group > .section h4.headline {
   margin-top: 0;
@@ -73,7 +23,7 @@ br-form-group br-form-group > .section h4.headline {
   margin-top: 0;
 }
 br-form-group br-form-group > .section h4.headline {
-  font-size: @font-size-base;
+  font-size: @form-font-size;
 }
 
 /* Omit dt field name and remove dd indention */
@@ -92,10 +42,10 @@ br-form-control md-input-container label:not(.md-container-ignore).md-required .
   content: ' *'
 }
 .br-theme-material .help-block {
-  font-size: floor((@font-size-base * 0.75));
+  font-size: floor((@form-font-size * 0.75));
 }
 .br-theme-material .br-form-control-validation-errors {
-  font-size: floor((@font-size-base * 0.75));
+  font-size: floor((@form-font-size * 0.75));
 }
 br-form-control md-input-container,
 br-select md-input-container {
@@ -154,228 +104,7 @@ br-select md-select {
 .br-help-toggle-invisible-remove.br-help-toggle-invisible-remove-active {
   opacity: 1;
 }
-.br-help-toggle-top {
-  vertical-align: top;
-}
-.br-help-toggle-top > .btn {
-  .border-left-radius(0);
-  .border-right-radius(@input-border-radius);
-}
-/* FIXME: deprecate -- Correct border-radius for form-controls with help toggles, etc. */
-.input-group .form-control,
-.input-group .ui-select-bootstrap,
-.input-group .br-select {
-  // replace original setting that removed radius for non-first/last child
-  // with only removing it if the form control is not a 'br-help' control
-  &:not(:first-child):not(:last-child),
-  &:not(:first-child):not(:last-child) .ui-select-match {
-    border-radius: @input-border-radius;
-  }
-  &:not(.br-help):not(:first-child):not(:last-child),
-  &:not(.br-help):not(:first-child):not(:last-child) .ui-select-match {
-    border-radius: 0;
-  }
 
-  // turn on border-left-radius for first child
-  &:first-child, &:first-child .ui-select-match {
-    .border-left-radius(@input-border-radius);
-  }
-
-  // turn on border-right-radius for last child
-  &:last-child, &:last-child .ui-select-match {
-    .border-right-radius(@input-border-radius);
-  }
-
-  // if form control/ui-select has an appended help toggle
-  &:not(.br-help-off).br-help {
-    // if its not the first child, remove left border radius
-    &:not(:first-child) {
-      &, & .ui-select-match {
-        .border-left-radius(0);
-      }
-    }
-    // always keep the right border radius
-    &, & .ui-select-match {
-      .border-right-radius(@input-border-radius);
-    }
-    // no border radius when br-help-toggle is shown/animating
-    &:hover, &:focus, &.br-show, &.br-help-focus, &.br-help-mouseover {
-      &, & .ui-select-match {
-        .border-right-radius(0);
-      }
-    }
-  }
-}
-.input-group .br-form-control-wrapper {
-  // if first child, use left border radius on content
-  &:first-child .br-form-control-content {
-    &, & .ui-select-bootstrap, & .ui-select-match {
-      .border-left-radius(@input-border-radius);
-    }
-  }
-
-  // if last child or help toggle is present but not visible,
-  // use right border radius on content
-  &:last-child,
-  &.br-help-toggle-present:not(.br-help-toggle-visible) {
-    & .br-form-control-content {
-      &, & .ui-select-bootstrap, & .ui-select-match {
-        .border-right-radius(@input-border-radius);
-      }
-    }
-  }
-
-  // if help toggle is present and visible
-  &.br-help-toggle-present.br-help-toggle-visible {
-    & .br-form-control-content {
-      // remove right border radius on non-tall content
-      &:not(.br-form-control-content-tall) {
-        &, & .ui-select-bootstrap, & .ui-select-match {
-          .border-right-radius(0);
-        }
-      }
-
-      // remove top-right radius on tall content
-      &.br-form-control-content-tall {
-        border-top-right-radius: 0;
-      }
-    }
-  }
-
-  // if middle child
-  &:not(:first-child):not(:last-child) {
-    // no left-border radius on content
-    & .br-form-control-content {
-      &, & .ui-select-bootstrap, & .ui-select-match {
-        .border-left-radius(0);
-      }
-    }
-
-    // if no help toggle is present, use right border radius on content
-    &:not(.br-help-toggle-present) .br-form-control-content {
-      &, & .ui-select-bootstrap, & .ui-select-match {
-        .border-right-radius(@input-border-radius);
-      }
-    }
-  }
-
-  // if not first child but is last
-  &:not(:first-child):last-child {
-    // no left-border radius on content
-    & .br-form-control-content {
-      &, & .ui-select-bootstrap, & .ui-select-match {
-        .border-left-radius(0);
-      }
-    }
-  }
-}
-
-/* Input Groups */
-/* FIXME: deprecated */
-.input-group .form-control,
-.input-group .ui-select-bootstrap,
-.input-group .br-select {
-  // fix inline padding
-  &:not(:first-child):not(:last-child) .input-group-inline {
-    padding-left: floor((@grid-gutter-width / 8));
-    padding-right: floor((@grid-gutter-width / 8));
-  }
-
-  &:first-child:not(:last-child) .input-group-inline {
-    padding-left: floor((@grid-gutter-width / 2));
-    padding-right: floor((@grid-gutter-width / 8));
-  }
-
-  &:last-child:not(:first-child) .input-group-inline {
-    padding-left: floor((@grid-gutter-width / 8));
-    padding-right: floor((@grid-gutter-width / 2));
-  }
-}
-.input-group.input-group-inline .br-form-control-wrapper {
-  // fix inline padding
-  &:not(:first-child):not(:last-child) {
-    & .form-control, & .ui-select-bootstrap, & .br-select {
-      padding-left: floor((@grid-gutter-width / 8));
-      padding-right: floor((@grid-gutter-width / 8));
-    }
-  }
-
-  &:first-child:not(:last-child) {
-    & .form-control, & .ui-select-bootstrap, & .br-select {
-      padding-left: floor((@grid-gutter-width / 2));
-      padding-right: floor((@grid-gutter-width / 8));
-    }
-  }
-
-  &:last-child:not(:first-child) {
-    & .form-control, & .ui-select-bootstrap, & .br-select {
-      padding-left: floor((@grid-gutter-width / 8));
-      padding-right: floor((@grid-gutter-width / 2));
-    }
-  }
-}
-.input-group {
-  // Redo padding of grid classes for small screens since columns stack
-  &[class*="col-"] {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-  @media (min-width: @screen-sm) {
-    // Undo padding of grid classes for x-small screens
-    &[class*="col-xs"] {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-  @media (min-width: @screen-sm) {
-    // Undo padding of grid classes for small screens
-    &[class*="col-sm"] {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-  @media (min-width: @screen-md) {
-    // Undo padding of grid classes for medium screens
-    &[class*="col-md"] {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-  @media (min-width: @screen-lg) {
-    // Undo padding of grid classes for large screens
-    &[class*="col-lg"] {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-}
-
-/* Select */
-.ui-select-match,
-.ui-select-match:hover {
-  background-color: @input-bg;
-  background-image: none;
-  color: @input-color;
-  border: 1px solid @input-border;
-  .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
-  outline: 0;
-  // caret placed 15px from the right, add its width + left padding
-  padding-right: (15 + @caret-width-base + @padding-base-horizontal);
-}
-.ui-select-match.btn-default-focus {
-  @color-rgba: rgba(red(@input-border-focus), green(@input-border-focus), blue(@input-border-focus), .6);
-  border: 1px solid @input-border-focus !important;
-  outline: 0;
-  .box-shadow(~"inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px @{color-rgba}");
-  .transition(~"border-color ease-in-out .15s, box-shadow ease-in-out .15s");
-}
-.ui-select-choices.dropdown-menu {
-  margin-top: (@input-height-base + 2);
-}
-.form-inline .ui-select-choices.dropdown-menu {
-  margin-top: 2px;
-}
 .form-inline br-select {
   display: inline-block;
 }

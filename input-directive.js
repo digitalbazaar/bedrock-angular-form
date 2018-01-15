@@ -109,14 +109,6 @@ function Ctrl($attrs, $scope) {
       options.icon = 'fa-' + options.icon;
     }
 
-    // backwards compatibility
-    if('columns' in options) {
-      options.classes = options.columns;
-      if('input' in options.classes) {
-        options.classes.content = options.classes.input;
-      }
-    }
-
     if(!('help' in options)) {
       options.help = !options.inline;
     }

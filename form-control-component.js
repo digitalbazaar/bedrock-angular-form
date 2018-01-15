@@ -32,21 +32,11 @@ function Ctrl($attrs, $element, $scope, $timeout) {
 
   var focusListener = function() {
     helpToggle.contentFocus = true;
-    if(self.options.theme === 'material') {
-      helpToggle.helpVisible = true;
-    } else {
-      helpToggle.visible = true;
-    }
+    helpToggle.helpVisible = true;
   };
   var blurListener = function() {
     helpToggle.contentFocus = false;
-    if(self.options.theme === 'material') {
-      helpToggle.helpVisible = false;
-    } else {
-      if(!helpToggle.contentMouseOver) {
-        helpToggle.scheduleHide();
-      }
-    }
+    helpToggle.helpVisible = false;
   };
   var contentElement;
 
@@ -158,14 +148,7 @@ function Ctrl($attrs, $element, $scope, $timeout) {
     options = options || {};
     return angular.merge({
       inline: false,
-      help: !options.inline,
-      helpTogglePosition: 'content',
-      classes: {
-        label: 'col-sm-3',
-        content: 'col-sm-8',
-        help: 'col-xs-offset-3 col-xs-8',
-        validation: 'col-xs-offset-3 col-xs-8'
-      }
+      help: !options.inline
     }, options);
   };
 
