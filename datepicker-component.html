@@ -1,0 +1,16 @@
+<br-form-control br-options="{{$ctrl.options|json}}">
+  <br-form-control-content>
+    <md-datepicker ng-model="$ctrl.model"
+      md-placeholder="{{$ctrl.options.placeholder}}"
+      md-is-open="$ctrl.isOpen"></md-datepicker>
+  </br-form-control-content>
+  <br-form-control-help xng-if="$ctrl.options.help">
+    <div ng-transclude="br-datepicker-help"></div>
+  </br-form-control-help>
+  <br-form-control-validation-errors ng-if="$ctrl.options.showValidation">
+    <!-- FIXME Validation errors may display weirdly for inline inputs. -->
+    <div ng-transclude="br-datepicker-validation-errors">
+      An error was detected in the input above.
+    </div>
+  </br-form-control-validation-errors>
+</br-form-control>

@@ -1,12 +1,12 @@
 /*!
  * Form module.
  *
- * Copyright (c) 2012-2017 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2018 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
 import angular from 'angular';
-import DatepickerDirective from './datepicker-directive.js';
+import DatepickerComponent from './datepicker-component.js';
 import DateFormatDirective from './date-format-directive.js';
 import FormDirective from './form-directive.js';
 import FormControlComponent from './form-control-component.js';
@@ -31,11 +31,11 @@ var module = angular.module(
     'bedrock.lazyCompile', 'bedrock.resource', 'ngMaterial', 'ngSanitize'
   ]);
 
+module.component('brDatepicker', DatepickerComponent);
 module.component('brFormControl', FormControlComponent);
 module.component('brSelect', SelectComponent);
 module.directive('brInput', InputDirective);
 module.directive('brInputManipulator', InputManipulatorDirective);
-module.directive('brDatepicker', DatepickerDirective);
 module.directive('brDateFormat', DateFormatDirective);
 module.directive('brForm', FormDirective);
 module.directive('brFormField', FormFieldDirective);
