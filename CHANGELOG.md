@@ -1,5 +1,7 @@
 # bedrock-angular-form ChangeLog
 
+## 4.0.0 - 2018-03-19
+
 ### Changed
 - **BREAKING**: Switch to material design.
 - Remove bootstrap classes from main controls.
