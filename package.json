@@ -7,7 +7,7 @@
   "dependencies": {
     "angular-sanitize": "~1.6.4",
     "bedrock-angular": "^4.0.0",
-    "bedrock-angular-jsonld": "^1.0.1",
+    "bedrock-angular-jsonld": "^2.1.0",
     "bedrock-angular-lazy-compile": "^3.0.0",
     "bedrock-angular-material": "^1.0.0",
     "bedrock-angular-resource": "^3.0.0"
