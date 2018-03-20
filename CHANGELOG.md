@@ -1,5 +1,10 @@
 # bedrock-angular-form ChangeLog
 
+### Changed
+- **BREAKING**: Switch to material design.
+- Remove bootstrap classes from main controls.
+- Update datepicker to use material.
+
 ## 3.1.2 - 2017-10-23
 
 ### Fixed
