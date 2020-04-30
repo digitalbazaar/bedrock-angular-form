@@ -10,7 +10,8 @@
     "bedrock-angular-jsonld": "^2.1.0",
     "bedrock-angular-lazy-compile": "^3.0.0",
     "bedrock-angular-material": "^1.0.0",
-    "bedrock-angular-resource": "^3.0.0"
+    "bedrock-angular-resource": "^3.0.0",
+    "snyk": "^1.316.1"
   },
   "bedrock": {
     "browserDependencies": "all"
@@ -22,5 +23,10 @@
   "bugs": {
     "url": "https://github.com/digitalbazaar/bedrock-angular-form/issues"
   },
-  "homepage": "https://github.com/digitalbazaar/bedrock-angular-form#readme"
+  "homepage": "https://github.com/digitalbazaar/bedrock-angular-form#readme",
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
